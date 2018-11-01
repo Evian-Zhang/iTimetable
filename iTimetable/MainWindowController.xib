@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
+            <connections>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="iTimetable" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5" customClass="MainWindow">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="705" height="452"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="705" height="452"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView arrangesAllSubviews="NO" dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="Dpo-oh-DlE">
+                        <rect key="frame" x="0.0" y="0.0" width="705" height="452"/>
+                        <subviews>
+                            <customView id="MK0-q5-aSO">
+                                <rect key="frame" x="0.0" y="0.0" width="705" height="85"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4cx-fB-aox">
+                                        <rect key="frame" x="18" y="34" width="141" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="正在获取日历访问权限" id="2mp-eb-HxY">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mMH-Vk-h1f">
+                                        <rect key="frame" x="20" y="34" width="31" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="账户" id="sZd-UY-jdC">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5pZ-eq-SKk">
+                                        <rect key="frame" x="69" y="29" width="38" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="GAB-Zz-l7f">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="oUk-k6-UGE"/>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S73-tA-H9H">
+                                        <rect key="frame" x="136" y="34" width="31" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="日历" id="Mdv-xq-IRT">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zbj-96-jLz">
+                                        <rect key="frame" x="179" y="29" width="38" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="e3C-SE-jiM">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="V9T-Hl-Waw"/>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="4cx-fB-aox" firstAttribute="centerY" secondItem="MK0-q5-aSO" secondAttribute="centerY" id="1Td-u1-tvI"/>
+                                    <constraint firstItem="S73-tA-H9H" firstAttribute="leading" secondItem="5pZ-eq-SKk" secondAttribute="trailing" constant="34" id="5Nj-PV-JFu"/>
+                                    <constraint firstItem="5pZ-eq-SKk" firstAttribute="leading" secondItem="mMH-Vk-h1f" secondAttribute="trailing" constant="22" id="BYM-iz-ENd"/>
+                                    <constraint firstItem="zbj-96-jLz" firstAttribute="leading" secondItem="S73-tA-H9H" secondAttribute="trailing" constant="16" id="EKj-wy-XmT"/>
+                                    <constraint firstItem="mMH-Vk-h1f" firstAttribute="baseline" secondItem="S73-tA-H9H" secondAttribute="baseline" id="Tth-na-xOb"/>
+                                    <constraint firstItem="mMH-Vk-h1f" firstAttribute="centerY" secondItem="zbj-96-jLz" secondAttribute="centerY" id="c2y-0K-pcR"/>
+                                    <constraint firstItem="4cx-fB-aox" firstAttribute="leading" secondItem="MK0-q5-aSO" secondAttribute="leading" constant="20" symbolic="YES" id="cBG-aZ-ab3"/>
+                                    <constraint firstAttribute="height" constant="85" id="cVZ-A4-ytl"/>
+                                    <constraint firstItem="mMH-Vk-h1f" firstAttribute="leading" secondItem="MK0-q5-aSO" secondAttribute="leading" constant="22" id="tz1-X9-wQU"/>
+                                    <constraint firstItem="mMH-Vk-h1f" firstAttribute="centerY" secondItem="5pZ-eq-SKk" secondAttribute="centerY" id="vWf-Pk-bdz"/>
+                                    <constraint firstItem="mMH-Vk-h1f" firstAttribute="baseline" secondItem="4cx-fB-aox" secondAttribute="baseline" id="wgG-Ew-DWH"/>
+                                </constraints>
+                            </customView>
+                            <customView fixedFrame="YES" id="hzL-8a-s6U">
+                                <rect key="frame" x="0.0" y="86" width="705" height="366"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </customView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="250"/>
+                        </holdingPriorities>
+                    </splitView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Dpo-oh-DlE" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="7GV-Cx-aH4"/>
+                    <constraint firstItem="Dpo-oh-DlE" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="Iln-zA-ox0"/>
+                    <constraint firstAttribute="trailing" secondItem="Dpo-oh-DlE" secondAttribute="trailing" id="MMs-2L-Y0V"/>
+                    <constraint firstAttribute="bottom" secondItem="Dpo-oh-DlE" secondAttribute="bottom" id="jAs-3H-Fcl"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="accessText" destination="4cx-fB-aox" id="GnG-9l-xYY"/>
+                <outlet property="calPop" destination="zbj-96-jLz" id="8iM-Ym-KBv"/>
+                <outlet property="calText" destination="S73-tA-H9H" id="j3l-dt-AaJ"/>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="sourcePop" destination="5pZ-eq-SKk" id="9pd-dt-NzI"/>
+                <outlet property="sourceText" destination="mMH-Vk-h1f" id="wRV-Ms-Qst"/>
+                <outlet property="splitView" destination="Dpo-oh-DlE" id="2gc-KP-X3o"/>
+            </connections>
+            <point key="canvasLocation" x="251.5" y="238"/>
+        </window>
+    </objects>
+</document>

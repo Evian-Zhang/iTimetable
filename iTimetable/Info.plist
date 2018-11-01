@@ -28,5 +28,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>iTimetable 想访问您的日历</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>iTimetable 想访问您的提醒事项</string>
 </dict>
 </plist>

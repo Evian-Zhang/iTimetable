@@ -11,6 +11,10 @@
 		56D3C046218B0B940032D0E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56D3C045218B0B940032D0E5 /* Assets.xcassets */; };
 		56D3C049218B0B940032D0E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56D3C047218B0B940032D0E5 /* MainMenu.xib */; };
 		56D3C04C218B0B940032D0E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C04B218B0B940032D0E5 /* main.m */; };
+		56D3C056218B0C0F0032D0E5 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C054218B0C0F0032D0E5 /* MainWindowController.m */; };
+		56D3C057218B0C0F0032D0E5 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56D3C055218B0C0F0032D0E5 /* MainWindowController.xib */; };
+		56D3C05A218B0D3D0032D0E5 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C059218B0D3D0032D0E5 /* MainWindow.m */; };
+		56D3C05D218B198E0032D0E5 /* EZEventStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C05C218B198E0032D0E5 /* EZEventStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,13 @@
 		56D3C04A218B0B940032D0E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56D3C04B218B0B940032D0E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		56D3C04D218B0B940032D0E5 /* iTimetable.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iTimetable.entitlements; sourceTree = "<group>"; };
+		56D3C053218B0C0F0032D0E5 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		56D3C054218B0C0F0032D0E5 /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		56D3C055218B0C0F0032D0E5 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
+		56D3C058218B0D3D0032D0E5 /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		56D3C059218B0D3D0032D0E5 /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
+		56D3C05B218B198E0032D0E5 /* EZEventStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EZEventStore.h; sourceTree = "<group>"; };
+		56D3C05C218B198E0032D0E5 /* EZEventStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZEventStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +67,13 @@
 			children = (
 				56D3C042218B0B930032D0E5 /* AppDelegate.h */,
 				56D3C043218B0B930032D0E5 /* AppDelegate.m */,
+				56D3C05B218B198E0032D0E5 /* EZEventStore.h */,
+				56D3C05C218B198E0032D0E5 /* EZEventStore.m */,
+				56D3C053218B0C0F0032D0E5 /* MainWindowController.h */,
+				56D3C054218B0C0F0032D0E5 /* MainWindowController.m */,
+				56D3C055218B0C0F0032D0E5 /* MainWindowController.xib */,
+				56D3C058218B0D3D0032D0E5 /* MainWindow.h */,
+				56D3C059218B0D3D0032D0E5 /* MainWindow.m */,
 				56D3C045218B0B940032D0E5 /* Assets.xcassets */,
 				56D3C047218B0B940032D0E5 /* MainMenu.xib */,
 				56D3C04A218B0B940032D0E5 /* Info.plist */,
@@ -123,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56D3C046218B0B940032D0E5 /* Assets.xcassets in Resources */,
+				56D3C057218B0C0F0032D0E5 /* MainWindowController.xib in Resources */,
 				56D3C049218B0B940032D0E5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,7 +153,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56D3C05A218B0D3D0032D0E5 /* MainWindow.m in Sources */,
+				56D3C056218B0C0F0032D0E5 /* MainWindowController.m in Sources */,
 				56D3C04C218B0B940032D0E5 /* main.m in Sources */,
+				56D3C05D218B198E0032D0E5 /* EZEventStore.m in Sources */,
 				56D3C044218B0B930032D0E5 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
