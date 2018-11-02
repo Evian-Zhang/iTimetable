@@ -11,6 +11,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property (nonatomic) MainWindowController *mainWindowController;
 
 @end
