@@ -16,6 +16,7 @@
 
 @implementation MainWindowController
 @synthesize storeModel = _storeModel;
+@synthesize aView = _aView;
 
 - (void)windowDidLoad {
     [super windowDidLoad];

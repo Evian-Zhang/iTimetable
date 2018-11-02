@@ -9,27 +9,35 @@
 #import "CourseInfo.h"
 
 @implementation CourseInfo
+@synthesize startTime = _startTime;
+@synthesize endTime = _endTime;
+@synthesize weeks = _weeks;
+@synthesize room = _room;
+@synthesize teacher = _teacher;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    /*
-     [aCoder encodeObject:self.bookId forKey:@"bookId"];
-     [aCoder encodeObject:self.name forKey:@"name"];
-     [aCoder encodeObject:self.publisher forKey:@"publisher"];
-     */
+    
+    [aCoder encodeObject:self.startTime forKey:@"startTime"];
+    [aCoder encodeObject:self.endTime forKey:@"endTime"];
+    [aCoder encodeObject:self.weeks forKey:@"weeks"];
+    [aCoder encodeObject:self.room forKey:@"room"];
+    [aCoder encodeObject:self.teacher forKey:@"teacher"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    /*
+    
      self = [[self class] new];
      if (self)
      {
-     self.bookId = [aDecoder decodeObjectForKey:@"bookId"];
-     self.name = [aDecoder decodeObjectForKey:@"name"];
-     self.publisher = [aDecoder decodeObjectForKey:@"publisher"];
+         self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
+         self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
+         self.weeks = [aDecoder decodeObjectForKey:@"weeks"];
+         self.room = [aDecoder decodeObjectForKey:@"room"];
+         self.teacher = [aDecoder decodeObjectForKey:@"teacher"];
      }
-     */
+    
     return self;
 }
 
