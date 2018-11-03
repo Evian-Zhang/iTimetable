@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSArray *weeks;
 @property (nonatomic) NSString *room;
 @property (nonatomic) NSString *teacher;
+@property (nonatomic) NSString *eventIdentifier;
 
 @end
 

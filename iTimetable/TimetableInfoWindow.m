@@ -1,14 +1,13 @@
 //
-//  Timetable+CoreDataClass.m
+//  TimetableInfoWindow.m
 //  iTimetable
 //
 //  Created by Evian张 on 2018/11/3.
 //  Copyright © 2018 Evian张. All rights reserved.
 //
-//
 
-#import "Timetable+CoreDataClass.h"
+#import "TimetableInfoWindow.h"
 
-@implementation Timetable
+@implementation TimetableInfoWindow
 
 @end

@@ -2,7 +2,7 @@
 //  Timetable+CoreDataClass.h
 //  iTimetable
 //
-//  Created by Evian张 on 2018/11/2.
+//  Created by Evian张 on 2018/11/3.
 //  Copyright © 2018 Evian张. All rights reserved.
 //
 //

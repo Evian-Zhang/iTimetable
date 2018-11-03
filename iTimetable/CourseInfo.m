@@ -14,6 +14,7 @@
 @synthesize weeks = _weeks;
 @synthesize room = _room;
 @synthesize teacher = _teacher;
+@synthesize eventIdentifier = _eventIdentifier;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -23,6 +24,7 @@
     [aCoder encodeObject:self.weeks forKey:@"weeks"];
     [aCoder encodeObject:self.room forKey:@"room"];
     [aCoder encodeObject:self.teacher forKey:@"teacher"];
+    [aCoder encodeObject:self.eventIdentifier forKey:@"eventIdentifier"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -36,6 +38,7 @@
          self.weeks = [aDecoder decodeObjectForKey:@"weeks"];
          self.room = [aDecoder decodeObjectForKey:@"room"];
          self.teacher = [aDecoder decodeObjectForKey:@"teacher"];
+         self.eventIdentifier = [aDecoder decodeObjectForKey:@"eventIdentifier"];
      }
     
     return self;

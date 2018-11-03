@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IBOutlet NSPopUpButton *sourcePop;
 @property (nonatomic) IBOutlet NSTextField *calText;
 @property (nonatomic) IBOutlet NSPopUpButton *calPop;
+@property (nonatomic) IBOutlet NSButton *createTimetableBtn;
+@property (nonatomic) IBOutlet NSTableView *courseTable;
+@property (nonatomic) IBOutlet NSScrollView *scrollView;
 
 
 @end

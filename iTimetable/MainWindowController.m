@@ -16,97 +16,21 @@
 
 @implementation MainWindowController
 @synthesize storeModel = _storeModel;
-@synthesize aView = _aView;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool: NO forKey:@"isEventStoreAccessed"];
     self.window.accessText.stringValue = @"正在获取日历访问权限";
     self.window.accessText.hidden = NO;
     self.window.sourceText.hidden = YES;
     self.window.sourcePop.hidden = YES;
     self.window.calText.hidden = YES;
     self.window.calPop.hidden = YES;
+    self.window.scrollView.hidden = YES;
+    self.window.createTimetableBtn.hidden = NO;
     [self initNotification];
     [self initPopUpButton];
     self.storeModel = [[EZEventStore alloc] init];
-/*
- self.view.notificationText.stringValue = @"正在获取日历源...";
- self.view.dateSetButton.enabled = NO;
- 
- //accessEventStore
- [self.eventModel accessEventStore];
- 
- self.view.aButton.target = self;
- self.view.aButton.action = @selector(aButtonHandler);
- //if has access to dataBase
- if(isDBAccessed){
- //access source and calendar
- [self.eventModel accessSources];
- [self.eventModel accessCalendars];
- 
- //clear popUpButton
- [self.view.sourceSelector removeAllItems];
- [self.view.calSelector removeAllItems];
- 
- //set default source popUpButton
- for(EKSource *source in self.eventModel.eventSources){
- NSMenuItem *sourceItem = [[NSMenuItem alloc] initWithTitle:source.title action:nil keyEquivalent:@""];
- [self.view.sourceSelector.menu addItem:sourceItem];
- }
- [self.view.sourceSelector setTarget:self];
- [self.view.sourceSelector setAction:@selector(sourceSelectorHandler)];
- 
- //set default selected source
- if(self.eventModel.eventSources.count != 0){
- self.entitySource = self.eventModel.eventSources[0];
- 
- //set default calendar popUpButton
- for(EKCalendar *calendar in [self.eventModel calendarsForSource:self.entitySource]){
- NSMenuItem *calendarItem = [[NSMenuItem alloc] initWithTitle:calendar.title action:nil keyEquivalent:@""];
- [self.view.calSelector.menu addItem:calendarItem];
- }
- [self.view.calSelector setTarget:self];
- [self.view.calSelector setAction:@selector(calSelectorHandler)];
- 
- //set dateSetButton
- if([self.eventModel calendarsForSource:self.entitySource].count != 0){
- self.calendarSource = [self.eventModel calendarsForSource:self.entitySource][0];
- NSArray *calArray = @[self.calendarSource];
- [self.eventModel makeEntrysForCalendar:calArray];
- self.view.dateSetButton.enabled = YES;
- } else {
- [self.eventModel makeEntrysEmpty];
- self.view.dateSetButton.enabled = NO;
- }
- }
- 
- //set popover
- self.popover = [[NSPopover alloc] init];
- self.popover.behavior = NSPopoverBehaviorTransient;
- 
- self.popoverViewController = [[LCPopoverViewController alloc] initWithNibName:@"LCPopoverViewController" bundle:nil];
- self.popover.contentViewController = self.popoverViewController;
- 
- //initialize startDate and endDate
- self.startDate = [NSDate date];
- NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
- NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
- [offsetComponents setYear:1];
- self.endDate = [gregorian dateByAddingComponents:offsetComponents toDate:self.startDate options:0];
- self.eventModel.startDate = self.startDate;
- self.eventModel.endDate = self.endDate;
- 
- //set dateSetButton
- self.view.dateSetButton.target = self;
- self.view.dateSetButton.action = @selector(showPopover:);
- self.view.entryTableView.dataSource = self;
- self.view.entryTableView.delegate = self;
- [self.view.entryTableView reloadData];
- }
- */
 }
 
 - (void)initNotification{
