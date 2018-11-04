@@ -10,8 +10,12 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+            <connections>
+                <outlet property="deleteTimetableItem" destination="wXK-BO-QO4" id="omj-Xi-j1n"/>
+            </connections>
+        </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
@@ -163,6 +167,9 @@
                                 <connections>
                                     <action selector="delete:" target="-1" id="0Mk-Ml-PaM"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Delete Timetable" id="wXK-BO-QO4">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
                                 <connections>

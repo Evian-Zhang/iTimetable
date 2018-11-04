@@ -7,11 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <EventKit/EventKit.h>
 #import "TimetableInfoWindow.h"
+#import "EZTimetable.h"
+#import "EZEventStore.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TimetableInfoWindowController : NSWindowController
+@interface TimetableInfoWindowController : NSWindowController <NSWindowDelegate>
+
+@property (nonatomic) EKSource *selectedSource;
+@property (nonatomic) EKCalendar *selectedCalendar;
+@property (nonatomic) EZEventStore *storeModel;
+@property (nonatomic) EZTimetable *timetable;
+@property (nonatomic) NSString *warningText;
 
 @end
 

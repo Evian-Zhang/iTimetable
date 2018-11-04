@@ -19,14 +19,30 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     _mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindowController"];
-    
+    _mainWindowController.persistentContainer = self.persistentContainer;
     [self.mainWindowController.window center];
     [self.mainWindowController.window orderFront:nil];
+    self.deleteTimetableItem.enabled = YES;
+    self.deleteTimetableItem.target = self;
+    self.deleteTimetableItem.action = @selector(deleteTimetableItemHandler);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    return [menuItem isEnabled];
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+- (void)deleteTimetableItemHandler{
+    [self.mainWindowController deleteTimetable];
+}
+
+- (void)calendarChangedHandler{
+    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
 }
 
 #pragma mark - Core Data stack

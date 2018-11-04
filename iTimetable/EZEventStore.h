@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) EKEventStore *eventStore;
 @property (nonatomic, copy) NSArray *sources;
 @property (nonatomic, copy) NSArray *calendars;
-@property (nonatomic) EKSource *currentSource;
-@property (nonatomic) EKCalendar *currentCalendar;
+@property (nonatomic, nullable) EKSource *currentSource;
+@property (nonatomic, nullable) EKCalendar *currentCalendar;
 
-- (void)setCalendarsForSource:(EKSource*)source;
+- (void)generateCalendars;
 
 @end
 

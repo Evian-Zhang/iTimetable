@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "MainWindowController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSValidatedUserInterfaceItem>
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property (nonatomic) MainWindowController *mainWindowController;
+@property (nonatomic) IBOutlet NSMenuItem *deleteTimetableItem;
 
 @end
 

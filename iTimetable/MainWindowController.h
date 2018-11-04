@@ -9,12 +9,23 @@
 #import <Cocoa/Cocoa.h>
 #import "MainWindow.h"
 #import "EZEventStore.h"
+#import "TimetableInfoWindowController.h"
+#import "EZTimetable.h"
+#import "Timetable+CoreDataClass.h"
+//#import "AppDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MainWindowController : NSWindowController
 
+@property (strong) NSPersistentContainer *persistentContainer;
 @property (nonatomic) EZEventStore *storeModel;
+@property (nonatomic) TimetableInfoWindowController *timetableInfoWindowController;
+@property (nonatomic) EZTimetable *currentTimetable;
+@property (nonatomic) Timetable *timetables;
+
+- (void)deleteTimetable;
+- (BOOL)checkTimetable;
 
 @end
 

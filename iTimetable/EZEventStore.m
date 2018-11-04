@@ -22,10 +22,10 @@
         self.currentCalendar = [[EKCalendar alloc] init];
         [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
             if (granted) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"EZEventStoreForEventAccessSucessfully" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"EZEventStoreForEventAccessSuccessfully" object:nil];
                 NSLog(@"AccessEventSuccessfully");
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"EZEventStoreForEventAccessUnsucessfully" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"EZEventStoreForEventAccessUnsuccessfully" object:nil];
                 NSLog(@"AccessEventUnsuccessfully");
             }
         }];
@@ -34,8 +34,8 @@
     return nil;
 }
 
-- (void)setCalendarsForSource:(EKSource*)source{
-    self.calendars = [[source calendarsForEntityType:EKEntityTypeEvent] allObjects];
+- (void)generateCalendars{
+    self.calendars = [[self.currentSource calendarsForEntityType:EKEntityTypeEvent] allObjects];
 }
 
 @end
