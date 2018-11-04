@@ -211,6 +211,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
+#pragma mark - create course
+- (void)createCourse{
+    
+}
+
 #pragma mark - checker
 - (BOOL)checkCalendarEmpty{
     if(self.storeModel.calendars.count > 0){
