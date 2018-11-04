@@ -32,7 +32,7 @@
     self.window.scrollView.hidden = YES;
     self.window.createTimetableBtn.hidden = NO;
     self.window.createTimetableBtn.target = self;
-    self.window.createTimetableBtn.action = @selector(createTimetableBtnHandler);
+    self.window.createTimetableBtn.action = @selector(createTimetable);
     [self initNotification];
     [self initPopUpButton];
     self.storeModel = [[EZEventStore alloc] init];
@@ -111,25 +111,49 @@
 
 - (void)timetableGetSuccessfullyHandler:(NSNotification*)aNotification{
     EZTimetable *tmpTimetable = [[aNotification userInfo] valueForKey:@"timetable"];
+    NSNumber *tmpNumber = [[aNotification userInfo] valueForKey:@"isCreating"];
+    BOOL tmpFlag = tmpNumber.boolValue;
     self.currentTimetable.firstWeek = tmpTimetable.firstWeek;
     self.currentTimetable.firstClassTime = tmpTimetable.firstClassTime;
     self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
     self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
     
-    Timetable *timeTable = [NSEntityDescription  insertNewObjectForEntityForName:@"Timetable"  inManagedObjectContext:self.persistentContainer.viewContext];
-    timeTable.calendarIdentifier = self.currentTimetable.calendarIdentifier;
-    timeTable.sourceIdentifier = self.currentTimetable.sourceIdentifier;
-    timeTable.firstWeek = self.currentTimetable.firstWeek;
-    timeTable.firstClassTime = self.currentTimetable.firstClassTime;
-    timeTable.lastClassTime = self.currentTimetable.lastClassTime;
-    timeTable.semesterLength = self.currentTimetable.semesterLength;
-    timeTable.courses = self.currentTimetable.courses;
-    
-    NSError *error = nil;
-    if ([self.persistentContainer.viewContext save:&error]) {
-        NSLog(@"数据插入到数据库成功");
-    }else{
-        NSLog(@"%@", [NSString stringWithFormat:@"数据插入到数据库失败, %@",error]);
+    if(tmpFlag){
+        Timetable *timetable = [NSEntityDescription  insertNewObjectForEntityForName:@"Timetable"  inManagedObjectContext:self.persistentContainer.viewContext];
+        timetable.calendarIdentifier = self.currentTimetable.calendarIdentifier;
+        timetable.sourceIdentifier = self.currentTimetable.sourceIdentifier;
+        timetable.firstWeek = self.currentTimetable.firstWeek;
+        timetable.firstClassTime = self.currentTimetable.firstClassTime;
+        timetable.lastClassTime = self.currentTimetable.lastClassTime;
+        timetable.semesterLength = self.currentTimetable.semesterLength;
+        timetable.courses = [self.currentTimetable.courses copy];
+        
+        NSError *error = nil;
+        if ([self.persistentContainer.viewContext save:&error]) {
+            NSLog(@"数据插入到数据库成功");
+        }else{
+            NSLog(@"%@", [NSString stringWithFormat:@"数据插入到数据库失败, %@",error]);
+        }
+    } else {
+        NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
+        changeRequest.predicate = pre;
+        
+        NSArray *changeArray = [self.persistentContainer.viewContext executeFetchRequest:changeRequest error:nil];
+        Timetable *timetable = changeArray[0];
+        timetable.calendarIdentifier = self.currentTimetable.calendarIdentifier;
+        timetable.sourceIdentifier = self.currentTimetable.sourceIdentifier;
+        timetable.firstWeek = self.currentTimetable.firstWeek;
+        timetable.firstClassTime = self.currentTimetable.firstClassTime;
+        timetable.lastClassTime = self.currentTimetable.lastClassTime;
+        timetable.semesterLength = self.currentTimetable.semesterLength;
+        timetable.courses = [self.currentTimetable.courses copy];
+        NSError *error = nil;
+        if ([self.persistentContainer.viewContext save:&error]) {
+            NSLog(@"数据修改到数据库成功");
+        }else{
+            NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@",error]);
+        }
     }
     [self checkTimetable];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
@@ -144,32 +168,40 @@
 
 - (void)calPopHandler{
     self.storeModel.currentCalendar = self.storeModel.calendars[self.window.calPop.indexOfSelectedItem];
+    [self checkTimetable];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
-#pragma mark - Button Handler
-- (void)createTimetableBtnHandler{
+#pragma mark - create timetable
+- (void)createTimetable{
     self.currentTimetable = [[EZTimetable alloc] init];
     self.currentTimetable.sourceIdentifier = self.storeModel.currentSource.sourceIdentifier;
     self.currentTimetable.calendarIdentifier = self.storeModel.currentCalendar.calendarIdentifier;
     self.timetableInfoWindowController = [[TimetableInfoWindowController alloc] initWithWindowNibName:@"TimetableInfoWindowController"];
     self.timetableInfoWindowController.timetable = self.currentTimetable;
+    self.timetableInfoWindowController.isCreating = YES;
     [NSApp runModalForWindow:self.timetableInfoWindowController.window];
 }
 
-#pragma mark - delete
+#pragma mark - change timetable
+- (void)changeTimetable{
+    self.timetableInfoWindowController = [[TimetableInfoWindowController alloc] initWithWindowNibName:@"TimetableInfoWindowController"];
+    self.timetableInfoWindowController.timetable = self.currentTimetable;
+    self.timetableInfoWindowController.isCreating = NO;
+    [NSApp runModalForWindow:self.timetableInfoWindowController.window];
+}
+
+#pragma mark - delete timetable
 - (void)deleteTimetable{
     NSFetchRequest *deleRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
     deleRequest.predicate = pre;
     
-    //返回需要删除的对象数组
     NSArray *deleArray = [self.persistentContainer.viewContext executeFetchRequest:deleRequest error:nil];
     
-    //从数据库中删除
     [self.persistentContainer.viewContext deleteObject:deleArray[0]];
     
     NSError *error = nil;
-    //保存--记住保存
     if ([self.persistentContainer.viewContext save:&error]) {
         NSLog(@"删除成功");
     }else{
@@ -180,11 +212,13 @@
 }
 
 #pragma mark - checker
-- (void)checkCalendarEmpty{
+- (BOOL)checkCalendarEmpty{
     if(self.storeModel.calendars.count > 0){
         self.window.createTimetableBtn.enabled = YES;
+        return YES;
     } else {
         self.window.createTimetableBtn.enabled = NO;
+        return NO;
     }
 }
 
@@ -202,7 +236,15 @@
         self.window.createTimetableBtn.enabled = NO;
         self.window.scrollView.hidden = NO;
         self.window.createTimetableBtn.hidden = YES;
-        self.currentTimetable = resArray[0];
+        Timetable *tmpTimetable = resArray[0];
+        self.currentTimetable = [[EZTimetable alloc] init];
+        self.currentTimetable.sourceIdentifier = tmpTimetable.sourceIdentifier;
+        self.currentTimetable.calendarIdentifier = tmpTimetable.calendarIdentifier;
+        self.currentTimetable.firstWeek = tmpTimetable.firstWeek;
+        self.currentTimetable.firstClassTime = tmpTimetable.firstClassTime;
+        self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
+        self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
+        self.currentTimetable.courses = [tmpTimetable.courses copy];
         return YES;
     }
 }

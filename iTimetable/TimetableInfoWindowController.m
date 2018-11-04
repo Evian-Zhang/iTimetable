@@ -20,6 +20,7 @@
 @synthesize selectedCalendar = _selectedCalendar;
 @synthesize timetable = _timetable;
 @synthesize warningText = _warningText;
+@synthesize isCreating = _isCreating;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -72,7 +73,7 @@
         lastClassComponents.minute = [calendar component:NSCalendarUnitMinute fromDate:lastClass];
         lastClassComponents.second = [calendar component:NSCalendarUnitSecond fromDate:lastClass];
         self.timetable.lastClassTime = [calendar dateFromComponents:lastClassComponents];
-        NSDictionary *userInfo = @{@"timetable:": self.timetable};
+        NSDictionary *userInfo = @{@"timetable": self.timetable, @"isCreating": [NSNumber numberWithBool:self.isCreating]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZTimetableGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelBtnHandler];
     } else {

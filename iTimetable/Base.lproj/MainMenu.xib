@@ -13,6 +13,8 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="changeTimetableItem" destination="bHP-xD-gPu" id="VQH-Mi-zGg"/>
+                <outlet property="createTimetableItem" destination="0nn-8x-ffo" id="DpS-Je-TNV"/>
                 <outlet property="deleteTimetableItem" destination="wXK-BO-QO4" id="omj-Xi-j1n"/>
             </connections>
         </customObject>
@@ -167,6 +169,12 @@
                                 <connections>
                                     <action selector="delete:" target="-1" id="0Mk-Ml-PaM"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Create Timetable" id="0nn-8x-ffo">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Change Timetable" id="bHP-xD-gPu">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Delete Timetable" id="wXK-BO-QO4">
                                 <modifierMask key="keyEquivalentModifierMask"/>

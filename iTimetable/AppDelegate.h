@@ -13,6 +13,8 @@
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property (nonatomic) MainWindowController *mainWindowController;
+@property (nonatomic) IBOutlet NSMenuItem *createTimetableItem;
+@property (nonatomic) IBOutlet NSMenuItem *changeTimetableItem;
 @property (nonatomic) IBOutlet NSMenuItem *deleteTimetableItem;
 
 @end

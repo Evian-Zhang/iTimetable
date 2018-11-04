@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) EZEventStore *storeModel;
 @property (nonatomic) EZTimetable *timetable;
 @property (nonatomic) NSString *warningText;
+@property (nonatomic) BOOL isCreating;
 
 @end
 

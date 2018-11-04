@@ -24,7 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) EZTimetable *currentTimetable;
 @property (nonatomic) Timetable *timetables;
 
+- (void)createTimetable;
+- (void)changeTimetable;
 - (void)deleteTimetable;
+- (BOOL)checkCalendarEmpty;
 - (BOOL)checkTimetable;
 
 @end
