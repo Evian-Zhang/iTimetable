@@ -33,6 +33,10 @@
     self.deleteTimetableItem.enabled = NO;
     self.deleteTimetableItem.target = self;
     self.deleteTimetableItem.action = @selector(deleteTimetableItemHandler);
+    
+    self.createCourseItem.enabled = NO;
+    self.createCourseItem.target = self;
+    self.createCourseItem.action = @selector(createCourseItemHandler);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
 }
 
@@ -57,10 +61,15 @@
     [self.mainWindowController deleteTimetable];
 }
 
+- (void)createCourseItemHandler{
+    [self.mainWindowController createCourse];
+}
+
 - (void)calendarChangedHandler{
     self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]);
     self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable];
     self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
+    self.createCourseItem.enabled = [self.mainWindowController checkTimetable];
 }
 
 #pragma mark - Core Data stack

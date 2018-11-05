@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EZTimetable : NSObject
 
-@property (nullable, nonatomic, retain) NSArray *courses;
+@property (nullable, nonatomic, retain) NSMutableArray *courses;
 @property (nullable, nonatomic, copy) NSDate *firstClassTime;
 @property (nullable, nonatomic, copy) NSDate *firstWeek;
 @property (nullable, nonatomic, copy) NSDate *lastClassTime;

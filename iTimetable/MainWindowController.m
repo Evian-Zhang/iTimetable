@@ -17,6 +17,7 @@
 @implementation MainWindowController
 @synthesize storeModel = _storeModel;
 @synthesize timetableInfoWindowController = _timetableInfoWindowController;
+@synthesize courseWindowController = _courseWindowController;
 @synthesize currentTimetable = _currentTimetable;
 @synthesize persistentContainer = _persistentContainer;
 
@@ -36,13 +37,15 @@
     [self initNotification];
     [self initPopUpButton];
     self.storeModel = [[EZEventStore alloc] init];
-    //self.timetables = self.persistentContainer
+    self.window.courseTable.dataSource = self;
+    self.window.courseTable.delegate = self;
 }
 
 - (void)initNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventStoreForEventAccessSuccessfullyNotificicationHandler) name:@"EZEventStoreForEventAccessSuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventStoreBForEventAccessUnsuccessfullyNotificicationHandler) name:@"EZEventStoreForEventAccessUnsuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timetableGetSuccessfullyHandler:) name:@"EZTimetableGetSuccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseGetSuccessfullyHandler:) name:@"EZCourseGetSuccessfully" object:nil];
 }
 
 - (void)initPopUpButton{
@@ -126,13 +129,13 @@
         timetable.firstClassTime = self.currentTimetable.firstClassTime;
         timetable.lastClassTime = self.currentTimetable.lastClassTime;
         timetable.semesterLength = self.currentTimetable.semesterLength;
-        timetable.courses = [self.currentTimetable.courses copy];
+        timetable.courses = [NSArray arrayWithArray:self.currentTimetable.courses];
         
         NSError *error = nil;
         if ([self.persistentContainer.viewContext save:&error]) {
             NSLog(@"数据插入到数据库成功");
         }else{
-            NSLog(@"%@", [NSString stringWithFormat:@"数据插入到数据库失败, %@",error]);
+            NSLog(@"%@", [NSString stringWithFormat:@"数据插入到数据库失败, %@", error]);
         }
     } else {
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
@@ -147,16 +150,39 @@
         timetable.firstClassTime = self.currentTimetable.firstClassTime;
         timetable.lastClassTime = self.currentTimetable.lastClassTime;
         timetable.semesterLength = self.currentTimetable.semesterLength;
-        timetable.courses = [self.currentTimetable.courses copy];
+        timetable.courses = [NSArray arrayWithArray:self.currentTimetable.courses];
         NSError *error = nil;
         if ([self.persistentContainer.viewContext save:&error]) {
             NSLog(@"数据修改到数据库成功");
         }else{
-            NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@",error]);
+            NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@", error]);
         }
     }
     [self checkTimetable];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
+}
+
+- (void)courseGetSuccessfullyHandler:(NSNotification*)aNotification{
+    Course *tmpCourse = [[aNotification userInfo] valueForKey:@"course"];
+    NSNumber *tmpNumber = [[aNotification userInfo] valueForKey:@"isCreating"];
+    BOOL tmpFlag = tmpNumber.boolValue;
+    if(tmpFlag){
+        [self.currentTimetable.courses addObject:tmpCourse];
+        NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
+        changeRequest.predicate = pre;
+        
+        NSArray *changeArray = [self.persistentContainer.viewContext executeFetchRequest:changeRequest error:nil];
+        Timetable *timetable = changeArray[0];
+        timetable.courses = [NSArray arrayWithArray:self.currentTimetable.courses];
+        NSError *error = nil;
+        if ([self.persistentContainer.viewContext save:&error]) {
+            NSLog(@"数据修改到数据库成功");
+        }else{
+            NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@", error]);
+        }
+    }
+    [self.window.courseTable reloadData];
 }
 
 #pragma mark - PopUpButton Handler
@@ -213,7 +239,12 @@
 
 #pragma mark - create course
 - (void)createCourse{
-    
+    Course *course = [[Course alloc] init];
+    self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
+    self.courseWindowController.course = course;
+    self.courseWindowController.eventStore = self.storeModel.eventStore;
+    self.courseWindowController.isCreating = YES;
+    [NSApp runModalForWindow:self.courseWindowController.window];
 }
 
 #pragma mark - checker
@@ -234,6 +265,7 @@
     NSArray *resArray = [self.persistentContainer.viewContext executeFetchRequest:request error:nil];
     if(resArray.count == 0){
         [self checkCalendarEmpty];
+        self.currentTimetable = [[EZTimetable alloc] init];
         self.window.scrollView.hidden = YES;
         self.window.createTimetableBtn.hidden = NO;
         return NO;
@@ -249,9 +281,38 @@
         self.currentTimetable.firstClassTime = tmpTimetable.firstClassTime;
         self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
         self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
-        self.currentTimetable.courses = [tmpTimetable.courses copy];
+        self.currentTimetable.courses = [NSMutableArray arrayWithArray:tmpTimetable.courses];
         return YES;
     }
+}
+
+#pragma mark - conform <NSTableViewDelegate, NSTableViewDataSource>
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
+    return self.currentTimetable.courses.count;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
+    NSString *cellIdentifier;
+    NSString *cellText;
+    Course *cellCourse = self.currentTimetable.courses[row];
+    if(tableColumn == tableView.tableColumns[0]){
+        cellIdentifier = @"EZCourseNameID";
+        cellText = cellCourse.courseName;
+    } else {
+        cellIdentifier = @"EZCourseStatusID";
+        BOOL isCellMatched = YES;
+        for(CourseInfo *courseInfo in cellCourse.courseInfos){
+            isCellMatched = isCellMatched && [self.courseWindowController statusOfCourseInfo:courseInfo];
+        }
+        if(isCellMatched){
+            cellText = @"已匹配";
+        } else {
+            cellText = @"未匹配";
+        }
+    }
+    NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];
+    tableCellView.textField.stringValue = cellText;
+    return tableCellView;
 }
 
 @end

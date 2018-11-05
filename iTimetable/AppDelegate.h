@@ -16,6 +16,7 @@
 @property (nonatomic) IBOutlet NSMenuItem *createTimetableItem;
 @property (nonatomic) IBOutlet NSMenuItem *changeTimetableItem;
 @property (nonatomic) IBOutlet NSMenuItem *deleteTimetableItem;
+@property (nonatomic) IBOutlet NSMenuItem *createCourseItem;
 
 @end
 

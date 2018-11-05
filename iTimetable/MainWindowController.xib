@@ -114,7 +114,7 @@
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                     <tableColumns>
-                                                                        <tableColumn width="157" minWidth="40" maxWidth="1000" id="RVM-Lp-bEw">
+                                                                        <tableColumn identifier="EZCourseNameID" width="157" minWidth="40" maxWidth="1000" id="RVM-Lp-bEw">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="课程名称">
                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -151,7 +151,7 @@
                                                                                 </tableCellView>
                                                                             </prototypeCellViews>
                                                                         </tableColumn>
-                                                                        <tableColumn width="66" minWidth="40" maxWidth="1000" id="JAT-qY-hD1">
+                                                                        <tableColumn identifier="EZCourseStatusID" width="66" minWidth="40" maxWidth="1000" id="JAT-qY-hD1">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="状态">
                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

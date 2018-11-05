@@ -9,27 +9,23 @@
 #import "Course.h"
 
 @implementation Course
+@synthesize courseName = _courseName;
+@synthesize courseInfos = _courseInfos;
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    /*
-    [aCoder encodeObject:self.bookId forKey:@"bookId"];
-    [aCoder encodeObject:self.name forKey:@"name"];
-    [aCoder encodeObject:self.publisher forKey:@"publisher"];
-     */
+    [aCoder encodeObject:self.courseName forKey:@"courseName"];
+    [aCoder encodeObject:self.courseInfos forKey:@"courseInfos"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    /*
     self = [[self class] new];
     if (self)
     {
-        self.bookId = [aDecoder decodeObjectForKey:@"bookId"];
-        self.name = [aDecoder decodeObjectForKey:@"name"];
-        self.publisher = [aDecoder decodeObjectForKey:@"publisher"];
+        self.courseName = [aDecoder decodeObjectForKey:@"courseName"];
+        self.courseInfos = [aDecoder decodeObjectForKey:@"courseInfos"];
     }
-     */
     return self;
 }
 

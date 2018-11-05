@@ -18,7 +18,7 @@
 
 - (instancetype)init{
     if(self = [super init]){
-        self.courses = [NSArray array];
+        self.courses = [NSMutableArray array];
         NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         NSDate *today = [NSDate date];
         NSDateComponents *todayComponent = [[NSDateComponents alloc] init];

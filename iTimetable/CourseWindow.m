@@ -6,8 +6,8 @@
 //  Copyright © 2018 Evian张. All rights reserved.
 //
 
-#import "CourseInfoWindow.h"
+#import "CourseWindow.h"
 
-@implementation CourseInfoWindow
+@implementation CourseWindow
 
 @end

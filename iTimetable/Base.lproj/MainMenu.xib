@@ -14,6 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="changeTimetableItem" destination="bHP-xD-gPu" id="VQH-Mi-zGg"/>
+                <outlet property="createCourseItem" destination="nED-lC-kxk" id="94X-2k-bXJ"/>
                 <outlet property="createTimetableItem" destination="0nn-8x-ffo" id="DpS-Je-TNV"/>
                 <outlet property="deleteTimetableItem" destination="wXK-BO-QO4" id="omj-Xi-j1n"/>
             </connections>
@@ -177,6 +178,10 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Delete Timetable" id="wXK-BO-QO4">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="m5s-wd-U4m"/>
+                            <menuItem title="Create Course" id="nED-lC-kxk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
