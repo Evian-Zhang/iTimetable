@@ -12,9 +12,19 @@
 @synthesize courseName = _courseName;
 @synthesize courseInfos = _courseInfos;
 
+- (instancetype)init{
+    if(self = [super init]){
+        self.courseName = [NSString string];
+        self.courseInfos = [NSArray array];
+        return self;
+    }
+    return nil;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.courseName forKey:@"courseName"];
+    NSLog(@"I'm called");
     [aCoder encodeObject:self.courseInfos forKey:@"courseInfos"];
 }
 

@@ -12,6 +12,7 @@
 #import "TimetableInfoWindowController.h"
 #import "CourseWindowController.h"
 #import "EZTimetable.h"
+#import "EZCourse.h"
 #import "Timetable+CoreDataClass.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -28,8 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changeTimetable;
 - (void)deleteTimetable;
 - (void)createCourse;
+- (void)changeCourse;
 - (BOOL)checkCalendarEmpty;
 - (BOOL)checkTimetable;
+- (BOOL)checkCourseSelected;
 
 @end
 

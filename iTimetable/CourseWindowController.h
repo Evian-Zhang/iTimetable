@@ -9,14 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import <EventKit/EventKit.h>
 #import "CourseWindow.h"
-#import "Course.h"
+#import "EZCourse.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CourseWindowController : NSWindowController <NSWindowDelegate>
 
 @property (weak) IBOutlet CourseWindow *window;
-@property (nonatomic) Course *course;
+@property (nonatomic) EZCourse *course;
 @property (nonatomic) EKEventStore *eventStore;
 @property (nonatomic) BOOL isCreating;
 

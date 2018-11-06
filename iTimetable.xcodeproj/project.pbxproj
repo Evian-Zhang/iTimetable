@@ -22,6 +22,7 @@
 		56D3C057218B0C0F0032D0E5 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56D3C055218B0C0F0032D0E5 /* MainWindowController.xib */; };
 		56D3C05A218B0D3D0032D0E5 /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C059218B0D3D0032D0E5 /* MainWindow.m */; };
 		56D3C05D218B198E0032D0E5 /* EZEventStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C05C218B198E0032D0E5 /* EZEventStore.m */; };
+		56D6809B21915B3500B515C0 /* EZCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6809A21915B3500B515C0 /* EZCourse.m */; };
 		56E071DC218F755100020DBF /* CourseWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E071DA218F755100020DBF /* CourseWindowController.m */; };
 		56E071DD218F755100020DBF /* CourseWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56E071DB218F755100020DBF /* CourseWindowController.xib */; };
 		56E071E0218F756900020DBF /* CourseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E071DF218F756900020DBF /* CourseWindow.m */; };
@@ -59,6 +60,8 @@
 		56D3C059218B0D3D0032D0E5 /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
 		56D3C05B218B198E0032D0E5 /* EZEventStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EZEventStore.h; sourceTree = "<group>"; };
 		56D3C05C218B198E0032D0E5 /* EZEventStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZEventStore.m; sourceTree = "<group>"; };
+		56D6809921915B3500B515C0 /* EZCourse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EZCourse.h; sourceTree = "<group>"; };
+		56D6809A21915B3500B515C0 /* EZCourse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZCourse.m; sourceTree = "<group>"; };
 		56E071D9218F755100020DBF /* CourseWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CourseWindowController.h; sourceTree = "<group>"; };
 		56E071DA218F755100020DBF /* CourseWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CourseWindowController.m; sourceTree = "<group>"; };
 		56E071DB218F755100020DBF /* CourseWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CourseWindowController.xib; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 				56676B2E218C19970086A00B /* CourseInfo.m */,
 				56FE79E6218EA2990093BBC5 /* EZTimetable.h */,
 				56FE79E7218EA2990093BBC5 /* EZTimetable.m */,
+				56D6809921915B3500B515C0 /* EZCourse.h */,
+				56D6809A21915B3500B515C0 /* EZCourse.m */,
 				56D3C045218B0B940032D0E5 /* Assets.xcassets */,
 				56D3C047218B0B940032D0E5 /* MainMenu.xib */,
 				56D3C04A218B0B940032D0E5 /* Info.plist */,
@@ -234,6 +239,7 @@
 				5687C88B218EAC5B00E29762 /* Timetable+CoreDataClass.m in Sources */,
 				56F11632218D4C8A006F8DF6 /* TimetableInfoWindow.m in Sources */,
 				56D3C04C218B0B940032D0E5 /* main.m in Sources */,
+				56D6809B21915B3500B515C0 /* EZCourse.m in Sources */,
 				56676B1D218C16220086A00B /* CourseTransformer.m in Sources */,
 				56676B2C218C187A0086A00B /* Course.m in Sources */,
 				56676B11218C10200086A00B /* iTimetable.xcdatamodeld in Sources */,

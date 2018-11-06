@@ -87,6 +87,7 @@
     }
     [self checkCalendarEmpty];
     [self checkTimetable];
+    [self.window.courseTable reloadData];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
@@ -163,11 +164,35 @@
 }
 
 - (void)courseGetSuccessfullyHandler:(NSNotification*)aNotification{
-    Course *tmpCourse = [[aNotification userInfo] valueForKey:@"course"];
+    EZCourse *tmpCourse = [[aNotification userInfo] valueForKey:@"course"];
     NSNumber *tmpNumber = [[aNotification userInfo] valueForKey:@"isCreating"];
     BOOL tmpFlag = tmpNumber.boolValue;
     if(tmpFlag){
-        [self.currentTimetable.courses addObject:tmpCourse];
+        Course *course = [[Course alloc] init];
+        course.courseName = tmpCourse.courseName;
+        course.courseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+        [self.currentTimetable.courses addObject:course];
+        NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
+        changeRequest.predicate = pre;
+        
+        NSArray *changeArray = [self.persistentContainer.viewContext executeFetchRequest:changeRequest error:nil];
+        Timetable *timetable = changeArray[0];
+        timetable.courses = [NSArray arrayWithArray:self.currentTimetable.courses];
+        NSError *error = nil;
+        if ([self.persistentContainer.viewContext save:&error]) {
+            NSLog(@"数据修改到数据库成功");
+        }else{
+            NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@", error]);
+        }
+    } else {
+        Course *course = [[Course alloc] init];
+        for(course in self.currentTimetable.courses){
+            if([course.courseName isEqualToString:tmpCourse.courseName]){
+                course.courseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+                break;
+            }
+        }
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
         changeRequest.predicate = pre;
@@ -183,6 +208,7 @@
         }
     }
     [self.window.courseTable reloadData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 #pragma mark - PopUpButton Handler
@@ -195,6 +221,7 @@
 - (void)calPopHandler{
     self.storeModel.currentCalendar = self.storeModel.calendars[self.window.calPop.indexOfSelectedItem];
     [self checkTimetable];
+    [self.window.courseTable reloadData];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
@@ -239,12 +266,27 @@
 
 #pragma mark - create course
 - (void)createCourse{
-    Course *course = [[Course alloc] init];
+    EZCourse *course = [[EZCourse alloc] init];
     self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
     self.courseWindowController.course = course;
     self.courseWindowController.eventStore = self.storeModel.eventStore;
     self.courseWindowController.isCreating = YES;
     [NSApp runModalForWindow:self.courseWindowController.window];
+}
+
+#pragma mark - change course
+- (void)changeCourse{
+    if(self.window.courseTable.selectedRow >= 0){
+        self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
+        Course *tmpCourse = self.currentTimetable.courses[self.window.courseTable.selectedRow];
+        EZCourse *course = [[EZCourse alloc] init];
+        course.courseName = tmpCourse.courseName;
+        course.courseInfos = [NSMutableArray arrayWithArray:tmpCourse.courseInfos];
+        self.courseWindowController.course = course;
+        self.courseWindowController.eventStore = self.storeModel.eventStore;
+        self.courseWindowController.isCreating = NO;
+        [NSApp runModalForWindow:self.courseWindowController.window];
+    }
 }
 
 #pragma mark - checker
@@ -282,7 +324,17 @@
         self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
         self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
         self.currentTimetable.courses = [NSMutableArray arrayWithArray:tmpTimetable.courses];
+        if(self.currentTimetable.courses.count > 0){
+            NSLog(@"%@", ((Course*)(self.currentTimetable.courses[0])).courseName);}
         return YES;
+    }
+}
+
+- (BOOL)checkCourseSelected{
+    if(self.window.courseTable.selectedRow >= 0){
+        return YES;
+    } else {
+        return NO;
     }
 }
 
@@ -313,6 +365,10 @@
     NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];
     tableCellView.textField.stringValue = cellText;
     return tableCellView;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseTableSelectionChanged" object:nil];
 }
 
 @end

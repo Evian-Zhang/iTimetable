@@ -1,8 +1,8 @@
 //
-//  Course.h
+//  EZCourse.h
 //  iTimetable
 //
-//  Created by Evian张 on 2018/11/2.
+//  Created by Evian张 on 2018/11/6.
 //  Copyright © 2018 Evian张. All rights reserved.
 //
 
@@ -11,10 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Course : NSObject <NSCoding>
+@interface EZCourse : NSObject
 
 @property (nonatomic) NSString *courseName;
-@property (nonatomic, nullable) NSArray *courseInfos;
+@property (nonatomic) NSMutableArray *courseInfos;
 
 @end
 

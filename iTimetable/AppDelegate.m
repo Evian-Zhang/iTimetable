@@ -37,7 +37,12 @@
     self.createCourseItem.enabled = NO;
     self.createCourseItem.target = self;
     self.createCourseItem.action = @selector(createCourseItemHandler);
+    
+    self.changeCourseItem.enabled = NO;
+    self.changeCourseItem.target = self;
+    self.changeCourseItem.action = @selector(changeCourseItemHandler);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseTableSelectionChangedHandler) name:@"EZCourseTableSelectionChanged" object:nil];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
@@ -65,11 +70,20 @@
     [self.mainWindowController createCourse];
 }
 
+- (void)changeCourseItemHandler{
+    [self.mainWindowController changeCourse];
+}
+
 - (void)calendarChangedHandler{
     self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]);
     self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable];
     self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
     self.createCourseItem.enabled = [self.mainWindowController checkTimetable];
+    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+}
+
+- (void)courseTableSelectionChangedHandler{
+    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
 }
 
 #pragma mark - Core Data stack

@@ -20,6 +20,8 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     
+    self.window.courseNameText.stringValue = self.course.courseName;
+    
     self.window.okButton.target = self;
     self.window.okButton.action = @selector(okButtonHandler);
     
