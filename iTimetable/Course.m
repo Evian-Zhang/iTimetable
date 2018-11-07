@@ -24,19 +24,22 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.courseName forKey:@"courseName"];
-    NSLog(@"I'm called");
     [aCoder encodeObject:self.courseInfos forKey:@"courseInfos"];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [[self class] new];
-    if (self)
+    if (self = [super init])
     {
         self.courseName = [aDecoder decodeObjectForKey:@"courseName"];
         self.courseInfos = [aDecoder decodeObjectForKey:@"courseInfos"];
     }
     return self;
+}
+
++ (BOOL)supportsSecureCoding{
+    return YES;
 }
 
 @end

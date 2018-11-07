@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Course.h"
+#import "CourseInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -324,8 +324,6 @@
         self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
         self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
         self.currentTimetable.courses = [NSMutableArray arrayWithArray:tmpTimetable.courses];
-        if(self.currentTimetable.courses.count > 0){
-            NSLog(@"%@", ((Course*)(self.currentTimetable.courses[0])).courseName);}
         return YES;
     }
 }

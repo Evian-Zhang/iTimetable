@@ -27,21 +27,24 @@
     [aCoder encodeObject:self.eventIdentifier forKey:@"eventIdentifier"];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    
-     self = [[self class] new];
-     if (self)
-     {
-         self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
-         self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
-         self.weeks = [aDecoder decodeObjectForKey:@"weeks"];
-         self.room = [aDecoder decodeObjectForKey:@"room"];
-         self.teacher = [aDecoder decodeObjectForKey:@"teacher"];
-         self.eventIdentifier = [aDecoder decodeObjectForKey:@"eventIdentifier"];
-     }
+    self = [[self class] new];
+    if (self = [super init])
+    {
+        self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
+        self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
+        self.weeks = [aDecoder decodeObjectForKey:@"weeks"];
+        self.room = [aDecoder decodeObjectForKey:@"room"];
+        self.teacher = [aDecoder decodeObjectForKey:@"teacher"];
+        self.eventIdentifier = [aDecoder decodeObjectForKey:@"eventIdentifier"];
+    }
     
     return self;
+}
+
++ (BOOL)supportsSecureCoding{
+    return YES;
 }
 
 @end

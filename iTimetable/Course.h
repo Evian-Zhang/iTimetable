@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Course : NSObject <NSCoding>
+@interface Course : NSObject <NSSecureCoding>
 
 @property (nonatomic) NSString *courseName;
 @property (nonatomic, nullable) NSArray *courseInfos;

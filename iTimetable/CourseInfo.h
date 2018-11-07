@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CourseInfo : NSObject <NSCoding>
+@interface CourseInfo : NSObject <NSSecureCoding>
 
 @property (nonatomic) NSDate *startTime;
 @property (nonatomic) NSDate *endTime;
