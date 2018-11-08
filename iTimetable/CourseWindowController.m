@@ -67,4 +67,44 @@
     [NSApp stopModal];
 }
 
+#pragma mark - conform <NSTableViewDelegate, NSTableViewDataSource>
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
+    return self.course.courseInfos.count;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
+    NSString *cellIdentifier;
+    NSString *cellText;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"HH:mm:ss";
+    CourseInfo *cellCourseInfo = self.course.courseInfos[row];
+    if(tableColumn == tableView.tableColumns[0]){
+        cellIdentifier = @"EZCourseInfoRoomID";
+        cellText = cellCourseInfo.room;
+    } else if(tableColumn == tableView.tableColumns[1]){
+        cellIdentifier = @"EZCourseInfoTeacherID";
+        cellText = cellCourseInfo.teacher;
+    } else if(tableColumn == tableView.tableColumns[2]){
+        cellIdentifier = @"EZCourseInfoStartTimeID";
+        cellText = [dateFormatter stringFromDate:cellCourseInfo.startTime];
+    } else if(tableColumn == tableView.tableColumns[3]){
+        cellIdentifier = @"EZCourseInfoEndTimeID";
+        cellText = [dateFormatter stringFromDate:cellCourseInfo.endTime];
+    } else if(tableColumn == tableView.tableColumns[4]){
+        cellIdentifier = @"EZCourseInfoWeeksID";
+        cellText = [cellCourseInfo.weeks componentsJoinedByString:@", "];
+    } else if(tableColumn == tableView.tableColumns[5]){
+        cellIdentifier = @"EZCourseInfoStatusID";
+    } else if(tableColumn == tableView.tableColumns[6]){
+        cellIdentifier = @"EZCourseInfoAlarmID";
+    }
+    NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];
+    tableCellView.textField.stringValue = cellText;
+    return tableCellView;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseTableSelectionChanged" object:nil];
+}
+
 @end

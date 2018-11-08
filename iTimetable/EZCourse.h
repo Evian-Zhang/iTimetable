@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSString *courseName;
 @property (nonatomic) NSMutableArray *courseInfos;
+@property (nullable, nonatomic, copy) NSDate *firstWeek;
 
 @end
 

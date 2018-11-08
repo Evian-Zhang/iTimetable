@@ -69,7 +69,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="118" minWidth="40" maxWidth="1000" id="PUA-8m-0o9">
+                                        <tableColumn identifier="EZCourseInfoRoomID" width="118" minWidth="40" maxWidth="1000" id="PUA-8m-0o9">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="教室">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -102,7 +102,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="70" minWidth="40" maxWidth="1000" id="2wt-lh-itJ">
+                                        <tableColumn identifier="EZCourseInfoTeacherID" width="70" minWidth="40" maxWidth="1000" id="2wt-lh-itJ">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="教师">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -135,7 +135,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="102" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZmC-kD-x86">
+                                        <tableColumn identifier="EZCourseInfoStartTimeID" width="102" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZmC-kD-x86">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课时间">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -168,7 +168,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="105.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="44w-by-eUi">
+                                        <tableColumn identifier="EZCourseInfoEndTimeID" width="105.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="44w-by-eUi">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="下课时间">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -201,7 +201,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="338" minWidth="10" maxWidth="3.4028234663852886e+38" id="cHZ-84-L7S">
+                                        <tableColumn identifier="EZCourseInfoWeeksID" width="338" minWidth="10" maxWidth="3.4028234663852886e+38" id="cHZ-84-L7S">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课周数">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -234,7 +234,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="70.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="fdd-gP-XG3">
+                                        <tableColumn identifier="EZCourseInfoStatusID" width="70.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="fdd-gP-XG3">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="状态">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -267,7 +267,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="119" minWidth="10" maxWidth="3.4028234663852886e+38" id="vTv-fV-DQB">
+                                        <tableColumn identifier="EZCourseInfoAlarmID" width="119" minWidth="10" maxWidth="3.4028234663852886e+38" id="vTv-fV-DQB">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="提醒">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
