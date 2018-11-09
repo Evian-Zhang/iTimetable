@@ -24,6 +24,7 @@
     
     self.window.okButton.target = self;
     self.window.okButton.action = @selector(okButtonHandler);
+    self.window.okButton.keyEquivalent = @"\r";
     
     self.window.cancelButton.target = self;
     self.window.cancelButton.action = @selector(cancelButtonHandler);
@@ -48,7 +49,10 @@
 }
 
 - (void)createCourseInfoButtonHandler{
-    
+    self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
+    EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
+    self.courseInfoWindowController.courseInfo = courseInfo;
+    [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
 
 - (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{

@@ -10,6 +10,7 @@
 #import <EventKit/EventKit.h>
 #import "CourseWindow.h"
 #import "EZCourse.h"
+#import "CourseInfoWindowController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) EZCourse *course;
 @property (nonatomic) EKEventStore *eventStore;
 @property (nonatomic) BOOL isCreating;
+@property (nonatomic) CourseInfoWindowController *courseInfoWindowController;
 
 - (BOOL)statusOfCourseInfo:(CourseInfo*)courseInfo;
 

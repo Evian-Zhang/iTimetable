@@ -17,6 +17,9 @@
 @synthesize eventIdentifier = _eventIdentifier;
 @synthesize firstWeek = _firstWeek;
 @synthesize semesterLength = _semesterLength;
+@synthesize isChanged = _isChanged;
+@synthesize hasAlarm = _hasAlarm;
+@synthesize relativeOffset = _relativeOffset;
 
 - (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength{
     if(self = [super init]){
@@ -35,7 +38,7 @@
         self.startTime = [calendar dateFromComponents:firstWeekComponent];
         
         firstWeekComponent.minute = 40;
-        self.startTime = [calendar dateFromComponents:firstWeekComponent];
+        self.endTime = [calendar dateFromComponents:firstWeekComponent];
         
         self.weeks = [NSMutableArray array];
         for(int week = 1; week <= self.semesterLength; week++){
@@ -47,6 +50,12 @@
         self.teacher = [NSString string];
         
         self.eventIdentifier = [NSString string];
+        
+        self.isChanged = YES;
+        
+        self.hasAlarm = YES;
+        
+        self.relativeOffset = -1200;
         return self;
     }
     return nil;
@@ -69,6 +78,8 @@
         self.teacher = [NSString string];
         
         self.eventIdentifier = [NSString string];
+        
+        self.isChanged = NO;
         return self;
     }
     return nil;

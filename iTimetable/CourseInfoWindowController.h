@@ -8,12 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CourseInfoWindow.h"
+#import "EZCourseInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CoreseInfoWindowController : NSWindowController
+@interface CourseInfoWindowController : NSWindowController
 
 @property (weak) IBOutlet CourseInfoWindow *window;
+@property (nonatomic) EZCourseInfo *courseInfo;
+@property (nonatomic) BOOL hasAlarm;
 
 @end
 

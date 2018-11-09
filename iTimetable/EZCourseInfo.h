@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *eventIdentifier;
 @property (nullable, nonatomic, copy) NSDate *firstWeek;
 @property (nonatomic) int semesterLength;
+@property (nonatomic) BOOL isChanged;
+@property (nonatomic) BOOL hasAlarm;
+@property (nonatomic) NSTimeInterval relativeOffset;
+
+- (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength;
 
 @end
 

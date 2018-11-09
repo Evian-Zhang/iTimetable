@@ -12,6 +12,7 @@
 @synthesize courseInfos = _courseInfos;
 @synthesize courseName = _courseName;
 @synthesize firstWeek = _firstWeek;
+@synthesize semesterLength = _semesterLength;
 
 - (instancetype)init{
     if(self = [super init]){
@@ -20,6 +21,7 @@
         [self.courseInfos addObject:initialCourseInfo];
         self.courseName = [NSString string];
         self.firstWeek = [NSDate date];
+        self.semesterLength = 0;
         return self;
     }
     return nil;

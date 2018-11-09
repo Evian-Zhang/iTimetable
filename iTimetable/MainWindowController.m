@@ -267,6 +267,8 @@
 #pragma mark - create course
 - (void)createCourse{
     EZCourse *course = [[EZCourse alloc] init];
+    course.firstWeek = self.currentTimetable.firstWeek;
+    course.semesterLength = self.currentTimetable.semesterLength;
     self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
     self.courseWindowController.course = course;
     self.courseWindowController.eventStore = self.storeModel.eventStore;
