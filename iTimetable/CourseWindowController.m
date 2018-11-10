@@ -16,6 +16,8 @@
 @synthesize course = _course;
 @synthesize eventStore = _eventStore;
 @synthesize isCreating = _isCreating;
+@synthesize names = _names;
+@synthesize warningText = _warningText;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -31,6 +33,8 @@
     
     self.window.createCourseInfoButton.target = self;
     self.window.createCourseInfoButton.action = @selector(createCourseInfoButtonHandler);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
 }
 
 #pragma mark - Button Handler
@@ -55,16 +59,36 @@
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
 
+- (void)EZCourseInfoGetSuccessfullyNotificicationHandler:(NSNotification*)aNotification{
+    NSDictionary *userInfo = aNotification.userInfo;
+    EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
+    CourseInfo *tmpCourseInfo = [[CourseInfo alloc] init];
+    tmpCourseInfo.room = courseInfo.room;
+    tmpCourseInfo.teacher = courseInfo.teacher;
+    tmpCourseInfo.startTime = courseInfo.startTime;
+    tmpCourseInfo.endTime = courseInfo.endTime;
+    tmpCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+}
+
 - (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{
     if([self.eventStore eventWithIdentifier:courseInfo.eventIdentifier] != nil){
-        return TRUE;
+        return YES;
     } else {
-        return FALSE;
+        return NO;
     }
 }
 
 - (BOOL)checkValidation{
-    return TRUE;
+    BOOL isValid = YES;
+    if([self.names containsObject:self.window.courseNameText.stringValue]){
+        isValid = NO;
+        self.warningText = [self.warningText stringByAppendingString:@"课程名不得重复。\n"];
+    }
+    if(self.course.courseInfos.count == 0){
+        isValid = NO;
+        self.warningText = [self.warningText stringByAppendingString:@"至少得有一个时段。\n"];
+    }
+    return isValid;
 }
 
 - (void)windowWillClose:(NSNotification *)notification{
@@ -89,17 +113,44 @@
         cellIdentifier = @"EZCourseInfoTeacherID";
         cellText = cellCourseInfo.teacher;
     } else if(tableColumn == tableView.tableColumns[2]){
+        cellIdentifier = @"EZCourseInfoDayID";
+        switch ([cellCourseInfo dayWithFirstWeek:self.course.firstWeek]) {
+            case 0:
+                cellText = @"周一";
+                break;
+            case 1:
+                cellText = @"周二";
+                break;
+            case 2:
+                cellText = @"周三";
+                break;
+            case 3:
+                cellText = @"周四";
+                break;
+            case 4:
+                cellText = @"周五";
+                break;
+            case 5:
+                cellText = @"周六";
+                break;
+            case 6:
+                cellText = @"周日";
+            default:
+                cellText = @"周一";
+                break;
+        }
+    } else if(tableColumn == tableView.tableColumns[3]){
         cellIdentifier = @"EZCourseInfoStartTimeID";
         cellText = [dateFormatter stringFromDate:cellCourseInfo.startTime];
-    } else if(tableColumn == tableView.tableColumns[3]){
+    } else if(tableColumn == tableView.tableColumns[4]){
         cellIdentifier = @"EZCourseInfoEndTimeID";
         cellText = [dateFormatter stringFromDate:cellCourseInfo.endTime];
-    } else if(tableColumn == tableView.tableColumns[4]){
+    } else if(tableColumn == tableView.tableColumns[5]){
         cellIdentifier = @"EZCourseInfoWeeksID";
         cellText = [cellCourseInfo.weeks componentsJoinedByString:@", "];
-    } else if(tableColumn == tableView.tableColumns[5]){
-        cellIdentifier = @"EZCourseInfoStatusID";
     } else if(tableColumn == tableView.tableColumns[6]){
+        cellIdentifier = @"EZCourseInfoStatusID";
+    } else if(tableColumn == tableView.tableColumns[7]){
         cellIdentifier = @"EZCourseInfoAlarmID";
     }
     NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];

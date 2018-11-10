@@ -266,6 +266,10 @@
 
 #pragma mark - create course
 - (void)createCourse{
+    NSMutableArray *names = [NSMutableArray array];
+    for(EZCourse *course in self.currentTimetable.courses){
+        [names addObject:course.courseName];
+    }
     EZCourse *course = [[EZCourse alloc] init];
     course.firstWeek = self.currentTimetable.firstWeek;
     course.semesterLength = self.currentTimetable.semesterLength;
@@ -273,20 +277,27 @@
     self.courseWindowController.course = course;
     self.courseWindowController.eventStore = self.storeModel.eventStore;
     self.courseWindowController.isCreating = YES;
+    self.courseWindowController.names = [NSArray arrayWithArray:names];
     [NSApp runModalForWindow:self.courseWindowController.window];
 }
 
 #pragma mark - change course
 - (void)changeCourse{
     if(self.window.courseTable.selectedRow >= 0){
+        NSMutableArray *names = [NSMutableArray array];
+        for(EZCourse *course in self.currentTimetable.courses){
+            [names addObject:course.courseName];
+        }
         self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
         Course *tmpCourse = self.currentTimetable.courses[self.window.courseTable.selectedRow];
+        [names removeObject:tmpCourse.courseName];
         EZCourse *course = [[EZCourse alloc] init];
         course.courseName = tmpCourse.courseName;
         course.courseInfos = [NSMutableArray arrayWithArray:tmpCourse.courseInfos];
         self.courseWindowController.course = course;
         self.courseWindowController.eventStore = self.storeModel.eventStore;
         self.courseWindowController.isCreating = NO;
+        self.courseWindowController.names = [NSArray arrayWithArray:names];
         [NSApp runModalForWindow:self.courseWindowController.window];
     }
 }

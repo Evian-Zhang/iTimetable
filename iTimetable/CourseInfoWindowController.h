@@ -12,11 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CourseInfoWindowController : NSWindowController
+@interface CourseInfoWindowController : NSWindowController <NSWindowDelegate>
 
 @property (weak) IBOutlet CourseInfoWindow *window;
 @property (nonatomic) EZCourseInfo *courseInfo;
 @property (nonatomic) BOOL hasAlarm;
+@property (nonatomic) NSString *warningText;
 
 @end
 

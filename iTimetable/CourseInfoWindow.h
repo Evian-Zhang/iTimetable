@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) IBOutlet NSTextField *roomText;
 @property (nonatomic) IBOutlet NSTextField *teacherText;
+@property (nonatomic) IBOutlet NSPopUpButton *weekPop;
 @property (nonatomic) IBOutlet NSDatePicker *startTimePicker;
 @property (nonatomic) IBOutlet NSDatePicker *endTimePicker;
 @property (nonatomic) IBOutlet NSPopUpButton *startWeekPop;

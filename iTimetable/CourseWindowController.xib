@@ -59,11 +59,11 @@
                         <rect key="frame" x="-1" y="61" width="946" height="368"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" ambiguous="YES" id="DdR-bs-X3n">
-                            <rect key="frame" x="1" y="0.0" width="944" height="367"/>
+                            <rect key="frame" x="1" y="0.0" width="944" height="352"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="jBZ-Gk-beB" viewBased="YES" id="TEb-yC-zaB">
-                                    <rect key="frame" x="0.0" y="0.0" width="944" height="342"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="jBZ-Gk-beB" viewBased="YES" id="TEb-yC-zaB">
+                                    <rect key="frame" x="0.0" y="0.0" width="956" height="327"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -135,8 +135,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="EZCourseInfoStartTimeID" width="102" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZmC-kD-x86">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课时间">
+                                        <tableColumn identifier="EZCourseInfoDayID" width="52" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZmC-kD-x86">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="天数">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -149,11 +149,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="v4l-Bg-IcC">
-                                                    <rect key="frame" x="195" y="1" width="102" height="17"/>
+                                                    <rect key="frame" x="195" y="1" width="52" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="luc-Wy-lrG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="102" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="52" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="4SD-C2-kZm">
                                                                 <font key="font" metaFont="system"/>
@@ -168,8 +168,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="EZCourseInfoEndTimeID" width="105.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="44w-by-eUi">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="下课时间">
+                                        <tableColumn identifier="EZCourseInfoStartTimeID" width="108" minWidth="10" maxWidth="3.4028234663852886e+38" id="44w-by-eUi">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课时间">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -182,11 +182,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="064-ea-EVG">
-                                                    <rect key="frame" x="300" y="1" width="106" height="17"/>
+                                                    <rect key="frame" x="250" y="1" width="108" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MFx-aY-Uhp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="106" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="108" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="6AR-d8-OCc">
                                                                 <font key="font" metaFont="system"/>
@@ -201,8 +201,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="EZCourseInfoWeeksID" width="338" minWidth="10" maxWidth="3.4028234663852886e+38" id="cHZ-84-L7S">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课周数">
+                                        <tableColumn identifier="EZCourseInfoEndTimeID" width="123" minWidth="10" maxWidth="3.4028234663852886e+38" id="cHZ-84-L7S">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="下课时间">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -215,11 +215,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="zXd-cf-cCv">
-                                                    <rect key="frame" x="408.5" y="1" width="338" height="17"/>
+                                                    <rect key="frame" x="361" y="1" width="123" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3i-7b-vGc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="338" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="123" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="xAu-6j-8x3">
                                                                 <font key="font" metaFont="system"/>
@@ -234,8 +234,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="EZCourseInfoStatusID" width="70.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="fdd-gP-XG3">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="状态">
+                                        <tableColumn identifier="EZCourseInfoWeeksID" width="261" minWidth="10" maxWidth="3.4028234663852886e+38" id="fdd-gP-XG3">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="上课周数">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -248,11 +248,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="Qqh-Cg-hko">
-                                                    <rect key="frame" x="749.5" y="1" width="70" height="17"/>
+                                                    <rect key="frame" x="487" y="1" width="261" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cMB-cI-Wgj">
-                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="261" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O6G-LG-FQ5">
                                                                 <font key="font" metaFont="system"/>
@@ -267,8 +267,8 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="EZCourseInfoAlarmID" width="119" minWidth="10" maxWidth="3.4028234663852886e+38" id="vTv-fV-DQB">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="提醒">
+                                        <tableColumn identifier="EZCourseInfoStatusID" width="72" minWidth="10" maxWidth="3.4028234663852886e+38" id="vTv-fV-DQB">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="状态">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -281,11 +281,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="sS7-fG-k6z">
-                                                    <rect key="frame" x="823" y="1" width="119" height="17"/>
+                                                    <rect key="frame" x="751" y="1" width="72" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1tX-pE-dE9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="119" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="72" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="NCc-pI-44w">
                                                                 <font key="font" metaFont="system"/>
@@ -300,11 +300,44 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
+                                        <tableColumn identifier="EZCourseInfoAlarmID" width="128" minWidth="10" maxWidth="3.4028234663852886e+38" id="Cdm-G7-U7L">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="提醒">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="b5A-q1-6Uv">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="9QX-dn-4Ki">
+                                                    <rect key="frame" x="826" y="1" width="128" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u65-Gh-IFg">
+                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="CQl-7Q-YnO">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="textField" destination="u65-Gh-IFg" id="USS-YE-gOj"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
                                     </tableColumns>
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="OwK-Af-unf">
+                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="OwK-Af-unf">
                             <rect key="frame" x="1" y="352" width="944" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -313,7 +346,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="jBZ-Gk-beB">
-                            <rect key="frame" x="0.0" y="0.0" width="944" height="25"/>
+                            <rect key="frame" x="0.0" y="0.0" width="956" height="25"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>

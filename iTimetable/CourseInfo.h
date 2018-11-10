@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *teacher;
 @property (nonatomic) NSString *eventIdentifier;
 
+- (int)dayWithFirstWeek:(NSDate*)firstWeek;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,6 +20,7 @@
 @synthesize isChanged = _isChanged;
 @synthesize hasAlarm = _hasAlarm;
 @synthesize relativeOffset = _relativeOffset;
+@synthesize day = _day;
 
 - (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength{
     if(self = [super init]){
@@ -56,6 +57,8 @@
         self.hasAlarm = YES;
         
         self.relativeOffset = -1200;
+        
+        self.day = 0;
         return self;
     }
     return nil;
@@ -80,6 +83,10 @@
         self.eventIdentifier = [NSString string];
         
         self.isChanged = NO;
+        
+        self.hasAlarm = YES;
+        
+        self.day = 0;
         return self;
     }
     return nil;

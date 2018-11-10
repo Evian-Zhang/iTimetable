@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isChanged;
 @property (nonatomic) BOOL hasAlarm;
 @property (nonatomic) NSTimeInterval relativeOffset;
+@property (nonatomic) int day;
 
 - (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength;
 

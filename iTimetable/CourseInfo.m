@@ -16,6 +16,21 @@
 @synthesize teacher = _teacher;
 @synthesize eventIdentifier = _eventIdentifier;
 
+- (int)dayWithFirstWeek:(NSDate *)firstWeek{
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    if(self.weeks.count > 0){
+        NSNumber *tmpCourseFirstWeek = self.weeks[0];
+        NSDateComponents *tmpDateComponents = [[NSDateComponents alloc] init];
+        tmpDateComponents.day = 7 * tmpCourseFirstWeek.intValue;
+
+        NSDate *courseFirstDate = [calendar nextDateAfterDate:firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchFirst];
+        dateComponents = [calendar components:NSCalendarUnitDay fromDate:courseFirstDate toDate:self.startTime options:NSCalendarMatchFirst];
+        return dateComponents.day;
+    }
+    return 0;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     
