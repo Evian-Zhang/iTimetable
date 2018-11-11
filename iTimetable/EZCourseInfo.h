@@ -10,6 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum
+{
+    EZCourseStatusHasMatched,
+    EZCourseStatusWillMatched,
+    EZCourseStatusWillCreate,
+    EZCourseStatusNotMatched,
+    EZCourseStatusWillDelete
+} EZCourseStatus;
+
 @interface EZCourseInfo : NSObject
 
 @property (nonatomic) NSDate *startTime;
@@ -24,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL hasAlarm;
 @property (nonatomic) NSTimeInterval relativeOffset;
 @property (nonatomic) int day;
+@property (nonatomic) EZCourseStatus status;
 
 - (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength;
 

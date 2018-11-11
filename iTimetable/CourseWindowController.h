@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isCreating;
 @property (nonatomic) CourseInfoWindowController *courseInfoWindowController;
 @property (nonatomic) NSArray *names;
+@property (nonatomic) NSMutableArray *statuses;
 @property (nonatomic) NSString *warningText;
 
 - (BOOL)statusOfCourseInfo:(CourseInfo*)courseInfo;

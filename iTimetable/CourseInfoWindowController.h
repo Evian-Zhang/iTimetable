@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet CourseInfoWindow *window;
 @property (nonatomic) EZCourseInfo *courseInfo;
 @property (nonatomic) BOOL hasAlarm;
+@property (nonatomic) BOOL isCreating;
 @property (nonatomic) NSString *warningText;
 
 @end

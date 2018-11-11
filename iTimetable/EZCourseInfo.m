@@ -21,6 +21,7 @@
 @synthesize hasAlarm = _hasAlarm;
 @synthesize relativeOffset = _relativeOffset;
 @synthesize day = _day;
+@synthesize status = _status;
 
 - (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength{
     if(self = [super init]){
@@ -59,6 +60,8 @@
         self.relativeOffset = -1200;
         
         self.day = 0;
+        
+        self.status = EZCourseStatusWillCreate;
         return self;
     }
     return nil;
@@ -87,6 +90,8 @@
         self.hasAlarm = YES;
         
         self.day = 0;
+        
+        self.status = EZCourseStatusWillCreate;
         return self;
     }
     return nil;

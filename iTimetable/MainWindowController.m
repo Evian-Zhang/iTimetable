@@ -170,7 +170,19 @@
     if(tmpFlag){
         Course *course = [[Course alloc] init];
         course.courseName = tmpCourse.courseName;
-        course.courseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+        NSArray *unconvertedCourseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+        NSMutableArray *convertedCourseInfos = [NSMutableArray array];
+        for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
+            CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+            convertedCourseInfo.room = courseInfo.room;
+            convertedCourseInfo.teacher = courseInfo.teacher;
+            convertedCourseInfo.startTime = courseInfo.startTime;
+            convertedCourseInfo.endTime = courseInfo.endTime;
+            convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+            //need to implement eventIdentifier
+            [convertedCourseInfos addObject:convertedCourseInfo];
+        }
+        course.courseInfos = [NSArray arrayWithArray:convertedCourseInfos];
         [self.currentTimetable.courses addObject:course];
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
@@ -189,7 +201,19 @@
         Course *course = [[Course alloc] init];
         for(course in self.currentTimetable.courses){
             if([course.courseName isEqualToString:tmpCourse.courseName]){
-                course.courseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+                NSArray *unconvertedCourseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
+                NSMutableArray *convertedCourseInfos = [NSMutableArray array];
+                for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
+                    CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                    convertedCourseInfo.room = courseInfo.room;
+                    convertedCourseInfo.teacher = courseInfo.teacher;
+                    convertedCourseInfo.startTime = courseInfo.startTime;
+                    convertedCourseInfo.endTime = courseInfo.endTime;
+                    convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                    //need to implement eventIdentifier
+                    [convertedCourseInfos addObject:convertedCourseInfo];
+                }
+                course.courseInfos = [NSArray arrayWithArray:convertedCourseInfos];
                 break;
             }
         }

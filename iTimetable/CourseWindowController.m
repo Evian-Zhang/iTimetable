@@ -17,6 +17,7 @@
 @synthesize eventStore = _eventStore;
 @synthesize isCreating = _isCreating;
 @synthesize names = _names;
+@synthesize statuses = _statuses;
 @synthesize warningText = _warningText;
 
 - (void)windowDidLoad {
@@ -33,6 +34,8 @@
     
     self.window.createCourseInfoButton.target = self;
     self.window.createCourseInfoButton.action = @selector(createCourseInfoButtonHandler);
+    
+    self.statuses = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
 }
@@ -55,6 +58,7 @@
 - (void)createCourseInfoButtonHandler{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
     EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
+    self.courseInfoWindowController.isCreating = YES;
     self.courseInfoWindowController.courseInfo = courseInfo;
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
@@ -62,12 +66,11 @@
 - (void)EZCourseInfoGetSuccessfullyNotificicationHandler:(NSNotification*)aNotification{
     NSDictionary *userInfo = aNotification.userInfo;
     EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
-    CourseInfo *tmpCourseInfo = [[CourseInfo alloc] init];
-    tmpCourseInfo.room = courseInfo.room;
-    tmpCourseInfo.teacher = courseInfo.teacher;
-    tmpCourseInfo.startTime = courseInfo.startTime;
-    tmpCourseInfo.endTime = courseInfo.endTime;
-    tmpCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+    NSNumber *tmpNumber = [userInfo objectForKey:@"isCreating"];
+    BOOL tmpFlag = tmpNumber.boolValue;
+    [self.course.courseInfos addObject:courseInfo];
+    [self.window.courseTableView reloadData];
+    
 }
 
 - (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{

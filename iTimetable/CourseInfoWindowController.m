@@ -16,6 +16,7 @@
 @synthesize courseInfo = _courseInfo;
 @synthesize hasAlarm = _hasAlarm;
 @synthesize warningText = _warningText;
+@synthesize isCreating = _isCreating;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -83,6 +84,7 @@
         self.window.alarmTypePop.enabled = NO;
     }
     self.warningText = [NSString string];
+    self.isCreating = YES;
 }
 
 - (void)alarmBtnHandler{
@@ -131,27 +133,10 @@
         self.courseInfo.day = self.window.weekPop.indexOfSelectedItem;
         tmpDateComponents.day = 7 * tmpCourseFirstWeek.intValue + self.courseInfo.day;
         
-        NSDate *courseFirstDate = [calendar nextDateAfterDate:self.courseInfo.firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchFirst];
+        NSDate *courseFirstDate = [calendar nextDateAfterDate:self.courseInfo.firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchNextTime];
         
-        NSDate *startTime = self.window.startTimePicker.dateValue;
-        NSDateComponents *startTimeComponents = [[NSDateComponents alloc] init];
-        startTimeComponents.year = [calendar component:NSCalendarUnitYear fromDate:courseFirstDate];
-        startTimeComponents.month = [calendar component:NSCalendarUnitMonth fromDate:courseFirstDate];
-        startTimeComponents.day = [calendar component:NSCalendarUnitDay fromDate:courseFirstDate];
-        startTimeComponents.hour = [calendar component:NSCalendarUnitHour fromDate:startTime];
-        startTimeComponents.minute = [calendar component:NSCalendarUnitMinute fromDate:startTime];
-        startTimeComponents.second = [calendar component:NSCalendarUnitSecond fromDate:startTime];
-        self.courseInfo.startTime = [calendar dateFromComponents:startTimeComponents];
-        
-        NSDate *endTime = self.window.endTimePicker.dateValue;
-        NSDateComponents *endTimeComponents = [[NSDateComponents alloc] init];
-        endTimeComponents.year = [calendar component:NSCalendarUnitYear fromDate:courseFirstDate];
-        endTimeComponents.month = [calendar component:NSCalendarUnitMonth fromDate:courseFirstDate];
-        endTimeComponents.day = [calendar component:NSCalendarUnitDay fromDate:courseFirstDate];
-        endTimeComponents.hour = [calendar component:NSCalendarUnitHour fromDate:endTime];
-        endTimeComponents.minute = [calendar component:NSCalendarUnitMinute fromDate:endTime];
-        endTimeComponents.second = [calendar component:NSCalendarUnitSecond fromDate:endTime];
-        self.courseInfo.endTime = [calendar dateFromComponents:endTimeComponents];
+        self.courseInfo.startTime = [self dateWithYearInformationOfDate:courseFirstDate dayInfomationOfDate:self.window.startTimePicker.dateValue];
+        self.courseInfo.endTime = [self dateWithYearInformationOfDate:courseFirstDate dayInfomationOfDate:self.window.endTimePicker.dateValue];
         self.courseInfo.room = self.window.roomText.stringValue;
         self.courseInfo.teacher = self.window.teacherText.stringValue;
         [self.courseInfo.weeks removeAllObjects];
@@ -167,7 +152,7 @@
         } else {
             self.courseInfo.hasAlarm = NO;
         }
-        NSDictionary *userInfo = @{@"courseInfo": self.courseInfo};
+        NSDictionary *userInfo = @{@"courseInfo": self.courseInfo, @"isCreating": [NSNumber numberWithBool:self.isCreating]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseInfoGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelBtnHandler];
     } else {
@@ -200,6 +185,18 @@
         self.warningText = [self.warningText stringByAppendingString:@"开始周需早于结束周。\n"];
     }
     return isValid;
+}
+
+- (NSDate*)dateWithYearInformationOfDate:(NSDate*)yearDate dayInfomationOfDate:(NSDate*)dayDate{
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.year = [calendar component:NSCalendarUnitYear fromDate:yearDate];
+    dateComponents.month = [calendar component:NSCalendarUnitMonth fromDate:yearDate];
+    dateComponents.day = [calendar component:NSCalendarUnitDay fromDate:yearDate];
+    dateComponents.hour = [calendar component:NSCalendarUnitHour fromDate:dayDate];
+    dateComponents.minute = [calendar component:NSCalendarUnitMinute fromDate:dayDate];
+    dateComponents.second = [calendar component:NSCalendarUnitSecond fromDate:dayDate];
+    return [calendar dateFromComponents:dateComponents];
 }
 
 @end
