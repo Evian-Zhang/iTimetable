@@ -31,8 +31,6 @@
 - (instancetype)init{
     if(self = [super init]){
         self.courseInfos = [NSMutableArray array];
-        EZCourseInfo *initialCourseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.firstWeek semesterLength:self.semesterLength];
-        [self.courseInfos addObject:initialCourseInfo];
         self.courseName = [NSString string];
         self.firstWeek = [NSDate date];
         self.semesterLength = 0;

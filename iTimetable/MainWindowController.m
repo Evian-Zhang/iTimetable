@@ -307,7 +307,7 @@
 - (void)changeCourse{
     if(self.window.courseTable.selectedRow >= 0){
         NSMutableArray *names = [NSMutableArray array];
-        for(EZCourse *course in self.currentTimetable.courses){
+        for(Course *course in self.currentTimetable.courses){
             [names addObject:course.courseName];
         }
         self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
@@ -315,7 +315,20 @@
         [names removeObject:tmpCourse.courseName];
         EZCourse *course = [[EZCourse alloc] init];
         course.courseName = tmpCourse.courseName;
-        course.courseInfos = [NSMutableArray arrayWithArray:tmpCourse.courseInfos];
+        [course.courseInfos removeAllObjects];
+        for(CourseInfo *unconvertedCourseInfo in tmpCourse.courseInfos){
+            EZCourseInfo *convertedCourseInfo = [[EZCourseInfo alloc] init];
+            convertedCourseInfo.room = unconvertedCourseInfo.room;
+            convertedCourseInfo.teacher = unconvertedCourseInfo.teacher;
+            convertedCourseInfo.startTime = unconvertedCourseInfo.startTime;
+            convertedCourseInfo.endTime = unconvertedCourseInfo.endTime;
+            convertedCourseInfo.weeks = [NSMutableArray arrayWithArray:unconvertedCourseInfo.weeks];
+            convertedCourseInfo.eventIdentifier = unconvertedCourseInfo.eventIdentifier;
+            convertedCourseInfo.semesterLength = self.currentTimetable.semesterLength;
+            convertedCourseInfo.firstWeek = self.currentTimetable.firstWeek;
+            convertedCourseInfo.day = [unconvertedCourseInfo dayWithFirstWeek:convertedCourseInfo.firstWeek];
+            [course.courseInfos addObject:convertedCourseInfo];
+        }
         self.courseWindowController.course = course;
         self.courseWindowController.eventStore = self.storeModel.eventStore;
         self.courseWindowController.isCreating = NO;

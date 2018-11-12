@@ -24,8 +24,8 @@
         NSDateComponents *tmpDateComponents = [[NSDateComponents alloc] init];
         tmpDateComponents.day = 7 * tmpCourseFirstWeek.intValue;
 
-        NSDate *courseFirstDate = [calendar nextDateAfterDate:firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchFirst];
-        dateComponents = [calendar components:NSCalendarUnitDay fromDate:courseFirstDate toDate:self.startTime options:NSCalendarMatchFirst];
+        NSDate *courseFirstDate = [calendar nextDateAfterDate:firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchNextTime];
+        dateComponents = [calendar components:NSCalendarUnitDay fromDate:courseFirstDate toDate:self.startTime options:NSCalendarMatchNextTime];
         return dateComponents.day;
     }
     return 0;
