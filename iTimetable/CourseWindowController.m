@@ -33,10 +33,10 @@
     self.window.cancelButton.action = @selector(cancelButtonHandler);
     
     self.window.createCourseInfoButton.target = self;
-    self.window.createCourseInfoButton.action = @selector(createCourseInfoButtonHandler);
+    self.window.createCourseInfoButton.action = @selector(createCourseInfo);
     
-    self.window.courseTableView.delegate = self;
-    self.window.courseTableView.dataSource = self;
+    self.window.courseInfoTable.delegate = self;
+    self.window.courseInfoTable.dataSource = self;
     
     self.statuses = [NSMutableArray array];
     
@@ -58,12 +58,24 @@
     [self.window close];
 }
 
-- (void)createCourseInfoButtonHandler{
+- (void)createCourseInfo{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
     EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
     self.courseInfoWindowController.isCreating = YES;
     self.courseInfoWindowController.courseInfo = courseInfo;
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
+}
+
+- (void)changeCourseInfo{
+    self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.courseInfoTable.selectedRow];
+    self.courseInfoWindowController.isCreating = NO;
+    self.courseInfoWindowController.courseInfo = courseInfo;
+    [NSApp runModalForWindow:self.courseInfoWindowController.window];
+}
+
+- (void)deleteCourseInfo{
+    
 }
 
 - (void)EZCourseInfoGetSuccessfullyNotificicationHandler:(NSNotification*)aNotification{
@@ -72,7 +84,7 @@
     NSNumber *tmpNumber = [userInfo objectForKey:@"isCreating"];
     BOOL tmpFlag = tmpNumber.boolValue;
     [self.course.courseInfos addObject:courseInfo];
-    [self.window.courseTableView reloadData];
+    [self.window.courseInfoTable reloadData];
 }
 
 - (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{
@@ -98,6 +110,14 @@
 
 - (void)windowWillClose:(NSNotification *)notification{
     [NSApp stopModal];
+}
+
+- (BOOL)checkCourseInfoSelected{
+    if(self.window.courseInfoTable.selectedRow >= 0){
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - conform <NSTableViewDelegate, NSTableViewDataSource>
@@ -166,7 +186,7 @@
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseTableSelectionChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseInfoTableSelectionChanged" object:nil];
 }
 
 @end

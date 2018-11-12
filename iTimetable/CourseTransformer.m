@@ -27,7 +27,7 @@
 
 - (id)reverseTransformedValue:(id)value
 {
-    NSSet *unarchivedClasses = [NSSet setWithObjects:[NSArray class], [Course class], [CourseInfo class], nil];
+    NSSet *unarchivedClasses = [NSSet setWithObjects:[NSArray class], [Course class], [CourseInfo class], [NSDate class], nil];
     return [NSKeyedUnarchiver unarchivedObjectOfClasses:unarchivedClasses fromData:value error:nil];
 }
 

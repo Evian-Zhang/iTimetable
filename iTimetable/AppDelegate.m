@@ -41,11 +41,37 @@
     self.changeCourseItem.enabled = NO;
     self.changeCourseItem.target = self;
     self.changeCourseItem.action = @selector(changeCourseItemHandler);
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseTableSelectionChangedHandler) name:@"EZCourseTableSelectionChanged" object:nil];
+    
+    self.deleteCourseItem.enabled = NO;
+    self.deleteCourseItem.target = self;
+    self.deleteCourseItem.action = @selector(deleteCourseItemHandler);
+    
+    self.createCourseInfoItem.enabled = NO;
+    //self.createCourseInfoItem.target = self;
+    self.createCourseInfoItem.action = @selector(createCourseInfoItemHandler);
+    
+    self.changeCourseInfoItem.enabled = NO;
+    //self.changeCourseInfoItem.target = self;
+    self.changeCourseInfoItem.action = @selector(changeCourseInfoItemHandler);
+    
+    self.deleteCourseInfoItem.enabled = NO;
+    //self.deleteCourseInfoItem.target = self;
+    self.deleteCourseInfoItem.action = @selector(deleteCourseInfoItemHandler);
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseTableSelectionChangedHandler) name:@"EZCourseTableSelectionChanged" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseInfoTableSelectionChangedHandler) name:@"EZCourseInfoTableSelectionChanged" object:nil];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]);
+    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable];
+    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
+    self.createCourseItem.enabled = [self.mainWindowController checkTimetable];
+    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible;
+    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
     return [menuItem isEnabled];
 }
 
@@ -74,18 +100,42 @@
     [self.mainWindowController changeCourse];
 }
 
+- (void)deleteCourseItemHandler{
+    [self.mainWindowController deleteCourse];
+}
+
+- (void)createCourseInfoItemHandler{
+    [self.mainWindowController.courseWindowController createCourseInfo];
+}
+
+- (void)changeCourseInfoItemHandler{
+    [self.mainWindowController.courseWindowController changeCourseInfo];
+}
+
+- (void)deleteCourseInfoItemHandler{
+    
+}
+/*
 - (void)calendarChangedHandler{
     self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]);
     self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable];
     self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
     self.createCourseItem.enabled = [self.mainWindowController checkTimetable];
     self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected];
 }
 
 - (void)courseTableSelectionChangedHandler{
     self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected];
 }
 
+- (void)courseInfoTableSelectionChangedHandler{
+    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected];
+}
+*/
 #pragma mark - Core Data stack
 
 @synthesize persistentContainer = _persistentContainer;

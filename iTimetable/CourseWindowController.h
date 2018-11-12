@@ -27,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *warningText;
 
 - (BOOL)statusOfCourseInfo:(CourseInfo*)courseInfo;
+- (void)createCourseInfo;
+- (void)changeCourseInfo;
+- (void)deleteCourseInfo;
+- (BOOL)checkCourseInfoSelected;
 
 @end
 

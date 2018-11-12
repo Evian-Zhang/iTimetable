@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CourseWindow : NSWindow
 
 @property (nonatomic) IBOutlet NSTextField *courseNameText;
-@property (nonatomic) IBOutlet NSTableView *courseTableView;
+@property (nonatomic) IBOutlet NSTableView *courseInfoTable;
 @property (nonatomic) IBOutlet NSButton *createCourseInfoButton;
 @property (nonatomic) IBOutlet NSButton *okButton;
 @property (nonatomic) IBOutlet NSButton *cancelButton;

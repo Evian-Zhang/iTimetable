@@ -46,6 +46,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventStoreBForEventAccessUnsuccessfullyNotificicationHandler) name:@"EZEventStoreForEventAccessUnsuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timetableGetSuccessfullyHandler:) name:@"EZTimetableGetSuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseGetSuccessfullyHandler:) name:@"EZCourseGetSuccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseWindowWillCloseHandler) name:@"EZCourseWindowWillClose" object:nil];
 }
 
 - (void)initPopUpButton{
@@ -159,6 +160,7 @@
             NSLog(@"%@", [NSString stringWithFormat:@"数据修改到数据库失败, %@", error]);
         }
     }
+    [self.window.courseTable reloadData];
     [self checkTimetable];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
@@ -232,6 +234,11 @@
         }
     }
     [self.window.courseTable reloadData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
+}
+
+- (void)courseWindowWillCloseHandler{
+    [self checkTimetable];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
@@ -335,6 +342,29 @@
         self.courseWindowController.names = [NSArray arrayWithArray:names];
         [NSApp runModalForWindow:self.courseWindowController.window];
     }
+}
+
+#pragma mark - delete course
+- (void)deleteCourse{
+    [self.currentTimetable.courses removeObjectAtIndex:self.window.courseTable.selectedRow];
+    NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
+    changeRequest.predicate = pre;
+    
+    NSArray *changeArray = [self.persistentContainer.viewContext executeFetchRequest:changeRequest error:nil];
+    
+    Timetable *timetable = changeArray[0];
+    timetable.courses = [NSArray arrayWithArray:self.currentTimetable.courses];
+    
+    NSError *error = nil;
+    if ([self.persistentContainer.viewContext save:&error]) {
+        NSLog(@"删除成功");
+    }else{
+        NSLog(@"删除数据失败, %@", error);
+    }
+    [self checkTimetable];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
+    [self.window.courseTable reloadData];
 }
 
 #pragma mark - checker
