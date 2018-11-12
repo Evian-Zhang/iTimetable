@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CourseInfo.h"
+#import "EZCourseInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSMutableArray *courseInfos;
 @property (nullable, nonatomic, copy) NSDate *firstWeek;
 @property (nonatomic) int semesterLength;
+
+- (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength;
 
 @end
 

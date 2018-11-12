@@ -14,10 +14,24 @@
 @synthesize firstWeek = _firstWeek;
 @synthesize semesterLength = _semesterLength;
 
+- (instancetype)initWithFirstWeek:(NSDate*)firstWeek semesterLength:(int)semesterLength{
+    if(self = [super init]){
+        self.courseInfos = [NSMutableArray array];
+        self.firstWeek = firstWeek;
+        self.semesterLength = semesterLength;
+        self.courseName = [NSString string];
+        EZCourseInfo *initialCourseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.firstWeek semesterLength:self.semesterLength];
+        [self.courseInfos addObject:initialCourseInfo];
+        
+        return self;
+    }
+    return nil;
+}
+
 - (instancetype)init{
     if(self = [super init]){
         self.courseInfos = [NSMutableArray array];
-        CourseInfo *initialCourseInfo = [[CourseInfo alloc] init];
+        EZCourseInfo *initialCourseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.firstWeek semesterLength:self.semesterLength];
         [self.courseInfos addObject:initialCourseInfo];
         self.courseName = [NSString string];
         self.firstWeek = [NSDate date];

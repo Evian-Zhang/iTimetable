@@ -123,7 +123,7 @@
     self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
     
     if(tmpFlag){
-        Timetable *timetable = [NSEntityDescription  insertNewObjectForEntityForName:@"Timetable"  inManagedObjectContext:self.persistentContainer.viewContext];
+        Timetable *timetable = [NSEntityDescription insertNewObjectForEntityForName:@"Timetable"  inManagedObjectContext:self.persistentContainer.viewContext];
         timetable.calendarIdentifier = self.currentTimetable.calendarIdentifier;
         timetable.sourceIdentifier = self.currentTimetable.sourceIdentifier;
         timetable.firstWeek = self.currentTimetable.firstWeek;
@@ -294,9 +294,7 @@
     for(EZCourse *course in self.currentTimetable.courses){
         [names addObject:course.courseName];
     }
-    EZCourse *course = [[EZCourse alloc] init];
-    course.firstWeek = self.currentTimetable.firstWeek;
-    course.semesterLength = self.currentTimetable.semesterLength;
+    EZCourse *course = [[EZCourse alloc] initWithFirstWeek:self.currentTimetable.firstWeek semesterLength:self.currentTimetable.semesterLength];
     self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
     self.courseWindowController.course = course;
     self.courseWindowController.eventStore = self.storeModel.eventStore;

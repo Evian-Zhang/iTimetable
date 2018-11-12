@@ -108,6 +108,7 @@
 
 - (void)okBtnHandler{
     if([self checkValidation]){
+        [self.courseInfo.weeks removeAllObjects];
         if([self.window.singleDoublePicker.selectedItem.title isEqualToString:@"每周"]){
             for(int week = self.window.startWeekPop.indexOfSelectedItem; week <= self.window.endWeekPop.indexOfSelectedItem; week++){
                 [self.courseInfo.weeks addObject:[NSNumber numberWithInt:week + 1]];
@@ -139,7 +140,6 @@
         self.courseInfo.endTime = [self dateWithYearInformationOfDate:courseFirstDate dayInfomationOfDate:self.window.endTimePicker.dateValue];
         self.courseInfo.room = self.window.roomText.stringValue;
         self.courseInfo.teacher = self.window.teacherText.stringValue;
-        [self.courseInfo.weeks removeAllObjects];
         if(self.window.alarmBtn.state == NSControlStateValueOn){
             self.courseInfo.hasAlarm = YES;
             if([self.window.alarmTypePop.selectedItem.title isEqualToString:@"日程发生时"]){

@@ -35,6 +35,9 @@
     self.window.createCourseInfoButton.target = self;
     self.window.createCourseInfoButton.action = @selector(createCourseInfoButtonHandler);
     
+    self.window.courseTableView.delegate = self;
+    self.window.courseTableView.dataSource = self;
+    
     self.statuses = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
@@ -70,7 +73,6 @@
     BOOL tmpFlag = tmpNumber.boolValue;
     [self.course.courseInfos addObject:courseInfo];
     [self.window.courseTableView reloadData];
-    
 }
 
 - (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{
@@ -108,7 +110,7 @@
     NSString *cellText;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"HH:mm:ss";
-    CourseInfo *cellCourseInfo = self.course.courseInfos[row];
+    EZCourseInfo *cellCourseInfo = self.course.courseInfos[row];
     if(tableColumn == tableView.tableColumns[0]){
         cellIdentifier = @"EZCourseInfoRoomID";
         cellText = cellCourseInfo.room;
@@ -117,7 +119,7 @@
         cellText = cellCourseInfo.teacher;
     } else if(tableColumn == tableView.tableColumns[2]){
         cellIdentifier = @"EZCourseInfoDayID";
-        switch ([cellCourseInfo dayWithFirstWeek:self.course.firstWeek]) {
+        switch (cellCourseInfo.day) {
             case 0:
                 cellText = @"周一";
                 break;
@@ -157,7 +159,9 @@
         cellIdentifier = @"EZCourseInfoAlarmID";
     }
     NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];
-    tableCellView.textField.stringValue = cellText;
+    if(cellText != NULL){
+        tableCellView.textField.stringValue = cellText;
+    }
     return tableCellView;
 }
 
