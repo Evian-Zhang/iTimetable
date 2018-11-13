@@ -25,11 +25,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSArray *names;
 @property (nonatomic) NSMutableArray *statuses;
 @property (nonatomic) NSString *warningText;
+@property (nonatomic) NSMutableArray *deleCourseInfos;
 
 - (BOOL)statusOfCourseInfo:(CourseInfo*)courseInfo;
 - (void)createCourseInfo;
 - (void)changeCourseInfo;
-- (void)deleteCourseInfo;
+- (void)markCourseInfoWillDeleted;
 - (BOOL)checkCourseInfoSelected;
 
 @end

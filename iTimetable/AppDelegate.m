@@ -54,9 +54,15 @@
     //self.changeCourseInfoItem.target = self;
     self.changeCourseInfoItem.action = @selector(changeCourseInfoItemHandler);
     
-    self.deleteCourseInfoItem.enabled = NO;
+    self.markCourseInfoWillCreatedItem.enabled = NO;
+    self.markCourseInfoWillCreatedItem.action = @selector(markCourseInfoWillCreatedItemHandler);
+    
+    self.markCourseInfoWillMatchedItem.enabled = NO;
+    self.markCourseInfoWillMatchedItem.action = @selector(markCourseInfoWillMatchedItemHandler);
+    
+    self.markCourseInfoWillDeletedItem.enabled = NO;
     //self.deleteCourseInfoItem.target = self;
-    self.deleteCourseInfoItem.action = @selector(deleteCourseInfoItemHandler);
+    self.markCourseInfoWillDeletedItem.action = @selector(markCourseInfoWillDeletedItemHandler);
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseTableSelectionChangedHandler) name:@"EZCourseTableSelectionChanged" object:nil];
@@ -72,6 +78,7 @@
     self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
     self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible;
     self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
+    self.markCourseInfoWillDeletedItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
     return [menuItem isEnabled];
 }
 
@@ -112,8 +119,16 @@
     [self.mainWindowController.courseWindowController changeCourseInfo];
 }
 
-- (void)deleteCourseInfoItemHandler{
+- (void)markCourseInfoWillCreatedItemHandler{
     
+}
+
+- (void)markCourseInfoWillMatchedItemHandler{
+    
+}
+
+- (void)markCourseInfoWillDeletedItemHandler{
+    [self.mainWindowController.courseWindowController markCourseInfoWillDeleted];
 }
 /*
 - (void)calendarChangedHandler{

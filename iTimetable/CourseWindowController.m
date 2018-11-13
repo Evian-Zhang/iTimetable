@@ -19,6 +19,7 @@
 @synthesize names = _names;
 @synthesize statuses = _statuses;
 @synthesize warningText = _warningText;
+@synthesize deleCourseInfos = _deleCourseInfos;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -39,6 +40,8 @@
     self.window.courseInfoTable.dataSource = self;
     
     self.statuses = [NSMutableArray array];
+    
+    self.deleCourseInfos = [NSMutableArray array];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
 }
@@ -74,8 +77,12 @@
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
 
-- (void)deleteCourseInfo{
-    
+- (void)markCourseInfoWillDeleted{
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.courseInfoTable.selectedRow];
+    [self.course.courseInfos removeObject:courseInfo];
+    courseInfo.status = EZCourseStatusWillDelete;
+    [self.deleCourseInfos addObject:courseInfo];
+    [self.window.courseInfoTable reloadData];
 }
 
 - (void)EZCourseInfoGetSuccessfullyNotificicationHandler:(NSNotification*)aNotification{
@@ -175,6 +182,23 @@
         cellText = [cellCourseInfo.weeks componentsJoinedByString:@", "];
     } else if(tableColumn == tableView.tableColumns[6]){
         cellIdentifier = @"EZCourseInfoStatusID";
+        switch (cellCourseInfo.status) {
+            case EZCourseStatusWillCreate:
+                cellText = @"将生成";
+                break;
+            case EZCourseStatusHasMatched:
+                cellText = @"已匹配";
+                break;
+            case EZCourseStatusNotMatched:
+                cellText = @"未匹配";
+                break;
+            case EZCourseStatusWillDelete:
+                cellText = @"将删除";
+                break;
+            case EZCourseStatusWillMatched:
+                cellText = @"将匹配";
+                break;
+        }
     } else if(tableColumn == tableView.tableColumns[7]){
         cellIdentifier = @"EZCourseInfoAlarmID";
     }

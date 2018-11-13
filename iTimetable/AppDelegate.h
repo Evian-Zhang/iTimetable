@@ -21,7 +21,9 @@
 @property (nonatomic) IBOutlet NSMenuItem *deleteCourseItem;
 @property (nonatomic) IBOutlet NSMenuItem *createCourseInfoItem;
 @property (nonatomic) IBOutlet NSMenuItem *changeCourseInfoItem;
-@property (nonatomic) IBOutlet NSMenuItem *deleteCourseInfoItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillCreatedItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillMatchedItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillDeletedItem;
 
 @end
 
