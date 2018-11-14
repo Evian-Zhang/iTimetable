@@ -19,7 +19,7 @@
 @synthesize names = _names;
 @synthesize statuses = _statuses;
 @synthesize warningText = _warningText;
-@synthesize deleCourseInfos = _deleCourseInfos;
+@synthesize deleteCount = _deleteCount;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -41,18 +41,27 @@
     
     self.statuses = [NSMutableArray array];
     
-    self.deleCourseInfos = [NSMutableArray array];
+    self.deleteCount = 0;
+    
+    self.warningText = [NSString string];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
 }
 
 #pragma mark - Button Handler
 - (void)okButtonHandler{
-    if([self checkValidation]){
+    if ([self checkValidation]) {
         self.course.courseName = self.window.courseNameText.stringValue;
         NSDictionary *userInfo = @{@"course": self.course, @"isCreating": [NSNumber numberWithBool:self.isCreating]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelButtonHandler];
+    } else {
+        NSAlert *alert = [NSAlert new];
+        [alert addButtonWithTitle:@"确定"];
+        [alert setMessageText:@"错误"];
+        [alert setInformativeText:self.warningText];
+        [alert setAlertStyle:NSAlertStyleWarning];
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {}];
     }
 }
 
@@ -66,22 +75,52 @@
     EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
     self.courseInfoWindowController.isCreating = YES;
     self.courseInfoWindowController.courseInfo = courseInfo;
+    self.courseInfoWindowController.row = -1;
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
 
 - (void)changeCourseInfo{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
-    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.courseInfoTable.selectedRow];
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
     self.courseInfoWindowController.isCreating = NO;
     self.courseInfoWindowController.courseInfo = courseInfo;
+    self.courseInfoWindowController.row = self.window.currentRow;
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
 
+- (void)markCourseInfoWillCreated{
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
+    switch (courseInfo.status) {
+        case EZCourseStatusWillDelete:
+            self.deleteCount--;
+            break;
+            
+        default:
+            break;
+    }
+    courseInfo.eventIdentifier = [NSString string];
+    courseInfo.status = EZCourseStatusWillCreate;
+    [self.window.courseInfoTable reloadData];
+}
+
+- (void)markCourseInfoWillMatched{
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
+    switch (courseInfo.status) {
+        case EZCourseStatusWillDelete:
+            self.deleteCount--;
+            break;
+            
+        default:
+            break;
+    }
+    courseInfo.status = EZCourseStatusWillMatched;
+    [self.window.courseInfoTable reloadData];
+}
+
 - (void)markCourseInfoWillDeleted{
-    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.courseInfoTable.selectedRow];
-    [self.course.courseInfos removeObject:courseInfo];
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
     courseInfo.status = EZCourseStatusWillDelete;
-    [self.deleCourseInfos addObject:courseInfo];
+    self.deleteCount++;
     [self.window.courseInfoTable reloadData];
 }
 
@@ -89,30 +128,81 @@
     NSDictionary *userInfo = aNotification.userInfo;
     EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
     NSNumber *tmpNumber = [userInfo objectForKey:@"isCreating"];
-    BOOL tmpFlag = tmpNumber.boolValue;
-    [self.course.courseInfos addObject:courseInfo];
-    [self.window.courseInfoTable reloadData];
-}
-
-- (BOOL)statusOfCourseInfo:(CourseInfo *)courseInfo{
-    if([self.eventStore eventWithIdentifier:courseInfo.eventIdentifier] != nil){
-        return YES;
+    BOOL isCreating = tmpNumber.boolValue;
+    if (isCreating) {
+        [self.course.courseInfos addObject:courseInfo];
     } else {
-        return NO;
+        
     }
+    [self.window.courseInfoTable reloadData];
 }
 
 - (BOOL)checkValidation{
     BOOL isValid = YES;
+    self.warningText = [NSString string];
     if([self.names containsObject:self.window.courseNameText.stringValue]){
         isValid = NO;
         self.warningText = [self.warningText stringByAppendingString:@"课程名不得重复。\n"];
     }
-    if(self.course.courseInfos.count == 0){
+    if(self.course.courseInfos.count - self.deleteCount == 0){
         isValid = NO;
         self.warningText = [self.warningText stringByAppendingString:@"至少得有一个时段。\n"];
     }
     return isValid;
+}
+
+- (BOOL)isMarkCourseInfoWillCreatedEnabled{
+    BOOL isEnabled = YES;
+    if (![self checkCourseInfoSelected]) {
+        isEnabled = NO;
+    } else {
+        EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
+        switch (currentCourseInfo.status) {
+            case EZCourseStatusWillCreate:
+                isEnabled = NO;
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return isEnabled;
+}
+
+- (BOOL)isMarkCourseInfoWillMatchedEnabled{
+    BOOL isEnabled = YES;
+    if (![self checkCourseInfoSelected]) {
+        isEnabled = NO;
+    } else {
+        EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
+        switch (currentCourseInfo.status) {
+            case EZCourseStatusWillMatched:
+                isEnabled = NO;
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return isEnabled;
+}
+
+- (BOOL)isMarkCourseInfoWillDeletedEnabled{
+    BOOL isEnabled = YES;
+    if (![self checkCourseInfoSelected]) {
+        isEnabled = NO;
+    } else {
+        EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
+        switch (currentCourseInfo.status) {
+            case EZCourseStatusWillDelete:
+                isEnabled = NO;
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return isEnabled;
 }
 
 - (void)windowWillClose:(NSNotification *)notification{
@@ -120,7 +210,7 @@
 }
 
 - (BOOL)checkCourseInfoSelected{
-    if(self.window.courseInfoTable.selectedRow >= 0){
+    if(self.window.currentRow >= 0){
         return YES;
     } else {
         return NO;

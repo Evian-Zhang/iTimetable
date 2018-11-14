@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IBOutlet NSButton *okButton;
 @property (nonatomic) IBOutlet NSButton *cancelButton;
 
+@property (nonatomic) NSInteger currentRow;
+
 @end
 
 NS_ASSUME_NONNULL_END

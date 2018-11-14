@@ -78,7 +78,9 @@
     self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
     self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible;
     self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
-    self.markCourseInfoWillDeletedItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
+    self.markCourseInfoWillCreatedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillCreatedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
+    self.markCourseInfoWillMatchedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillMatchedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
+    self.markCourseInfoWillDeletedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillDeletedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
     return [menuItem isEnabled];
 }
 
@@ -120,11 +122,11 @@
 }
 
 - (void)markCourseInfoWillCreatedItemHandler{
-    
+    [self.mainWindowController.courseWindowController markCourseInfoWillCreated];
 }
 
 - (void)markCourseInfoWillMatchedItemHandler{
-    
+    [self.mainWindowController.courseWindowController markCourseInfoWillMatched];
 }
 
 - (void)markCourseInfoWillDeletedItemHandler{

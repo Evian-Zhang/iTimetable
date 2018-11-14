@@ -17,6 +17,7 @@
 @synthesize hasAlarm = _hasAlarm;
 @synthesize warningText = _warningText;
 @synthesize isCreating = _isCreating;
+@synthesize row = _row;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -84,6 +85,7 @@
         self.window.alarmTypePop.enabled = NO;
     }
     self.warningText = [NSString string];
+    self.row = -1;
     self.isCreating = YES;
 }
 
@@ -176,6 +178,7 @@
 
 - (BOOL)checkValidation{
     BOOL isValid = YES;
+    self.warningText = [NSString string];
     if([self.window.startTimePicker.dateValue compare:self.window.endTimePicker.dateValue] != NSOrderedAscending){
         isValid = NO;
         self.warningText = [self.warningText stringByAppendingString:@"上课时间需早于下课时间。\n"];

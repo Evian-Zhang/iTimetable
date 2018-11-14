@@ -9,5 +9,13 @@
 #import "CourseWindow.h"
 
 @implementation CourseWindow
+@synthesize currentRow = _currentRow;
+
+- (NSInteger)currentRow{
+    if (self.courseInfoTable.clickedRow >= 0) {
+        return self.courseInfoTable.clickedRow;
+    }
+    return self.courseInfoTable.selectedRow;
+}
 
 @end

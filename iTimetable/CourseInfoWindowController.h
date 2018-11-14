@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL hasAlarm;
 @property (nonatomic) BOOL isCreating;
 @property (nonatomic) NSString *warningText;
+@property (nonatomic) int row;
 
 @end
 

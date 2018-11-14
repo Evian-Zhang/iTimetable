@@ -334,6 +334,9 @@
                                             </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <outlet property="menu" destination="APE-Hs-JeZ" id="NoZ-zC-wG6"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
@@ -370,5 +373,19 @@
             </connections>
             <point key="canvasLocation" x="100" y="255"/>
         </window>
+        <menu id="APE-Hs-JeZ">
+            <items>
+                <menuItem title="Item 1" id="r0a-ub-nui">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="2eU-Ol-2Xi">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="6m8-VS-SJf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-93" y="-205"/>
+        </menu>
     </objects>
 </document>
