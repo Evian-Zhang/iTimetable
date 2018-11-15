@@ -20,6 +20,7 @@
 @synthesize statuses = _statuses;
 @synthesize warningText = _warningText;
 @synthesize deleteCount = _deleteCount;
+@synthesize row = _row;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -52,7 +53,7 @@
 - (void)okButtonHandler{
     if ([self checkValidation]) {
         self.course.courseName = self.window.courseNameText.stringValue;
-        NSDictionary *userInfo = @{@"course": self.course, @"isCreating": [NSNumber numberWithBool:self.isCreating]};
+        NSDictionary *userInfo = @{@"course": self.course, @"isCreating": [NSNumber numberWithBool:self.isCreating], @"row":[NSNumber numberWithInt:self.row]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelButtonHandler];
     } else {
@@ -73,6 +74,7 @@
 - (void)createCourseInfo{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
     EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
+    courseInfo.day = 0;
     self.courseInfoWindowController.isCreating = YES;
     self.courseInfoWindowController.courseInfo = courseInfo;
     self.courseInfoWindowController.row = -1;
@@ -161,6 +163,9 @@
         EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
         switch (currentCourseInfo.status) {
             case EZCourseStatusWillCreate:
+                isEnabled = NO;
+                break;
+            case EZCourseStatusWillChange:
                 isEnabled = NO;
                 break;
                 
@@ -260,7 +265,7 @@
             case 6:
                 cellText = @"周日";
             default:
-                cellText = @"周一";
+                cellText = @"错误";
                 break;
         }
     } else if(tableColumn == tableView.tableColumns[3]){
@@ -289,6 +294,9 @@
                 break;
             case EZCourseStatusWillMatched:
                 cellText = @"将匹配";
+                break;
+            case EZCourseStatusWillChange:
+                cellText = @"将修改";
                 break;
         }
     } else if(tableColumn == tableView.tableColumns[7]){

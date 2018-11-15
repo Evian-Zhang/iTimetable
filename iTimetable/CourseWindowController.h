@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSMutableArray *statuses;
 @property (nonatomic) NSString *warningText;
 @property (nonatomic) int deleteCount;
+@property (nonatomic) int row;
 
 - (void)createCourseInfo;
 - (void)changeCourseInfo;

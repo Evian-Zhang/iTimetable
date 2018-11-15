@@ -16,7 +16,8 @@ typedef enum
     EZCourseStatusWillMatched,
     EZCourseStatusWillCreate,
     EZCourseStatusNotMatched,
-    EZCourseStatusWillDelete
+    EZCourseStatusWillDelete,
+    EZCourseStatusWillChange
 } EZCourseStatus;
 
 @interface EZCourseInfo : NSObject

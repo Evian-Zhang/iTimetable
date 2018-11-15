@@ -89,7 +89,6 @@
     [self checkCalendarEmpty];
     [self checkTimetable];
     [self.window.courseTable reloadData];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 #pragma mark - Notification Handler
@@ -162,7 +161,6 @@
     }
     [self.window.courseTable reloadData];
     [self checkTimetable];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 - (void)courseGetSuccessfullyHandler:(NSNotification*)aNotification{
@@ -195,6 +193,8 @@
             }
         }
         course.courseInfos = [self convertedCourseInfosWithUnconvertedCourseInfos:[NSArray arrayWithArray:tmpCourse.courseInfos] andCourseName:course.courseName];
+        NSNumber *tmpRow = [[aNotification userInfo] valueForKey:@"row"];
+        [self.currentTimetable.courses replaceObjectAtIndex:tmpRow.intValue withObject:course];
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
         changeRequest.predicate = pre;
@@ -210,12 +210,11 @@
         }
     }
     [self.window.courseTable reloadData];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
+    [self checkTimetable];
 }
 
 - (void)courseWindowWillCloseHandler{
     [self checkTimetable];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 #pragma mark - PopUpButton Handler
@@ -229,7 +228,6 @@
     self.storeModel.currentCalendar = self.storeModel.calendars[self.window.calPop.indexOfSelectedItem];
     [self checkTimetable];
     [self.window.courseTable reloadData];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 #pragma mark - create timetable
@@ -253,6 +251,9 @@
 
 #pragma mark - delete timetable
 - (void)deleteTimetable{
+    for (Course *course in self.currentTimetable.courses) {
+        [self deleteCourseInfosInCalendarOfCourse:course];
+    }
     NSFetchRequest *deleRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
     deleRequest.predicate = pre;
@@ -268,7 +269,6 @@
         NSLog(@"删除数据失败, %@", error);
     }
     [self checkTimetable];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
 }
 
 #pragma mark - create course
@@ -282,6 +282,7 @@
     self.courseWindowController.course = course;
     self.courseWindowController.eventStore = self.storeModel.eventStore;
     self.courseWindowController.isCreating = YES;
+    self.courseWindowController.row = -1;
     self.courseWindowController.names = [NSArray arrayWithArray:names];
     [NSApp runModalForWindow:self.courseWindowController.window];
 }
@@ -298,18 +299,17 @@
         [names removeObject:tmpCourse.courseName];
         EZCourse *course = [[EZCourse alloc] init];
         course.courseName = tmpCourse.courseName;
+        course.firstWeek = self.currentTimetable.firstWeek;
         course.semesterLength = self.currentTimetable.semesterLength;
         [course.courseInfos removeAllObjects];
         for(CourseInfo *unconvertedCourseInfo in tmpCourse.courseInfos){
-            EZCourseInfo *convertedCourseInfo = [[EZCourseInfo alloc] init];
+            EZCourseInfo *convertedCourseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.currentTimetable.firstWeek semesterLength:self.currentTimetable.semesterLength];
             convertedCourseInfo.room = unconvertedCourseInfo.room;
             convertedCourseInfo.teacher = unconvertedCourseInfo.teacher;
             convertedCourseInfo.startTime = unconvertedCourseInfo.startTime;
             convertedCourseInfo.endTime = unconvertedCourseInfo.endTime;
             convertedCourseInfo.weeks = [NSMutableArray arrayWithArray:unconvertedCourseInfo.weeks];
             convertedCourseInfo.eventIdentifier = unconvertedCourseInfo.eventIdentifier;
-            convertedCourseInfo.semesterLength = self.currentTimetable.semesterLength;
-            convertedCourseInfo.firstWeek = self.currentTimetable.firstWeek;
             convertedCourseInfo.day = [unconvertedCourseInfo dayWithFirstWeek:convertedCourseInfo.firstWeek];
             if (convertedCourseInfo.eventIdentifier.length == 0) {
                 convertedCourseInfo.status = EZCourseStatusNotMatched;
@@ -338,6 +338,7 @@
         self.courseWindowController.course = course;
         self.courseWindowController.eventStore = self.storeModel.eventStore;
         self.courseWindowController.isCreating = NO;
+        self.courseWindowController.row = self.window.courseTable.selectedRow;
         self.courseWindowController.names = [NSArray arrayWithArray:names];
         [NSApp runModalForWindow:self.courseWindowController.window];
     }
@@ -345,6 +346,8 @@
 
 #pragma mark - delete course
 - (void)deleteCourse{
+    Course *currentCourse = self.currentTimetable.courses[self.window.courseTable.selectedRow];
+    [self deleteCourseInfosInCalendarOfCourse:currentCourse];
     [self.currentTimetable.courses removeObjectAtIndex:self.window.courseTable.selectedRow];
     NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
@@ -357,12 +360,11 @@
     
     NSError *error = nil;
     if ([self.persistentContainer.viewContext save:&error]) {
-        NSLog(@"删除成功");
+        NSLog(@"从数据库中删除成功");
     }else{
-        NSLog(@"删除数据失败, %@", error);
+        NSLog(@"从数据库中删除数据失败, %@", error);
     }
     [self checkTimetable];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCalendarChanged" object:nil];
     [self.window.courseTable reloadData];
 }
 
@@ -420,6 +422,7 @@
     return NO;
 }
 
+#pragma mark - helper function
 - (NSArray*)convertedCourseInfosWithUnconvertedCourseInfos:(NSArray*)unconvertedCourseInfos andCourseName:(NSString*)courseName{
     NSMutableArray *convertedCourseInfos = [NSMutableArray array];
     for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
@@ -465,7 +468,7 @@
                     convertedCourseInfo.eventIdentifier = courseInfoEvent.eventIdentifier;
                     [convertedCourseInfos addObject:convertedCourseInfo];
                 } else {
-                    NSLog(@"添加事件失败。%@", createError);
+                    NSLog(@"向日历添加事件失败。%@", createError);
                 }
             }
                 break;
@@ -477,7 +480,7 @@
                         if ([self.storeModel.eventStore removeEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&removeError]) {
                             NSLog(@"从日历删除事件成功");
                         } else {
-                            NSLog(@"删除事件失败。%@", removeError);
+                            NSLog(@"从日历删除事件失败。%@", removeError);
                         }
                     }
                 }
@@ -516,9 +519,126 @@
                 [convertedCourseInfos addObject:convertedCourseInfo];
             }
                 break;
+            case EZCourseStatusWillChange: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                if (courseInfo.eventIdentifier.length == 0) {
+                    EKEvent *courseInfoEvent = [EKEvent eventWithEventStore:self.storeModel.eventStore];
+                    courseInfoEvent.title = courseName;
+                    courseInfoEvent.startDate = convertedCourseInfo.startTime;
+                    courseInfoEvent.endDate = convertedCourseInfo.endTime;
+                    if (convertedCourseInfo.teacher.length > 0) {
+                        courseInfoEvent.title = [courseInfoEvent.title stringByAppendingString:[NSString stringWithFormat:@"（教师：%@）", convertedCourseInfo.teacher]];
+                    }
+                    if (convertedCourseInfo.room.length > 0) {
+                        [courseInfoEvent setStructuredLocation:[EKStructuredLocation locationWithTitle:convertedCourseInfo.room]];
+                    }
+                    if (courseInfo.hasAlarm) {
+                        [courseInfoEvent addAlarm:[EKAlarm alarmWithRelativeOffset:courseInfo.relativeOffset]];
+                    }
+                    NSInteger interval;
+                    if (courseInfo.weeks.count == 1) {
+                        interval = 1;
+                    } else {
+                        NSNumber *firstWeek = courseInfo.weeks[0];
+                        NSNumber *secondWeek = courseInfo.weeks[1];
+                        if (secondWeek.intValue - firstWeek.intValue == 1) {
+                            interval = 1;
+                        } else {
+                            interval = 2;
+                        }
+                    }
+                    [courseInfoEvent addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:interval end:[EKRecurrenceEnd recurrenceEndWithOccurrenceCount:courseInfo.weeks.count]]];
+                    courseInfoEvent.allDay = NO;
+                    courseInfoEvent.calendar = self.storeModel.currentCalendar;
+                    NSError *createError;
+                    if ([self.storeModel.eventStore saveEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&createError]) {
+                        NSLog(@"向日历添加事件成功");
+                        convertedCourseInfo.eventIdentifier = courseInfoEvent.eventIdentifier;
+                        [convertedCourseInfos addObject:convertedCourseInfo];
+                    } else {
+                        NSLog(@"向日历添加事件失败。%@", createError);
+                    }
+                } else {
+                    EKEvent *courseInfoEvent = [self.storeModel.eventStore eventWithIdentifier:courseInfo.eventIdentifier];
+                    if (courseInfoEvent != nil) {
+                        courseInfoEvent.title = courseName;
+                        courseInfoEvent.startDate = convertedCourseInfo.startTime;
+                        courseInfoEvent.endDate = convertedCourseInfo.endTime;
+                        if (convertedCourseInfo.teacher.length > 0) {
+                            courseInfoEvent.title = [courseInfoEvent.title stringByAppendingString:[NSString stringWithFormat:@"（教师：%@）", convertedCourseInfo.teacher]];
+                        }
+                        if (convertedCourseInfo.room.length > 0) {
+                            [courseInfoEvent setStructuredLocation:[EKStructuredLocation locationWithTitle:convertedCourseInfo.room]];
+                        }
+                        for (EKAlarm *alarm in courseInfoEvent.alarms) {
+                            [courseInfoEvent removeAlarm:alarm];
+                        }
+                        if (courseInfo.hasAlarm) {
+                            [courseInfoEvent addAlarm:[EKAlarm alarmWithRelativeOffset:courseInfo.relativeOffset]];
+                        }
+                        NSInteger interval;
+                        if (courseInfo.weeks.count == 1) {
+                            interval = 1;
+                        } else {
+                            NSNumber *firstWeek = courseInfo.weeks[0];
+                            NSNumber *secondWeek = courseInfo.weeks[1];
+                            if (secondWeek.intValue - firstWeek.intValue == 1) {
+                                interval = 1;
+                            } else {
+                                interval = 2;
+                            }
+                        }
+                        for (EKRecurrenceRule *recurrenceRule in courseInfoEvent.recurrenceRules) {
+                            [courseInfoEvent removeRecurrenceRule:recurrenceRule];
+                        }
+                        [courseInfoEvent addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:interval end:[EKRecurrenceEnd recurrenceEndWithOccurrenceCount:courseInfo.weeks.count]]];
+                        courseInfoEvent.allDay = NO;
+                        courseInfoEvent.calendar = self.storeModel.currentCalendar;
+                        NSError *createError;
+                        if ([self.storeModel.eventStore saveEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&createError]) {
+                            NSLog(@"向日历修改事件成功");
+                            convertedCourseInfo.eventIdentifier = courseInfoEvent.eventIdentifier;
+                            [convertedCourseInfos addObject:convertedCourseInfo];
+                        } else {
+                            NSLog(@"向日历修改事件失败。%@", createError);
+                        }
+                    } else {
+                        CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                        convertedCourseInfo.room = courseInfo.room;
+                        convertedCourseInfo.teacher = courseInfo.teacher;
+                        convertedCourseInfo.startTime = courseInfo.startTime;
+                        convertedCourseInfo.endTime = courseInfo.endTime;
+                        convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                        convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
+                        [convertedCourseInfos addObject:convertedCourseInfo];
+                    }
+                }
+            }
+                break;
         }
     }
     return [NSArray arrayWithArray:convertedCourseInfos];
+}
+
+- (void)deleteCourseInfosInCalendarOfCourse:(Course*)course{
+    for (CourseInfo *courseInfo in course.courseInfos) {
+        if (courseInfo.eventIdentifier.length > 0) {
+            EKEvent *courseInfoEvent = [self.storeModel.eventStore eventWithIdentifier:courseInfo.eventIdentifier];
+            if (courseInfoEvent != nil) {
+                NSError *removeError;
+                if ([self.storeModel.eventStore removeEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&removeError]) {
+                    NSLog(@"从日历中删除课程成功");
+                } else {
+                    NSLog(@"从日历中删除失败。%@", removeError);
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - conform <NSTableViewDelegate, NSTableViewDataSource>

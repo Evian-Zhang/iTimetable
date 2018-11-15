@@ -89,10 +89,17 @@
 - (BOOL)checkValidation{
     BOOL isValid = YES;
     self.warningText = [NSString string];
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *component = [calendar components:NSCalendarUnitWeekday fromDate:self.window.firstWeekPicker.dateValue];
+    if(component.weekday != 2){
+        isValid = NO;
+        NSString *weekDayInvalid = @"输入的第一周周一非周一！\n";
+        self.warningText = [self.warningText stringByAppendingString:weekDayInvalid];
+    }
     if(self.window.semesterLengthText.intValue <= 0){
         isValid = NO;
-        NSString *semesterLenthInvalid = @"请输入正确的周数！\n";
-        self.warningText = [self.warningText stringByAppendingString:semesterLenthInvalid];
+        NSString *semesterLengthInvalid = @"请输入正确的周数！\n";
+        self.warningText = [self.warningText stringByAppendingString:semesterLengthInvalid];
     }
     if([self.window.firstClassPicker.dateValue compare:self.window.lastClassPicker.dateValue] != NSOrderedAscending){
         isValid = NO;

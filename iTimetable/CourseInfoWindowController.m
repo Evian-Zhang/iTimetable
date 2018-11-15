@@ -27,6 +27,7 @@
     }
     
     [self.window.weekPop addItemsWithTitles:@[@"周一", @"周二", @"周三", @"周四", @"周五", @"周六", @"周日"]];
+    [self.window.weekPop selectItemAtIndex:self.courseInfo.day];
     
     NSNumber *startWeek = self.courseInfo.weeks[0];
     [self.window.startWeekPop selectItemWithTitle:[NSString stringWithFormat:@"第%d周", startWeek.intValue]];
@@ -54,6 +55,7 @@
     
     self.window.okBtn.target = self;
     self.window.okBtn.action = @selector(okBtnHandler);
+    self.window.okBtn.keyEquivalent = @"\r";
     
     self.window.cancelBtn.target = self;
     self.window.cancelBtn.action = @selector(cancelBtnHandler);
@@ -132,10 +134,8 @@
         NSDateComponents *tmpDateComponents = [[NSDateComponents alloc] init];
         NSNumber *tmpCourseFirstWeek = self.courseInfo.weeks[0];
         self.courseInfo.day = self.window.weekPop.indexOfSelectedItem;
-        tmpDateComponents.day = 7 * tmpCourseFirstWeek.intValue + self.courseInfo.day;
-        
-        NSDate *courseFirstDate = [calendar nextDateAfterDate:self.courseInfo.firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchNextTime];
-        
+        tmpDateComponents.day = 7 * (tmpCourseFirstWeek.intValue - 1) + self.courseInfo.day;
+        NSDate *courseFirstDate = [calendar dateByAddingComponents:tmpDateComponents toDate:self.courseInfo.firstWeek options:0];
         self.courseInfo.startTime = [self dateWithYearInformationOfDate:courseFirstDate dayInfomationOfDate:self.window.startTimePicker.dateValue];
         self.courseInfo.endTime = [self dateWithYearInformationOfDate:courseFirstDate dayInfomationOfDate:self.window.endTimePicker.dateValue];
         self.courseInfo.room = self.window.roomText.stringValue;
@@ -151,6 +151,11 @@
             }
         } else {
             self.courseInfo.hasAlarm = NO;
+        }
+        if (self.isCreating) {
+            self.courseInfo.status = EZCourseStatusWillCreate;
+        } else {
+            self.courseInfo.status = EZCourseStatusWillChange;
         }
         NSDictionary *userInfo = @{@"courseInfo": self.courseInfo, @"isCreating": [NSNumber numberWithBool:self.isCreating], @"row": [NSNumber numberWithInt:self.row]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseInfoGetSuccessfully" object:nil userInfo:userInfo];

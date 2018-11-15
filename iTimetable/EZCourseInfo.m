@@ -59,14 +59,12 @@
         
         self.relativeOffset = -1200;
         
-        self.day = 0;
-        
         self.status = EZCourseStatusWillCreate;
         return self;
     }
     return nil;
 }
-
+/*
 - (instancetype)init{
     if(self = [super init]){
         self.firstWeek = [NSDate date];
@@ -96,5 +94,5 @@
     }
     return nil;
 }
-
+*/
 @end

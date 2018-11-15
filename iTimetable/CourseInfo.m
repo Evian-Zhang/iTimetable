@@ -22,9 +22,8 @@
     if(self.weeks.count > 0){
         NSNumber *tmpCourseFirstWeek = self.weeks[0];
         NSDateComponents *tmpDateComponents = [[NSDateComponents alloc] init];
-        tmpDateComponents.day = 7 * tmpCourseFirstWeek.intValue;
-
-        NSDate *courseFirstDate = [calendar nextDateAfterDate:firstWeek matchingComponents:tmpDateComponents options:NSCalendarMatchNextTime];
+        tmpDateComponents.day = 7 * (tmpCourseFirstWeek.intValue - 1);
+        NSDate *courseFirstDate = [calendar dateByAddingComponents:tmpDateComponents toDate:firstWeek options:0];
         dateComponents = [calendar components:NSCalendarUnitDay fromDate:courseFirstDate toDate:self.startTime options:NSCalendarMatchNextTime];
         return dateComponents.day;
     }
