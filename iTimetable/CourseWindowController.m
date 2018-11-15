@@ -82,8 +82,8 @@
 - (void)changeCourseInfo{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
     EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
-    self.courseInfoWindowController.isCreating = NO;
     self.courseInfoWindowController.courseInfo = courseInfo;
+    self.courseInfoWindowController.isCreating = NO;
     self.courseInfoWindowController.row = self.window.currentRow;
     [NSApp runModalForWindow:self.courseInfoWindowController.window];
 }
@@ -132,7 +132,9 @@
     if (isCreating) {
         [self.course.courseInfos addObject:courseInfo];
     } else {
-        
+        NSNumber *aNumber = [userInfo objectForKey:@"row"];
+        int courseInfoRow = aNumber.intValue;
+        [self.course.courseInfos replaceObjectAtIndex:courseInfoRow withObject:courseInfo];
     }
     [self.window.courseInfoTable reloadData];
 }
@@ -291,6 +293,17 @@
         }
     } else if(tableColumn == tableView.tableColumns[7]){
         cellIdentifier = @"EZCourseInfoAlarmID";
+        if (cellCourseInfo.hasAlarm) {
+            if (cellCourseInfo.relativeOffset == 0) {
+                cellText = @"日程发生时";
+            } else if (-cellCourseInfo.relativeOffset < 3600) {
+                cellText = [NSString stringWithFormat:@"%.1lf分钟前", -cellCourseInfo.relativeOffset / 60];
+            } else {
+                cellText = [NSString stringWithFormat:@"%.1lf小时前", -cellCourseInfo.relativeOffset / 3600];
+            }
+        } else {
+            cellText = @"无提醒";
+        }
     }
     NSTableCellView *tableCellView = [tableView makeViewWithIdentifier:cellIdentifier owner:nil];
     if(cellText != NULL){

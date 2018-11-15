@@ -172,19 +172,7 @@
     if(tmpFlag){
         Course *course = [[Course alloc] init];
         course.courseName = tmpCourse.courseName;
-        NSArray *unconvertedCourseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
-        NSMutableArray *convertedCourseInfos = [NSMutableArray array];
-        for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
-            CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
-            convertedCourseInfo.room = courseInfo.room;
-            convertedCourseInfo.teacher = courseInfo.teacher;
-            convertedCourseInfo.startTime = courseInfo.startTime;
-            convertedCourseInfo.endTime = courseInfo.endTime;
-            convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
-            //need to implement eventIdentifier
-            [convertedCourseInfos addObject:convertedCourseInfo];
-        }
-        course.courseInfos = [NSArray arrayWithArray:convertedCourseInfos];
+        course.courseInfos = [self convertedCourseInfosWithUnconvertedCourseInfos:[NSArray arrayWithArray:tmpCourse.courseInfos] andCourseName:course.courseName];
         [self.currentTimetable.courses addObject:course];
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
@@ -203,57 +191,10 @@
         Course *course = [[Course alloc] init];
         for(course in self.currentTimetable.courses){
             if([course.courseName isEqualToString:tmpCourse.courseName]){
-                NSArray *unconvertedCourseInfos = [NSArray arrayWithArray:tmpCourse.courseInfos];
-                NSMutableArray *convertedCourseInfos = [NSMutableArray array];
-                for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
-                    switch (courseInfo.status) {
-                        case EZCourseStatusWillCreate: {
-                            CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
-                            convertedCourseInfo.room = courseInfo.room;
-                            convertedCourseInfo.teacher = courseInfo.teacher;
-                            convertedCourseInfo.startTime = courseInfo.startTime;
-                            convertedCourseInfo.endTime = courseInfo.endTime;
-                            convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
-                            //need to implement eventIdentifier
-                            [convertedCourseInfos addObject:convertedCourseInfo];
-                        }
-                            break;
-                        case EZCourseStatusWillDelete: {
-                            
-                        }
-                            break;
-                        case EZCourseStatusWillMatched: {
-                            CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
-                            convertedCourseInfo.room = courseInfo.room;
-                            convertedCourseInfo.teacher = courseInfo.teacher;
-                            convertedCourseInfo.startTime = courseInfo.startTime;
-                            convertedCourseInfo.endTime = courseInfo.endTime;
-                            convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
-                            convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
-                            [convertedCourseInfos addObject:convertedCourseInfo];
-                        }
-                            break;
-                        case EZCourseStatusNotMatched: {
-                            
-                        }
-                            break;
-                        case EZCourseStatusHasMatched: {
-                            CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
-                            convertedCourseInfo.room = courseInfo.room;
-                            convertedCourseInfo.teacher = courseInfo.teacher;
-                            convertedCourseInfo.startTime = courseInfo.startTime;
-                            convertedCourseInfo.endTime = courseInfo.endTime;
-                            convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
-                            convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
-                            [convertedCourseInfos addObject:convertedCourseInfo];
-                        }
-                            break;
-                    }
-                }
-                course.courseInfos = [NSArray arrayWithArray:convertedCourseInfos];
                 break;
             }
         }
+        course.courseInfos = [self convertedCourseInfosWithUnconvertedCourseInfos:[NSArray arrayWithArray:tmpCourse.courseInfos] andCourseName:course.courseName];
         NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
         NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
         changeRequest.predicate = pre;
@@ -357,6 +298,7 @@
         [names removeObject:tmpCourse.courseName];
         EZCourse *course = [[EZCourse alloc] init];
         course.courseName = tmpCourse.courseName;
+        course.semesterLength = self.currentTimetable.semesterLength;
         [course.courseInfos removeAllObjects];
         for(CourseInfo *unconvertedCourseInfo in tmpCourse.courseInfos){
             EZCourseInfo *convertedCourseInfo = [[EZCourseInfo alloc] init];
@@ -369,7 +311,28 @@
             convertedCourseInfo.semesterLength = self.currentTimetable.semesterLength;
             convertedCourseInfo.firstWeek = self.currentTimetable.firstWeek;
             convertedCourseInfo.day = [unconvertedCourseInfo dayWithFirstWeek:convertedCourseInfo.firstWeek];
-            convertedCourseInfo.status = EZCourseStatusHasMatched;
+            if (convertedCourseInfo.eventIdentifier.length == 0) {
+                convertedCourseInfo.status = EZCourseStatusNotMatched;
+                convertedCourseInfo.hasAlarm = NO;
+                convertedCourseInfo.relativeOffset = 0;
+            } else {
+                EKEvent *courseInfoEvent = [self.storeModel.eventStore eventWithIdentifier:convertedCourseInfo.eventIdentifier];
+                if (courseInfoEvent == nil) {
+                    convertedCourseInfo.status = EZCourseStatusNotMatched;
+                    convertedCourseInfo.hasAlarm = NO;
+                    convertedCourseInfo.relativeOffset = 0;
+                } else {
+                    convertedCourseInfo.status = EZCourseStatusHasMatched;
+                    if (![courseInfoEvent hasAlarms]) {
+                        convertedCourseInfo.hasAlarm = NO;
+                        convertedCourseInfo.relativeOffset = 0;
+                    } else {
+                        convertedCourseInfo.hasAlarm = YES;
+                        EKAlarm *alarm = courseInfoEvent.alarms[0];
+                        convertedCourseInfo.relativeOffset = alarm.relativeOffset;
+                    }
+                }
+            }
             [course.courseInfos addObject:convertedCourseInfo];
         }
         self.courseWindowController.course = course;
@@ -455,6 +418,107 @@
         return YES;
     }
     return NO;
+}
+
+- (NSArray*)convertedCourseInfosWithUnconvertedCourseInfos:(NSArray*)unconvertedCourseInfos andCourseName:(NSString*)courseName{
+    NSMutableArray *convertedCourseInfos = [NSMutableArray array];
+    for(EZCourseInfo *courseInfo in unconvertedCourseInfos){
+        switch (courseInfo.status) {
+            case EZCourseStatusWillCreate: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                EKEvent *courseInfoEvent = [EKEvent eventWithEventStore:self.storeModel.eventStore];
+                courseInfoEvent.title = courseName;
+                courseInfoEvent.startDate = convertedCourseInfo.startTime;
+                courseInfoEvent.endDate = convertedCourseInfo.endTime;
+                if (convertedCourseInfo.teacher.length > 0) {
+                    courseInfoEvent.title = [courseInfoEvent.title stringByAppendingString:[NSString stringWithFormat:@"（教师：%@）", convertedCourseInfo.teacher]];
+                }
+                if (convertedCourseInfo.room.length > 0) {
+                    [courseInfoEvent setStructuredLocation:[EKStructuredLocation locationWithTitle:convertedCourseInfo.room]];
+                }
+                if (courseInfo.hasAlarm) {
+                    [courseInfoEvent addAlarm:[EKAlarm alarmWithRelativeOffset:courseInfo.relativeOffset]];
+                }
+                NSInteger interval;
+                if (courseInfo.weeks.count == 1) {
+                    interval = 1;
+                } else {
+                    NSNumber *firstWeek = courseInfo.weeks[0];
+                    NSNumber *secondWeek = courseInfo.weeks[1];
+                    if (secondWeek.intValue - firstWeek.intValue == 1) {
+                        interval = 1;
+                    } else {
+                        interval = 2;
+                    }
+                }
+                [courseInfoEvent addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:interval end:[EKRecurrenceEnd recurrenceEndWithOccurrenceCount:courseInfo.weeks.count]]];
+                courseInfoEvent.allDay = NO;
+                courseInfoEvent.calendar = self.storeModel.currentCalendar;
+                NSError *createError;
+                if ([self.storeModel.eventStore saveEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&createError]) {
+                    NSLog(@"向日历添加事件成功");
+                    convertedCourseInfo.eventIdentifier = courseInfoEvent.eventIdentifier;
+                    [convertedCourseInfos addObject:convertedCourseInfo];
+                } else {
+                    NSLog(@"添加事件失败。%@", createError);
+                }
+            }
+                break;
+            case EZCourseStatusWillDelete: {
+                if (courseInfo.eventIdentifier.length > 0) {
+                    EKEvent *courseInfoEvent = [self.storeModel.eventStore eventWithIdentifier:courseInfo.eventIdentifier];
+                    if (courseInfoEvent != nil) {
+                        NSError *removeError;
+                        if ([self.storeModel.eventStore removeEvent:courseInfoEvent span:EKSpanFutureEvents commit:YES error:&removeError]) {
+                            NSLog(@"从日历删除事件成功");
+                        } else {
+                            NSLog(@"删除事件失败。%@", removeError);
+                        }
+                    }
+                }
+            }
+                break;
+            case EZCourseStatusWillMatched: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
+                [convertedCourseInfos addObject:convertedCourseInfo];
+            }
+                break;
+            case EZCourseStatusNotMatched: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
+                [convertedCourseInfos addObject:convertedCourseInfo];
+            }
+                break;
+            case EZCourseStatusHasMatched: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
+                [convertedCourseInfos addObject:convertedCourseInfo];
+            }
+                break;
+        }
+    }
+    return [NSArray arrayWithArray:convertedCourseInfos];
 }
 
 #pragma mark - conform <NSTableViewDelegate, NSTableViewDataSource>

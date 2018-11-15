@@ -85,8 +85,6 @@
         self.window.alarmTypePop.enabled = NO;
     }
     self.warningText = [NSString string];
-    self.row = -1;
-    self.isCreating = YES;
 }
 
 - (void)alarmBtnHandler{
@@ -154,7 +152,7 @@
         } else {
             self.courseInfo.hasAlarm = NO;
         }
-        NSDictionary *userInfo = @{@"courseInfo": self.courseInfo, @"isCreating": [NSNumber numberWithBool:self.isCreating]};
+        NSDictionary *userInfo = @{@"courseInfo": self.courseInfo, @"isCreating": [NSNumber numberWithBool:self.isCreating], @"row": [NSNumber numberWithInt:self.row]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseInfoGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelBtnHandler];
     } else {

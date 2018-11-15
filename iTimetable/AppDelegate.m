@@ -70,12 +70,12 @@
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]);
-    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable];
-    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable];
-    self.createCourseItem.enabled = [self.mainWindowController checkTimetable];
-    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected];
-    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected];
+    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]) && (!self.mainWindowController.courseWindowController.window.isVisible);
+    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
+    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
+    self.createCourseItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
+    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible;
+    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible;
     self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible;
     self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
     self.markCourseInfoWillCreatedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillCreatedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
