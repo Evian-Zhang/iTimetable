@@ -15,7 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CourseWindowController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource>
+@interface CourseWindowController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate>
 
 @property (weak) IBOutlet CourseWindow *window;
 @property (nonatomic) EZCourse *course;

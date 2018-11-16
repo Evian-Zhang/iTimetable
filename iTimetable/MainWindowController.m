@@ -36,6 +36,7 @@
     self.window.createTimetableBtn.action = @selector(createTimetable);
     [self initNotification];
     [self initPopUpButton];
+    [self initContextualMenu];
     self.storeModel = [[EZEventStore alloc] init];
     self.window.courseTable.dataSource = self;
     self.window.courseTable.delegate = self;
@@ -55,6 +56,26 @@
     
     [self.window.calPop setTarget:self];
     [self.window.calPop setAction:@selector(calPopHandler)];
+}
+
+- (void)initContextualMenu{
+    self.window.contextualMenu.delegate = self;
+    
+    [self.window.createCourseItem setTarget:self];
+    [self.window.createCourseItem setAction:@selector(createCourse)];
+    
+    [self.window.changeCourseItem setTarget:self];
+    [self.window.changeCourseItem setAction:@selector(changeCourse)];
+    
+    [self.window.deleteCourseItem setTarget:self];
+    [self.window.deleteCourseItem setAction:@selector(deleteCourse)];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    self.window.createCourseItem.enabled = [self checkTimetable] && !self.courseWindowController.window.isVisible;
+    self.window.changeCourseItem.enabled = [self checkCourseSelected] && !self.courseWindowController.window.isVisible;
+    self.window.deleteCourseItem.enabled = [self checkCourseSelected] && !self.courseWindowController.window.isVisible;
+    return [menuItem isEnabled];
 }
 
 #pragma mark - Generate PopUpItems
@@ -289,13 +310,13 @@
 
 #pragma mark - change course
 - (void)changeCourse{
-    if(self.window.courseTable.selectedRow >= 0){
+    if(self.window.currentRow >= 0){
         NSMutableArray *names = [NSMutableArray array];
         for(Course *course in self.currentTimetable.courses){
             [names addObject:course.courseName];
         }
         self.courseWindowController = [[CourseWindowController alloc] initWithWindowNibName:@"CourseWindowController"];
-        Course *tmpCourse = self.currentTimetable.courses[self.window.courseTable.selectedRow];
+        Course *tmpCourse = self.currentTimetable.courses[self.window.currentRow];
         [names removeObject:tmpCourse.courseName];
         EZCourse *course = [[EZCourse alloc] init];
         course.courseName = tmpCourse.courseName;
@@ -338,7 +359,7 @@
         self.courseWindowController.course = course;
         self.courseWindowController.eventStore = self.storeModel.eventStore;
         self.courseWindowController.isCreating = NO;
-        self.courseWindowController.row = self.window.courseTable.selectedRow;
+        self.courseWindowController.row = self.window.currentRow;
         self.courseWindowController.names = [NSArray arrayWithArray:names];
         [NSApp runModalForWindow:self.courseWindowController.window];
     }
@@ -346,9 +367,9 @@
 
 #pragma mark - delete course
 - (void)deleteCourse{
-    Course *currentCourse = self.currentTimetable.courses[self.window.courseTable.selectedRow];
+    Course *currentCourse = self.currentTimetable.courses[self.window.currentRow];
     [self deleteCourseInfosInCalendarOfCourse:currentCourse];
-    [self.currentTimetable.courses removeObjectAtIndex:self.window.courseTable.selectedRow];
+    [self.currentTimetable.courses removeObjectAtIndex:self.window.currentRow];
     NSFetchRequest *changeRequest = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
     NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
     changeRequest.predicate = pre;
@@ -408,7 +429,7 @@
 }
 
 - (BOOL)checkCourseSelected{
-    if(self.window.courseTable.selectedRow >= 0){
+    if(self.window.currentRow >= 0){
         return YES;
     } else {
         return NO;

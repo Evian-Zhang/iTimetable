@@ -9,8 +9,14 @@
 #import "MainWindow.h"
 
 @implementation MainWindow
+@synthesize currentRow = _currentRow;
 
-
-
+- (NSInteger)currentRow{
+    if (self.courseTable.clickedRow >= 0) {
+        return self.courseTable.clickedRow;
+    } else {
+        return self.courseTable.selectedRow;
+    }
+}
 
 @end

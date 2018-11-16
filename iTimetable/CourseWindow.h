@@ -17,7 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IBOutlet NSButton *createCourseInfoButton;
 @property (nonatomic) IBOutlet NSButton *okButton;
 @property (nonatomic) IBOutlet NSButton *cancelButton;
-
+@property (nonatomic) IBOutlet NSMenu *contextualMenu;
+@property (nonatomic) IBOutlet NSMenuItem *createCourseInfoItem;
+@property (nonatomic) IBOutlet NSMenuItem *changeCourseInfoItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillCreatedItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillMatchedItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillDeletedItem;
 @property (nonatomic) NSInteger currentRow;
 
 @end

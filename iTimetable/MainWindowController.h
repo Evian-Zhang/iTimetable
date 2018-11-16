@@ -17,7 +17,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource>
+@interface MainWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate>
 
 @property (strong) NSPersistentContainer *persistentContainer;
 @property (nonatomic) EZEventStore *storeModel;

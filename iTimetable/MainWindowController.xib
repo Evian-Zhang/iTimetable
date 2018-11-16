@@ -107,7 +107,7 @@
                                                             <rect key="frame" x="1" y="0.0" width="229" height="365"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1H1-Sa-3IQ" viewBased="YES" id="ZNL-o1-1Cb">
+                                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1H1-Sa-3IQ" viewBased="YES" id="ZNL-o1-1Cb">
                                                                     <rect key="frame" x="0.0" y="0.0" width="229" height="340"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -189,6 +189,9 @@
                                                                             </prototypeCellViews>
                                                                         </tableColumn>
                                                                     </tableColumns>
+                                                                    <connections>
+                                                                        <outlet property="menu" destination="92M-WL-fKJ" id="1c1-Ew-SuT"/>
+                                                                    </connections>
                                                                 </tableView>
                                                             </subviews>
                                                         </clipView>
@@ -252,9 +255,13 @@
                 <outlet property="accessText" destination="4cx-fB-aox" id="GnG-9l-xYY"/>
                 <outlet property="calPop" destination="zbj-96-jLz" id="8iM-Ym-KBv"/>
                 <outlet property="calText" destination="S73-tA-H9H" id="j3l-dt-AaJ"/>
+                <outlet property="changeCourseItem" destination="aDd-bg-XM5" id="Lpb-JN-byF"/>
+                <outlet property="contextualMenu" destination="92M-WL-fKJ" id="zMM-zH-8d4"/>
                 <outlet property="courseTable" destination="ZNL-o1-1Cb" id="l5l-1o-TQu"/>
+                <outlet property="createCourseItem" destination="Buq-GG-6Ou" id="8xJ-G1-voe"/>
                 <outlet property="createTimetableBtn" destination="I7D-XD-Upq" id="gv1-vT-Mdz"/>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="deleteCourseItem" destination="iWq-U3-yl0" id="JHh-Rg-cwo"/>
                 <outlet property="scrollView" destination="ojy-8M-AVR" id="fLE-pq-nt8"/>
                 <outlet property="sourcePop" destination="5pZ-eq-SKk" id="9pd-dt-NzI"/>
                 <outlet property="sourceText" destination="mMH-Vk-h1f" id="wRV-Ms-Qst"/>
@@ -262,5 +269,19 @@
             </connections>
             <point key="canvasLocation" x="251.5" y="238"/>
         </window>
+        <menu id="92M-WL-fKJ">
+            <items>
+                <menuItem title="新建课程" id="Buq-GG-6Ou">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="修改课程" id="aDd-bg-XM5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="删除课程" id="iWq-U3-yl0">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="66" y="-315"/>
+        </menu>
     </objects>
 </document>

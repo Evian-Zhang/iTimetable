@@ -62,7 +62,7 @@
                             <rect key="frame" x="1" y="0.0" width="944" height="367"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="jBZ-Gk-beB" viewBased="YES" id="TEb-yC-zaB">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="jBZ-Gk-beB" viewBased="YES" id="TEb-yC-zaB">
                                     <rect key="frame" x="0.0" y="0.0" width="944" height="342"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -365,23 +365,35 @@
             </view>
             <connections>
                 <outlet property="cancelButton" destination="nQb-Ea-NzQ" id="d5Y-DC-fwc"/>
+                <outlet property="changeCourseInfoItem" destination="2eU-Ol-2Xi" id="dgg-RI-z0p"/>
+                <outlet property="contextualMenu" destination="APE-Hs-JeZ" id="MS8-CA-jR0"/>
                 <outlet property="courseInfoTable" destination="TEb-yC-zaB" id="Xsa-mT-3fi"/>
                 <outlet property="courseNameText" destination="nvG-OV-5yh" id="eaF-Ym-qNH"/>
                 <outlet property="createCourseInfoButton" destination="jJf-SP-KKg" id="ixz-T9-6AB"/>
+                <outlet property="createCourseInfoItem" destination="r0a-ub-nui" id="D8Q-F0-pFl"/>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="markCourseInfoWillCreatedItem" destination="6m8-VS-SJf" id="iif-3Z-A3r"/>
+                <outlet property="markCourseInfoWillDeletedItem" destination="KJq-le-iqf" id="54o-S6-lZ5"/>
+                <outlet property="markCourseInfoWillMatchedItem" destination="8gy-Tf-cLQ" id="RJp-Tr-xyO"/>
                 <outlet property="okButton" destination="TOU-vM-FzT" id="2C3-YB-TD4"/>
             </connections>
             <point key="canvasLocation" x="100" y="255"/>
         </window>
         <menu id="APE-Hs-JeZ">
             <items>
-                <menuItem title="Item 1" id="r0a-ub-nui">
+                <menuItem title="增加时段" id="r0a-ub-nui">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Item 2" id="2eU-Ol-2Xi">
+                <menuItem title="修改时段" id="2eU-Ol-2Xi">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Item 3" id="6m8-VS-SJf">
+                <menuItem title="标记为将生成" id="6m8-VS-SJf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="标记为将匹配" id="8gy-Tf-cLQ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="标记为将删除" id="KJq-le-iqf">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
             </items>

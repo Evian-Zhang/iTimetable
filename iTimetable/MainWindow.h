@@ -21,7 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IBOutlet NSButton *createTimetableBtn;
 @property (nonatomic) IBOutlet NSTableView *courseTable;
 @property (nonatomic) IBOutlet NSScrollView *scrollView;
-
+@property (nonatomic) IBOutlet NSMenuItem *createCourseItem;
+@property (nonatomic) IBOutlet NSMenuItem *changeCourseItem;
+@property (nonatomic) IBOutlet NSMenuItem *deleteCourseItem;
+@property (nonatomic) IBOutlet NSMenu *contextualMenu;
+@property (nonatomic) NSInteger currentRow;
 
 @end
 

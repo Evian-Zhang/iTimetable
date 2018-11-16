@@ -37,6 +37,21 @@
     self.window.createCourseInfoButton.target = self;
     self.window.createCourseInfoButton.action = @selector(createCourseInfo);
     
+    self.window.createCourseInfoItem.target = self;
+    self.window.createCourseInfoItem.action = @selector(createCourseInfo);
+    
+    self.window.changeCourseInfoItem.target = self;
+    self.window.changeCourseInfoItem.action = @selector(changeCourseInfo);
+    
+    self.window.markCourseInfoWillCreatedItem.target = self;
+    self.window.markCourseInfoWillCreatedItem.action = @selector(markCourseInfoWillCreated);
+    
+    self.window.markCourseInfoWillMatchedItem.target = self;
+    self.window.markCourseInfoWillMatchedItem.action = @selector(markCourseInfoWillMatched);
+    
+    self.window.markCourseInfoWillDeletedItem.target = self;
+    self.window.markCourseInfoWillDeletedItem.action = @selector(markCourseInfoWillDeleted);
+    
     self.window.courseInfoTable.delegate = self;
     self.window.courseInfoTable.dataSource = self;
     
@@ -47,6 +62,15 @@
     self.warningText = [NSString string];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
+    self.window.createCourseInfoItem.enabled = self.window.isVisible;
+    self.window.changeCourseInfoItem.enabled = [self checkCourseInfoSelected] && self.window.isVisible;
+    self.window.markCourseInfoWillCreatedItem.enabled = [self isMarkCourseInfoWillCreatedEnabled] && self.window.isVisible;
+    self.window.markCourseInfoWillMatchedItem.enabled = [self isMarkCourseInfoWillMatchedEnabled] && self.window.isVisible;
+    self.window.markCourseInfoWillDeletedItem.enabled = [self isMarkCourseInfoWillDeletedEnabled] && self.window.isVisible;
+    return [menuItem isEnabled];
 }
 
 #pragma mark - Button Handler
