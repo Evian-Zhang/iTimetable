@@ -226,9 +226,6 @@
     } else {
         EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
         switch (currentCourseInfo.status) {
-            case EZCourseStatusWillMatched:
-                isEnabled = NO;
-                break;
                 
             default:
                 break;

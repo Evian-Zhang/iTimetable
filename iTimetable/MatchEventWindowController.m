@@ -43,9 +43,11 @@
 
 - (void)displayButtonHandler{
     NSDate *startDate = self.window.datePicker.dateValue;
+    startDate = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] dateBySettingHour:0 minute:0 second:0 ofDate:startDate options:0];
     NSDateComponents *tmpDateComponents = [[NSDateComponents alloc] init];
     tmpDateComponents.day = 1;
     NSDate *endDate = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] dateByAddingComponents:tmpDateComponents toDate:startDate options:0];
+    endDate = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] dateBySettingHour:0 minute:0 second:0 ofDate:endDate options:0];
     NSArray *calendars = @[self.calendar];
     NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:calendars];
     self.events = [[self.eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
