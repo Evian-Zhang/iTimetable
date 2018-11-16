@@ -12,6 +12,7 @@
 #import "EZCourse.h"
 #import "CourseInfo.h"
 #import "CourseInfoWindowController.h"
+#import "MatchEventWindowController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,11 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) EKEventStore *eventStore;
 @property (nonatomic) BOOL isCreating;
 @property (nonatomic) CourseInfoWindowController *courseInfoWindowController;
+@property (nonatomic) MatchEventWindowController *matchEventWindowController;
 @property (nonatomic) NSArray *names;
 @property (nonatomic) NSMutableArray *statuses;
 @property (nonatomic) NSString *warningText;
 @property (nonatomic) int deleteCount;
 @property (nonatomic) int row;
+@property (nonatomic) EKCalendar *currentCalendar;
 
 - (void)createCourseInfo;
 - (void)changeCourseInfo;

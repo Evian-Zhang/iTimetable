@@ -16,6 +16,9 @@
 		56676B1D218C16220086A00B /* CourseTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 56676B1C218C16220086A00B /* CourseTransformer.m */; };
 		56676B2C218C187A0086A00B /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 56676B2B218C187A0086A00B /* Course.m */; };
 		56676B2F218C19970086A00B /* CourseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 56676B2E218C19970086A00B /* CourseInfo.m */; };
+		56865C10219E784B00CB09FE /* MatchEventWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56865C0E219E784B00CB09FE /* MatchEventWindowController.m */; };
+		56865C11219E784B00CB09FE /* MatchEventWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56865C0F219E784B00CB09FE /* MatchEventWindowController.xib */; };
+		56865C14219E785D00CB09FE /* MatchEventWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 56865C13219E785D00CB09FE /* MatchEventWindow.m */; };
 		5687C88B218EAC5B00E29762 /* Timetable+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 5687C889218EAC5B00E29762 /* Timetable+CoreDataClass.m */; };
 		5687C88C218EAC5B00E29762 /* Timetable+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5687C88A218EAC5B00E29762 /* Timetable+CoreDataProperties.m */; };
 		56D3C044218B0B930032D0E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D3C043218B0B930032D0E5 /* AppDelegate.m */; };
@@ -52,6 +55,11 @@
 		56676B2B218C187A0086A00B /* Course.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		56676B2D218C19970086A00B /* CourseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CourseInfo.h; sourceTree = "<group>"; };
 		56676B2E218C19970086A00B /* CourseInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CourseInfo.m; sourceTree = "<group>"; };
+		56865C0D219E784B00CB09FE /* MatchEventWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchEventWindowController.h; sourceTree = "<group>"; };
+		56865C0E219E784B00CB09FE /* MatchEventWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchEventWindowController.m; sourceTree = "<group>"; };
+		56865C0F219E784B00CB09FE /* MatchEventWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MatchEventWindowController.xib; sourceTree = "<group>"; };
+		56865C12219E785D00CB09FE /* MatchEventWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchEventWindow.h; sourceTree = "<group>"; };
+		56865C13219E785D00CB09FE /* MatchEventWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchEventWindow.m; sourceTree = "<group>"; };
 		5687C887218EAC5B00E29762 /* Timetable+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timetable+CoreDataProperties.h"; sourceTree = "<group>"; };
 		5687C888218EAC5B00E29762 /* Timetable+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timetable+CoreDataClass.h"; sourceTree = "<group>"; };
 		5687C889218EAC5B00E29762 /* Timetable+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Timetable+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -149,6 +157,11 @@
 				565E36B12194186E00884D65 /* CourseInfoWindowController.h */,
 				565E36B22194186E00884D65 /* CourseInfoWindowController.m */,
 				565E36B32194186E00884D65 /* CourseInfoWindowController.xib */,
+				56865C0D219E784B00CB09FE /* MatchEventWindowController.h */,
+				56865C0E219E784B00CB09FE /* MatchEventWindowController.m */,
+				56865C0F219E784B00CB09FE /* MatchEventWindowController.xib */,
+				56865C12219E785D00CB09FE /* MatchEventWindow.h */,
+				56865C13219E785D00CB09FE /* MatchEventWindow.m */,
 				565E36B62194187E00884D65 /* CourseInfoWindow.h */,
 				565E36B72194187E00884D65 /* CourseInfoWindow.m */,
 				56FE79E6218EA2990093BBC5 /* EZTimetable.h */,
@@ -235,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56D3C046218B0B940032D0E5 /* Assets.xcassets in Resources */,
+				56865C11219E784B00CB09FE /* MatchEventWindowController.xib in Resources */,
 				56D3C057218B0C0F0032D0E5 /* MainWindowController.xib in Resources */,
 				56D3C049218B0B940032D0E5 /* MainMenu.xib in Resources */,
 				56E071DD218F755100020DBF /* CourseWindowController.xib in Resources */,
@@ -264,9 +278,11 @@
 				56676B2C218C187A0086A00B /* Course.m in Sources */,
 				56676B11218C10200086A00B /* iTimetable.xcdatamodeld in Sources */,
 				56E071DC218F755100020DBF /* CourseWindowController.m in Sources */,
+				56865C14219E785D00CB09FE /* MatchEventWindow.m in Sources */,
 				565E36B82194187E00884D65 /* CourseInfoWindow.m in Sources */,
 				56D3C05D218B198E0032D0E5 /* EZEventStore.m in Sources */,
 				56D3C044218B0B930032D0E5 /* AppDelegate.m in Sources */,
+				56865C10219E784B00CB09FE /* MatchEventWindowController.m in Sources */,
 				5644AA962193286500715618 /* EZCourseInfo.m in Sources */,
 				56F1162E218D4C76006F8DF6 /* TimetableInfoWindowController.m in Sources */,
 				56676B2F218C19970086A00B /* CourseInfo.m in Sources */,

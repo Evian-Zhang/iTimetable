@@ -21,6 +21,9 @@
 @synthesize warningText = _warningText;
 @synthesize deleteCount = _deleteCount;
 @synthesize row = _row;
+@synthesize courseInfoWindowController = _courseInfoWindowController;
+@synthesize matchEventWindowController = _matchEventWindowController;
+@synthesize currentCalendar = _currentCalendar;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -61,7 +64,9 @@
     
     self.warningText = [NSString string];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificicationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoMatchSuccessfullyNotificationHandler:) name:@"EZCourseInfoMatchSuccessfully" object:nil];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
@@ -139,8 +144,13 @@
         default:
             break;
     }
-    courseInfo.status = EZCourseStatusWillMatched;
-    [self.window.courseInfoTable reloadData];
+    self.matchEventWindowController = [[MatchEventWindowController alloc] initWithWindowNibName:@"MatchEventWindowController"];
+    self.matchEventWindowController.row = self.window.currentRow;
+    self.matchEventWindowController.eventStore = self.eventStore;
+    self.matchEventWindowController.firstWeek = courseInfo.firstWeek;
+    self.matchEventWindowController.courseName = self.window.courseNameText.stringValue;
+    self.matchEventWindowController.calendar = self.currentCalendar;
+    [NSApp runModalForWindow:self.matchEventWindowController.window];
 }
 
 - (void)markCourseInfoWillDeleted{
@@ -150,7 +160,7 @@
     [self.window.courseInfoTable reloadData];
 }
 
-- (void)EZCourseInfoGetSuccessfullyNotificicationHandler:(NSNotification*)aNotification{
+- (void)EZCourseInfoGetSuccessfullyNotificationHandler:(NSNotification*)aNotification{
     NSDictionary *userInfo = aNotification.userInfo;
     EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
     NSNumber *tmpNumber = [userInfo objectForKey:@"isCreating"];
@@ -162,6 +172,15 @@
         int courseInfoRow = aNumber.intValue;
         [self.course.courseInfos replaceObjectAtIndex:courseInfoRow withObject:courseInfo];
     }
+    [self.window.courseInfoTable reloadData];
+}
+
+- (void)EZCourseInfoMatchSuccessfullyNotificationHandler:(NSNotification*)aNotification{
+    NSDictionary *userInfo = aNotification.userInfo;
+    EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
+    courseInfo.status = EZCourseStatusWillMatched;
+    NSNumber *tmpNumber = [userInfo objectForKey:@"row"];
+    [self.course.courseInfos replaceObjectAtIndex:tmpNumber.intValue withObject:courseInfo];
     [self.window.courseInfoTable reloadData];
 }
 

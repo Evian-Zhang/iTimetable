@@ -305,6 +305,7 @@
     self.courseWindowController.isCreating = YES;
     self.courseWindowController.row = -1;
     self.courseWindowController.names = [NSArray arrayWithArray:names];
+    self.courseWindowController.currentCalendar = self.storeModel.currentCalendar;
     [NSApp runModalForWindow:self.courseWindowController.window];
 }
 
@@ -360,6 +361,7 @@
         self.courseWindowController.eventStore = self.storeModel.eventStore;
         self.courseWindowController.isCreating = NO;
         self.courseWindowController.row = self.window.currentRow;
+        self.courseWindowController.currentCalendar = self.storeModel.currentCalendar;
         self.courseWindowController.names = [NSArray arrayWithArray:names];
         [NSApp runModalForWindow:self.courseWindowController.window];
     }
