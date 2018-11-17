@@ -17,7 +17,6 @@
 @synthesize eventStore = _eventStore;
 @synthesize isCreating = _isCreating;
 @synthesize names = _names;
-@synthesize statuses = _statuses;
 @synthesize warningText = _warningText;
 @synthesize deleteCount = _deleteCount;
 @synthesize row = _row;
@@ -58,11 +57,11 @@
     self.window.courseInfoTable.delegate = self;
     self.window.courseInfoTable.dataSource = self;
     
-    self.statuses = [NSMutableArray array];
-    
     self.deleteCount = 0;
     
     self.warningText = [NSString string];
+    
+    self.window.courseNameText.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EZCourseInfoGetSuccessfullyNotificationHandler:) name:@"EZCourseInfoGetSuccessfully" object:nil];
     
@@ -261,6 +260,24 @@
         return YES;
     } else {
         return NO;
+    }
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj{
+    if (!self.isCreating) {
+        for (EZCourseInfo *courseInfo in self.course.courseInfos) {
+            switch (courseInfo.status) {
+                case EZCourseStatusWillDelete:
+                    break;
+                case EZCourseStatusNotMatched:
+                    break;
+                    
+                default:
+                    courseInfo.status = EZCourseStatusWillChange;
+                    break;
+            }
+        }
+        [self.window.courseInfoTable reloadData];
     }
 }
 

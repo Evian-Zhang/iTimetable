@@ -35,6 +35,11 @@
     self.window.firstClassPicker.dateValue = self.timetable.firstClassTime;
     self.window.lastClassPicker.dateValue = self.timetable.lastClassTime;
     
+    if (!self.isCreating) {
+        self.window.firstWeekPicker.enabled = NO;
+        self.window.semesterLengthText.enabled = NO;
+    }
+    
     self.warningText = [NSString string];
 }
 

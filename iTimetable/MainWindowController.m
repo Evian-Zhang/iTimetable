@@ -208,11 +208,7 @@
         }
     } else {
         Course *course = [[Course alloc] init];
-        for(course in self.currentTimetable.courses){
-            if([course.courseName isEqualToString:tmpCourse.courseName]){
-                break;
-            }
-        }
+        course.courseName = tmpCourse.courseName;
         course.courseInfos = [self convertedCourseInfosWithUnconvertedCourseInfos:[NSArray arrayWithArray:tmpCourse.courseInfos] andCourseName:course.courseName];
         NSNumber *tmpRow = [[aNotification userInfo] valueForKey:@"row"];
         [self.currentTimetable.courses replaceObjectAtIndex:tmpRow.intValue withObject:course];

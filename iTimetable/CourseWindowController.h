@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CourseWindowController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate>
+@interface CourseWindowController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate, NSTextFieldDelegate>
 
 @property (weak) IBOutlet CourseWindow *window;
 @property (nonatomic) EZCourse *course;
@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CourseInfoWindowController *courseInfoWindowController;
 @property (nonatomic) MatchEventWindowController *matchEventWindowController;
 @property (nonatomic) NSArray *names;
-@property (nonatomic) NSMutableArray *statuses;
 @property (nonatomic) NSString *warningText;
 @property (nonatomic) int deleteCount;
 @property (nonatomic) int row;
