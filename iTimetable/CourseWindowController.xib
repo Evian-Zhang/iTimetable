@@ -375,6 +375,7 @@
                 <outlet property="markCourseInfoWillCreatedItem" destination="6m8-VS-SJf" id="iif-3Z-A3r"/>
                 <outlet property="markCourseInfoWillDeletedItem" destination="KJq-le-iqf" id="54o-S6-lZ5"/>
                 <outlet property="markCourseInfoWillMatchedItem" destination="8gy-Tf-cLQ" id="RJp-Tr-xyO"/>
+                <outlet property="markCourseInfoWillUnmatchedItem" destination="lsB-a2-AT7" id="V9d-Hz-vuV"/>
                 <outlet property="okButton" destination="TOU-vM-FzT" id="2C3-YB-TD4"/>
             </connections>
             <point key="canvasLocation" x="100" y="255"/>
@@ -390,10 +391,13 @@
                 <menuItem title="标记为将生成" id="6m8-VS-SJf">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="标记为将匹配" id="8gy-Tf-cLQ">
+                <menuItem title="标记为将绑定" id="8gy-Tf-cLQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem title="标记为将删除" id="KJq-le-iqf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="标记为将解绑" id="lsB-a2-AT7">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
             </items>

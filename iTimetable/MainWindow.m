@@ -10,7 +10,6 @@
 
 @implementation MainWindow
 @synthesize currentRow = _currentRow;
-@synthesize timetableViewController = _timetableViewController;
 
 - (NSInteger)currentRow{
     if (self.courseTable.clickedRow >= 0) {

@@ -39,8 +39,6 @@
     self.storeModel = [[EZEventStore alloc] init];
     self.window.courseTable.dataSource = self;
     self.window.courseTable.delegate = self;
-    self.window.timetableViewController = [[TimetableViewController alloc] initWithNibName:@"TimetableViewController" bundle:nil];
-    self.window.timetableScrollView.documentView = self.window.timetableViewController.view;
 }
 
 - (void)initNotification{
@@ -641,6 +639,17 @@
                         [convertedCourseInfos addObject:convertedCourseInfo];
                     }
                 }
+            }
+                break;
+            case EZCourseStatusWillUnmatched: {
+                CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.room = courseInfo.room;
+                convertedCourseInfo.teacher = courseInfo.teacher;
+                convertedCourseInfo.startTime = courseInfo.startTime;
+                convertedCourseInfo.endTime = courseInfo.endTime;
+                convertedCourseInfo.weeks = [NSArray arrayWithArray:courseInfo.weeks];
+                convertedCourseInfo.eventIdentifier = courseInfo.eventIdentifier;
+                [convertedCourseInfos addObject:convertedCourseInfo];
             }
                 break;
         }

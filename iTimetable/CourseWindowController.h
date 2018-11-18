@@ -35,10 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)markCourseInfoWillCreated;
 - (void)markCourseInfoWillMatched;
 - (void)markCourseInfoWillDeleted;
+- (void)markCourseInfoWillUnmatched;
 - (BOOL)checkCourseInfoSelected;
 - (BOOL)isMarkCourseInfoWillCreatedEnabled;
 - (BOOL)isMarkCourseInfoWillMatchedEnabled;
 - (BOOL)isMarkCourseInfoWillDeletedEnabled;
+- (BOOL)isMarkCourseInfoWillUnmatchedEnabled;
 
 @end
 

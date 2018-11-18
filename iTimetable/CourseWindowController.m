@@ -54,6 +54,9 @@
     self.window.markCourseInfoWillDeletedItem.target = self;
     self.window.markCourseInfoWillDeletedItem.action = @selector(markCourseInfoWillDeleted);
     
+    self.window.markCourseInfoWillUnmatchedItem.target = self;
+    self.window.markCourseInfoWillUnmatchedItem.action = @selector(markCourseInfoWillUnmatched);
+    
     self.window.courseInfoTable.delegate = self;
     self.window.courseInfoTable.dataSource = self;
     
@@ -71,9 +74,10 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
     self.window.createCourseInfoItem.enabled = self.window.isVisible;
     self.window.changeCourseInfoItem.enabled = [self checkCourseInfoSelected] && self.window.isVisible;
-    self.window.markCourseInfoWillCreatedItem.enabled = [self isMarkCourseInfoWillCreatedEnabled] && self.window.isVisible;
-    self.window.markCourseInfoWillMatchedItem.enabled = [self isMarkCourseInfoWillMatchedEnabled] && self.window.isVisible;
-    self.window.markCourseInfoWillDeletedItem.enabled = [self isMarkCourseInfoWillDeletedEnabled] && self.window.isVisible;
+    self.window.markCourseInfoWillCreatedItem.enabled = [self isMarkCourseInfoWillCreatedEnabled] && self.window.isVisible && !self.matchEventWindowController.window.isVisible;
+    self.window.markCourseInfoWillMatchedItem.enabled = [self isMarkCourseInfoWillMatchedEnabled] && self.window.isVisible && !self.matchEventWindowController.window.isVisible;
+    self.window.markCourseInfoWillDeletedItem.enabled = [self isMarkCourseInfoWillDeletedEnabled] && self.window.isVisible && !self.matchEventWindowController.window.isVisible;
+    self.window.markCourseInfoWillUnmatchedItem.enabled = [self isMarkCourseInfoWillUnmatchedEnabled] && self.window.isVisible && !self.matchEventWindowController.window.isVisible;
     return [menuItem isEnabled];
 }
 
@@ -159,6 +163,12 @@
     [self.window.courseInfoTable reloadData];
 }
 
+- (void)markCourseInfoWillUnmatched{
+    EZCourseInfo *courseInfo = self.course.courseInfos[self.window.currentRow];
+    courseInfo.eventIdentifier = [NSString string];
+    [self.window.courseInfoTable reloadData];
+}
+
 - (void)EZCourseInfoGetSuccessfullyNotificationHandler:(NSNotification*)aNotification{
     NSDictionary *userInfo = aNotification.userInfo;
     EZCourseInfo *courseInfo = [userInfo objectForKey:@"courseInfo"];
@@ -241,6 +251,30 @@
         EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
         switch (currentCourseInfo.status) {
             case EZCourseStatusWillDelete:
+                isEnabled = NO;
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return isEnabled;
+}
+
+- (BOOL)isMarkCourseInfoWillUnmatchedEnabled{
+    BOOL isEnabled = YES;
+    if (![self checkCourseInfoSelected]) {
+        isEnabled = NO;
+    } else {
+        EZCourseInfo *currentCourseInfo = self.course.courseInfos[self.window.currentRow];
+        switch (currentCourseInfo.status) {
+            case EZCourseStatusWillCreate:
+                isEnabled = NO;
+                break;
+            case EZCourseStatusWillDelete:
+                isEnabled = NO;
+                break;
+            case EZCourseStatusWillUnmatched:
                 isEnabled = NO;
                 break;
                 
@@ -350,10 +384,13 @@
                 cellText = @"将删除";
                 break;
             case EZCourseStatusWillMatched:
-                cellText = @"将匹配";
+                cellText = @"将绑定";
                 break;
             case EZCourseStatusWillChange:
                 cellText = @"将修改";
+                break;
+            case EZCourseStatusWillUnmatched:
+                cellText = @"将解绑";
                 break;
         }
     } else if(tableColumn == tableView.tableColumns[7]){

@@ -64,23 +64,27 @@
     //self.deleteCourseInfoItem.target = self;
     self.markCourseInfoWillDeletedItem.action = @selector(markCourseInfoWillDeletedItemHandler);
     
+    self.markCourseInfoWillUnmatchedItem.enabled = NO;
+    self.markCourseInfoWillUnmatchedItem.action = @selector(markCourseInfoWillUnmatchedItemHandler);
+    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarChangedHandler) name:@"EZCalendarChanged" object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseTableSelectionChangedHandler) name:@"EZCourseTableSelectionChanged" object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(courseInfoTableSelectionChangedHandler) name:@"EZCourseInfoTableSelectionChanged" object:nil];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]) && (!self.mainWindowController.courseWindowController.window.isVisible);
-    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
-    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
-    self.createCourseItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible;
-    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible;
-    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible;
-    self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible;
-    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible;
-    self.markCourseInfoWillCreatedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillCreatedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
-    self.markCourseInfoWillMatchedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillMatchedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
-    self.markCourseInfoWillDeletedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillDeletedEnabled] && self.mainWindowController.courseWindowController.window.isVisible;
+    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]) && (!self.mainWindowController.courseWindowController.window.isVisible) && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.createCourseItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.changeCourseInfoItem.enabled = [self.mainWindowController.courseWindowController checkCourseInfoSelected] && self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.markCourseInfoWillCreatedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillCreatedEnabled] && self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.markCourseInfoWillMatchedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillMatchedEnabled] && self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.markCourseInfoWillDeletedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillDeletedEnabled] && self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.markCourseInfoWillUnmatchedItem.enabled = [self.mainWindowController.courseWindowController isMarkCourseInfoWillUnmatchedEnabled] && self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
     return [menuItem isEnabled];
 }
 
@@ -131,6 +135,10 @@
 
 - (void)markCourseInfoWillDeletedItemHandler{
     [self.mainWindowController.courseWindowController markCourseInfoWillDeleted];
+}
+
+- (void)markCourseInfoWillUnmatchedItemHandler{
+    [self.mainWindowController.courseWindowController markCourseInfoWillUnmatched];
 }
 /*
 - (void)calendarChangedHandler{

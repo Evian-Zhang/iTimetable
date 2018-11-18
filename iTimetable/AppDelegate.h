@@ -24,6 +24,7 @@
 @property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillCreatedItem;
 @property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillMatchedItem;
 @property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillDeletedItem;
+@property (nonatomic) IBOutlet NSMenuItem *markCourseInfoWillUnmatchedItem;
 
 @end
 

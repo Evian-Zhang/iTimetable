@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "TimetableViewController.h"
+#import "TimetableView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,8 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IBOutlet NSMenuItem *changeCourseItem;
 @property (nonatomic) IBOutlet NSMenuItem *deleteCourseItem;
 @property (nonatomic) IBOutlet NSMenu *contextualMenu;
-@property (nonatomic) IBOutlet NSScrollView *timetableScrollView;
-@property (nonatomic) TimetableViewController *timetableViewController;
+@property (nonatomic) IBOutlet TimetableView *timetableView;
 @property (nonatomic) NSInteger currentRow;
 
 @end

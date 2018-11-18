@@ -24,6 +24,7 @@
                 <outlet property="markCourseInfoWillCreatedItem" destination="LGW-0c-kly" id="0N5-NM-2qK"/>
                 <outlet property="markCourseInfoWillDeletedItem" destination="1Sy-69-o6M" id="pn9-ia-PKA"/>
                 <outlet property="markCourseInfoWillMatchedItem" destination="Tah-3L-tuf" id="ew1-vA-83t"/>
+                <outlet property="markCourseInfoWillUnmatchedItem" destination="gv5-AD-xpD" id="5aY-nX-l1u"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -211,6 +212,9 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Mark CourseInfo WillDeleted" id="1Sy-69-o6M">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Mark CourseInfo WillUnmatched" id="gv5-AD-xpD">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
