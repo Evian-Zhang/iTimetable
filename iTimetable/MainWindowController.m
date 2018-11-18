@@ -23,7 +23,6 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
     self.window.accessText.stringValue = @"正在获取日历访问权限";
     self.window.accessText.hidden = NO;
     self.window.sourceText.hidden = YES;
@@ -40,6 +39,8 @@
     self.storeModel = [[EZEventStore alloc] init];
     self.window.courseTable.dataSource = self;
     self.window.courseTable.delegate = self;
+    self.window.timetableViewController = [[TimetableViewController alloc] initWithNibName:@"TimetableViewController" bundle:nil];
+    self.window.timetableScrollView.documentView = self.window.timetableViewController.view;
 }
 
 - (void)initNotification{
@@ -440,6 +441,9 @@
     }
     return NO;
 }
+
+#pragma mark -draw timetable
+
 
 #pragma mark - helper function
 - (NSArray*)convertedCourseInfosWithUnconvertedCourseInfos:(NSArray*)unconvertedCourseInfos andCourseName:(NSString*)courseName{

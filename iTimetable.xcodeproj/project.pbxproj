@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5644AA962193286500715618 /* EZCourseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644AA952193286500715618 /* EZCourseInfo.m */; };
+		564659B621A10F7300FBC72E /* TimetableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 564659B421A10F7300FBC72E /* TimetableViewController.m */; };
+		564659B721A10F7300FBC72E /* TimetableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 564659B521A10F7300FBC72E /* TimetableViewController.xib */; };
+		564659BF21A110DF00FBC72E /* TimetableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 564659BE21A110DF00FBC72E /* TimetableView.m */; };
 		565E36B42194186E00884D65 /* CourseInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565E36B22194186E00884D65 /* CourseInfoWindowController.m */; };
 		565E36B52194186E00884D65 /* CourseInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 565E36B32194186E00884D65 /* CourseInfoWindowController.xib */; };
 		565E36B82194187E00884D65 /* CourseInfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 565E36B72194187E00884D65 /* CourseInfoWindow.m */; };
@@ -42,6 +45,11 @@
 /* Begin PBXFileReference section */
 		5644AA942193286500715618 /* EZCourseInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EZCourseInfo.h; sourceTree = "<group>"; };
 		5644AA952193286500715618 /* EZCourseInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZCourseInfo.m; sourceTree = "<group>"; };
+		564659B321A10F7300FBC72E /* TimetableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimetableViewController.h; sourceTree = "<group>"; };
+		564659B421A10F7300FBC72E /* TimetableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimetableViewController.m; sourceTree = "<group>"; };
+		564659B521A10F7300FBC72E /* TimetableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableViewController.xib; sourceTree = "<group>"; };
+		564659BD21A110DF00FBC72E /* TimetableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimetableView.h; sourceTree = "<group>"; };
+		564659BE21A110DF00FBC72E /* TimetableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimetableView.m; sourceTree = "<group>"; };
 		565E36B12194186E00884D65 /* CourseInfoWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CourseInfoWindowController.h; sourceTree = "<group>"; };
 		565E36B22194186E00884D65 /* CourseInfoWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CourseInfoWindowController.m; sourceTree = "<group>"; };
 		565E36B32194186E00884D65 /* CourseInfoWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CourseInfoWindowController.xib; sourceTree = "<group>"; };
@@ -144,6 +152,11 @@
 				56D3C055218B0C0F0032D0E5 /* MainWindowController.xib */,
 				56D3C058218B0D3D0032D0E5 /* MainWindow.h */,
 				56D3C059218B0D3D0032D0E5 /* MainWindow.m */,
+				564659B321A10F7300FBC72E /* TimetableViewController.h */,
+				564659B421A10F7300FBC72E /* TimetableViewController.m */,
+				564659B521A10F7300FBC72E /* TimetableViewController.xib */,
+				564659BD21A110DF00FBC72E /* TimetableView.h */,
+				564659BE21A110DF00FBC72E /* TimetableView.m */,
 				56F1162B218D4C76006F8DF6 /* TimetableInfoWindowController.h */,
 				56F1162C218D4C76006F8DF6 /* TimetableInfoWindowController.m */,
 				56F1162D218D4C76006F8DF6 /* TimetableInfoWindowController.xib */,
@@ -249,6 +262,7 @@
 			files = (
 				56D3C046218B0B940032D0E5 /* Assets.xcassets in Resources */,
 				56865C11219E784B00CB09FE /* MatchEventWindowController.xib in Resources */,
+				564659B721A10F7300FBC72E /* TimetableViewController.xib in Resources */,
 				56D3C057218B0C0F0032D0E5 /* MainWindowController.xib in Resources */,
 				56D3C049218B0B940032D0E5 /* MainMenu.xib in Resources */,
 				56E071DD218F755100020DBF /* CourseWindowController.xib in Resources */,
@@ -284,6 +298,8 @@
 				56D3C044218B0B930032D0E5 /* AppDelegate.m in Sources */,
 				56865C10219E784B00CB09FE /* MatchEventWindowController.m in Sources */,
 				5644AA962193286500715618 /* EZCourseInfo.m in Sources */,
+				564659BF21A110DF00FBC72E /* TimetableView.m in Sources */,
+				564659B621A10F7300FBC72E /* TimetableViewController.m in Sources */,
 				56F1162E218D4C76006F8DF6 /* TimetableInfoWindowController.m in Sources */,
 				56676B2F218C19970086A00B /* CourseInfo.m in Sources */,
 			);

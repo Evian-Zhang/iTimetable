@@ -14,6 +14,7 @@
 #import "EZTimetable.h"
 #import "EZCourse.h"
 #import "Timetable+CoreDataClass.h"
+#import "TimetableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

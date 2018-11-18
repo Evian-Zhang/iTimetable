@@ -219,9 +219,38 @@
                                                     <constraint firstItem="I7D-XD-Upq" firstAttribute="centerY" secondItem="1dO-A5-ftB" secondAttribute="centerY" id="qVX-VT-Quz"/>
                                                 </constraints>
                                             </customView>
-                                            <customView fixedFrame="YES" id="2bY-st-2S2">
+                                            <customView id="2bY-st-2S2">
                                                 <rect key="frame" x="232" y="0.0" width="473" height="366"/>
                                                 <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BN-SX-yQj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="473" height="366"/>
+                                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qlg-1f-pW6">
+                                                            <rect key="frame" x="1" y="1" width="456" height="349"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vm7-yg-PGV">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="441" height="334"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                </view>
+                                                            </subviews>
+                                                        </clipView>
+                                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="OhE-VW-Fcq">
+                                                            <rect key="frame" x="1" y="350" width="456" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8dd-cp-HPq">
+                                                            <rect key="frame" x="457" y="1" width="15" height="349"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="8BN-SX-yQj" firstAttribute="top" secondItem="2bY-st-2S2" secondAttribute="top" id="WM1-Am-os2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="8BN-SX-yQj" secondAttribute="trailing" id="aZY-Fj-dcr"/>
+                                                    <constraint firstAttribute="bottom" secondItem="8BN-SX-yQj" secondAttribute="bottom" id="gpG-Qk-akI"/>
+                                                    <constraint firstItem="8BN-SX-yQj" firstAttribute="leading" secondItem="2bY-st-2S2" secondAttribute="leading" id="qb4-5R-KjT"/>
+                                                </constraints>
                                             </customView>
                                         </subviews>
                                         <holdingPriorities>
@@ -266,6 +295,7 @@
                 <outlet property="sourcePop" destination="5pZ-eq-SKk" id="9pd-dt-NzI"/>
                 <outlet property="sourceText" destination="mMH-Vk-h1f" id="wRV-Ms-Qst"/>
                 <outlet property="splitView" destination="Dpo-oh-DlE" id="2gc-KP-X3o"/>
+                <outlet property="timetableScrollView" destination="8BN-SX-yQj" id="htl-ct-aVu"/>
             </connections>
             <point key="canvasLocation" x="251.5" y="238"/>
         </window>
@@ -281,7 +311,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="66" y="-315"/>
+            <point key="canvasLocation" x="128" y="-85"/>
         </menu>
     </objects>
 </document>
