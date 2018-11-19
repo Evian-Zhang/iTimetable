@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CourseInfo : NSObject <NSSecureCoding>
 
+@property (nonatomic) NSString *courseName;
 @property (nonatomic) NSDate *startTime;
 @property (nonatomic) NSDate *endTime;
 @property (nonatomic) NSArray *weeks;

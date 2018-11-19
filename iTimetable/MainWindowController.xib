@@ -219,9 +219,26 @@
                                                     <constraint firstItem="I7D-XD-Upq" firstAttribute="centerY" secondItem="1dO-A5-ftB" secondAttribute="centerY" id="qVX-VT-Quz"/>
                                                 </constraints>
                                             </customView>
-                                            <customView fixedFrame="YES" id="2bY-st-2S2" customClass="TimetableView">
+                                            <customView id="2bY-st-2S2" customClass="TimetableView">
                                                 <rect key="frame" x="232" y="0.0" width="473" height="366"/>
                                                 <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ymD-Z5-2fP">
+                                                        <rect key="frame" x="198" y="322" width="77" height="25"/>
+                                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="IrU-Ck-gI7">
+                                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="menu"/>
+                                                            <menu key="menu" id="q2v-Tl-vDT"/>
+                                                        </popUpButtonCell>
+                                                    </popUpButton>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="ymD-Z5-2fP" firstAttribute="top" secondItem="2bY-st-2S2" secondAttribute="top" constant="20" symbolic="YES" id="DTa-nY-Feg"/>
+                                                    <constraint firstItem="ymD-Z5-2fP" firstAttribute="centerX" secondItem="2bY-st-2S2" secondAttribute="centerX" id="zn5-6Y-1ml"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="currentWeekPicker" destination="ymD-Z5-2fP" id="onC-jX-iMQ"/>
+                                                </connections>
                                             </customView>
                                         </subviews>
                                         <holdingPriorities>
@@ -268,7 +285,7 @@
                 <outlet property="splitView" destination="Dpo-oh-DlE" id="2gc-KP-X3o"/>
                 <outlet property="timetableView" destination="2bY-st-2S2" id="BB1-sE-i7H"/>
             </connections>
-            <point key="canvasLocation" x="251.5" y="238"/>
+            <point key="canvasLocation" x="49.5" y="342"/>
         </window>
         <menu id="92M-WL-fKJ">
             <items>

@@ -9,6 +9,7 @@
 #import "CourseInfo.h"
 
 @implementation CourseInfo
+@synthesize courseName = _courseName;
 @synthesize startTime = _startTime;
 @synthesize endTime = _endTime;
 @synthesize weeks = _weeks;
@@ -32,7 +33,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    
+    [aCoder encodeObject:self.courseName forKey:@"courseName"];
     [aCoder encodeObject:self.startTime forKey:@"startTime"];
     [aCoder encodeObject:self.endTime forKey:@"endTime"];
     [aCoder encodeObject:self.weeks forKey:@"weeks"];
@@ -46,6 +47,7 @@
     self = [[self class] new];
     if (self = [super init])
     {
+        self.courseName = [aDecoder decodeObjectForKey:@"courseName"];
         self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
         self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
         self.weeks = [aDecoder decodeObjectForKey:@"weeks"];

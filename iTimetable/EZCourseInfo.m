@@ -9,6 +9,7 @@
 #import "EZCourseInfo.h"
 
 @implementation EZCourseInfo
+@synthesize courseName = _courseName;
 @synthesize startTime = _startTime;
 @synthesize endTime = _endTime;
 @synthesize weeks = _weeks;

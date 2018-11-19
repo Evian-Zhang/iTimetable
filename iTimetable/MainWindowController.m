@@ -39,6 +39,11 @@
     self.storeModel = [[EZEventStore alloc] init];
     self.window.courseTable.dataSource = self;
     self.window.courseTable.delegate = self;
+    
+    self.window.timetableView.courseInfos = [NSMutableArray<NSMutableArray<CourseInfo*>*> arrayWithCapacity:7];
+    for (int day = 0; day < 7; day++) {
+        self.window.timetableView.courseInfos[day] = [NSMutableArray<CourseInfo*> array];
+    }
 }
 
 - (void)initNotification{
@@ -321,6 +326,7 @@
         [course.courseInfos removeAllObjects];
         for(CourseInfo *unconvertedCourseInfo in tmpCourse.courseInfos){
             EZCourseInfo *convertedCourseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.currentTimetable.firstWeek semesterLength:self.currentTimetable.semesterLength];
+            convertedCourseInfo.courseName = unconvertedCourseInfo.courseName;
             convertedCourseInfo.room = unconvertedCourseInfo.room;
             convertedCourseInfo.teacher = unconvertedCourseInfo.teacher;
             convertedCourseInfo.startTime = unconvertedCourseInfo.startTime;
@@ -407,6 +413,12 @@
         self.currentTimetable = [[EZTimetable alloc] init];
         self.window.scrollView.hidden = YES;
         self.window.createTimetableBtn.hidden = NO;
+        self.window.timetableView.currentWeekPicker.enabled = NO;
+        [self.window.timetableView.currentWeekPicker removeAllItems];
+        self.window.timetableView.firstClassTime = [NSDate date];
+        self.window.timetableView.dayLength = 0;
+        [self classifyCourseInfosToTimetableView];
+        [self.window.timetableView setNeedsDisplay:YES];
         return NO;
     } else {
         self.window.createTimetableBtn.enabled = NO;
@@ -421,6 +433,23 @@
         self.currentTimetable.lastClassTime = tmpTimetable.lastClassTime;
         self.currentTimetable.semesterLength = tmpTimetable.semesterLength;
         self.currentTimetable.courses = [NSMutableArray arrayWithArray:tmpTimetable.courses];
+        self.window.timetableView.currentWeekPicker.enabled = YES;
+        for (int week = 0; week < self.currentTimetable.semesterLength; week++) {
+            [self.window.timetableView.currentWeekPicker addItemWithTitle:[NSString stringWithFormat:@"第%d周", week + 1]];
+        }
+        NSDateComponents *tmpComponents = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] components:NSCalendarUnitDay fromDate:self.currentTimetable.firstWeek toDate:[NSDate date] options:0];
+        int currentWeek = (tmpComponents.day) / 7;
+        if (currentWeek >= 0 && currentWeek < self.currentTimetable.semesterLength) {
+            self.window.timetableView.currentWeek = currentWeek;
+            [self.window.timetableView.currentWeekPicker selectItemAtIndex:currentWeek];
+        } else {
+            self.window.timetableView.currentWeek = 0;
+            [self.window.timetableView.currentWeekPicker selectItemAtIndex:0];
+        }
+        self.window.timetableView.firstClassTime = self.currentTimetable.firstClassTime;
+        self.window.timetableView.dayLength = [self.currentTimetable.lastClassTime timeIntervalSinceDate:self.currentTimetable.firstClassTime] / (double)3600;
+        [self classifyCourseInfosToTimetableView];
+        [self.window.timetableView setNeedsDisplay:YES];
         return YES;
     }
 }
@@ -450,6 +479,7 @@
         switch (courseInfo.status) {
             case EZCourseStatusWillCreate: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -509,6 +539,7 @@
                 break;
             case EZCourseStatusWillMatched: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -520,6 +551,7 @@
                 break;
             case EZCourseStatusNotMatched: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -531,6 +563,7 @@
                 break;
             case EZCourseStatusHasMatched: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -542,6 +575,7 @@
                 break;
             case EZCourseStatusWillChange: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -643,6 +677,7 @@
                 break;
             case EZCourseStatusWillUnmatched: {
                 CourseInfo *convertedCourseInfo = [[CourseInfo alloc] init];
+                convertedCourseInfo.courseName = courseInfo.courseName;
                 convertedCourseInfo.room = courseInfo.room;
                 convertedCourseInfo.teacher = courseInfo.teacher;
                 convertedCourseInfo.startTime = courseInfo.startTime;
@@ -669,6 +704,40 @@
                     NSLog(@"从日历中删除失败。%@", removeError);
                 }
             }
+        }
+    }
+}
+
+- (void)classifyCourseInfosToTimetableView {
+    NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
+    dateComponent.day = 7 * self.window.timetableView.currentWeekPicker.indexOfSelectedItem;
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *currentDay = [gregorian dateByAddingComponents:dateComponent toDate:self.currentTimetable.firstWeek options:0];
+    dateComponent.day = 0;
+    if (self.storeModel.currentCalendar != nil) {
+        NSArray *calendars = @[self.storeModel.currentCalendar];
+        for (int day = 0; day < 7; day++) {
+            [self.window.timetableView.courseInfos[day] removeAllObjects];
+            currentDay = [gregorian dateByAddingComponents:dateComponent toDate:currentDay options:0];
+            dateComponent.day = 1;
+            NSDate *nextDay = [gregorian dateByAddingComponents:dateComponent toDate:currentDay options:0];
+            NSPredicate *predicate = [self.storeModel.eventStore predicateForEventsWithStartDate:currentDay endDate:nextDay calendars:calendars];
+            NSArray *currentEvents = [self.storeModel.eventStore eventsMatchingPredicate:predicate];
+            NSMutableArray *currentIdentifiers = [NSMutableArray array];
+            for (EKEvent *event in currentEvents) {
+                [currentIdentifiers addObject:event.eventIdentifier];
+            }
+            for (Course *course in self.currentTimetable.courses) {
+                for (CourseInfo *courseInfo in course.courseInfos) {
+                    if ([currentIdentifiers containsObject:courseInfo.eventIdentifier]) {
+                        [self.window.timetableView.courseInfos[day] addObject:courseInfo];
+                    }
+                }
+            }
+        }
+    } else {
+        for (int day = 0; day < 7; day++) {
+            [self.window.timetableView.courseInfos[day] removeAllObjects];
         }
     }
 }

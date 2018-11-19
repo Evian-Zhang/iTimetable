@@ -85,6 +85,9 @@
 - (void)okButtonHandler{
     if ([self checkValidation]) {
         self.course.courseName = self.window.courseNameText.stringValue;
+        for (EZCourseInfo *courseInfo in self.course.courseInfos) {
+            courseInfo.courseName = self.course.courseName;
+        }
         NSDictionary *userInfo = @{@"course": self.course, @"isCreating": [NSNumber numberWithBool:self.isCreating], @"row":[NSNumber numberWithInt:self.row]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"EZCourseGetSuccessfully" object:nil userInfo:userInfo];
         [self cancelButtonHandler];
@@ -106,6 +109,7 @@
 - (void)createCourseInfo{
     self.courseInfoWindowController = [[CourseInfoWindowController alloc] initWithWindowNibName:@"CourseInfoWindowController"];
     EZCourseInfo *courseInfo = [[EZCourseInfo alloc] initWithFirstWeek:self.course.firstWeek semesterLength:self.course.semesterLength];
+    courseInfo.courseName = self.window.courseNameText.stringValue;
     courseInfo.day = 0;
     self.courseInfoWindowController.isCreating = YES;
     self.courseInfoWindowController.courseInfo = courseInfo;

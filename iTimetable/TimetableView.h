@@ -7,10 +7,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CourseInfo.h"
+#import "EZTextFieldCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TimetableView : NSView
+
+@property (nonatomic) IBOutlet NSPopUpButton *currentWeekPicker;
+@property (nonatomic) NSMutableArray<NSMutableArray<CourseInfo*>*> *courseInfos;
+@property (nonatomic) NSDate *firstClassTime;
+@property (nonatomic) int currentWeek;
+@property (nonatomic) double dayLength;
 
 @end
 

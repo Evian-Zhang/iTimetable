@@ -23,6 +23,7 @@ typedef enum
 
 @interface EZCourseInfo : NSObject
 
+@property (nonatomic) NSString *courseName;
 @property (nonatomic) NSDate *startTime;
 @property (nonatomic) NSDate *endTime;
 @property (nonatomic) NSMutableArray *weeks;
