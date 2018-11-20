@@ -7,6 +7,8 @@
 
 ## 安装
 
+下载地址：https://github.com/Evian-Zhang/iTimetable/releases/download/v1.0/iTimetable.dmg
+
 双击点开iTimetable软件即可使用。第一次使用时，将申请日历访问权限，请选择允许。
 
 对于想要将课程同步到同一iCloud账户下的不同设备中的日历中的用户，请在系统偏好设置$\to$iCloud中勾选日历，并在其他登录此iCloud账户的设备（如iPhone, iPad, Apple Watch等）中，对应的iCloud设置里勾选日历。
