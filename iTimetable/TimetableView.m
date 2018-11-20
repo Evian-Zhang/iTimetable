@@ -16,6 +16,7 @@
 @synthesize courseInfos = _courseInfos;
 @synthesize dayLength = dayLength;
 @synthesize firstClassTime = _firstClassTime;
+@synthesize courseInfoViews = _courseInfoViews;
 
 - (BOOL)isFlipped{
     return YES;
@@ -138,6 +139,7 @@
                 courseTextField.bordered = NO;
                 courseTextField.alignment = NSTextAlignmentCenter;
                 [self addSubview:courseTextField];
+                [self.courseInfoViews addObject:courseTextField];
             }
         }
     }

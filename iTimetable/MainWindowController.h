@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteCourse;
 - (BOOL)checkCalendarEmpty;
 - (BOOL)checkTimetable;
+- (BOOL)checkTimetableEmpty;
 - (BOOL)checkCourseSelected;
 
 @end

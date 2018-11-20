@@ -40,10 +40,13 @@
     self.window.courseTable.dataSource = self;
     self.window.courseTable.delegate = self;
     
+    self.window.timetableView.courseInfoViews = [NSMutableArray<NSTextField*> array];
     self.window.timetableView.courseInfos = [NSMutableArray<NSMutableArray<CourseInfo*>*> arrayWithCapacity:7];
     for (int day = 0; day < 7; day++) {
         self.window.timetableView.courseInfos[day] = [NSMutableArray<CourseInfo*> array];
     }
+    self.window.timetableView.currentWeekPicker.target = self;
+    self.window.timetableView.currentWeekPicker.action = @selector(currentWeekPickerHandler);
 }
 
 - (void)initNotification{
@@ -76,7 +79,7 @@
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    self.window.createCourseItem.enabled = [self checkTimetable] && !self.courseWindowController.window.isVisible;
+    self.window.createCourseItem.enabled = [self checkTimetableEmpty] && !self.courseWindowController.window.isVisible;
     self.window.changeCourseItem.enabled = [self checkCourseSelected] && !self.courseWindowController.window.isVisible;
     self.window.deleteCourseItem.enabled = [self checkCourseSelected] && !self.courseWindowController.window.isVisible;
     return [menuItem isEnabled];
@@ -251,6 +254,16 @@
     [self.window.courseTable reloadData];
 }
 
+- (void)currentWeekPickerHandler {
+    self.window.timetableView.currentWeek = self.window.timetableView.currentWeekPicker.indexOfSelectedItem;
+    for (NSTextField *textField in self.window.timetableView.courseInfoViews) {
+        [textField removeFromSuperviewWithoutNeedingDisplay];
+        [self.window.timetableView.courseInfoViews removeObject:textField];
+    }
+    [self classifyCourseInfosToTimetableView];
+    [self.window.timetableView setNeedsDisplay:YES];
+}
+
 #pragma mark - create timetable
 - (void)createTimetable{
     self.currentTimetable = [[EZTimetable alloc] init];
@@ -417,6 +430,11 @@
         [self.window.timetableView.currentWeekPicker removeAllItems];
         self.window.timetableView.firstClassTime = [NSDate date];
         self.window.timetableView.dayLength = 0;
+        for (NSTextField *textField in self.window.timetableView.courseInfoViews) {
+            [textField removeFromSuperviewWithoutNeedingDisplay];
+            [self.window.timetableView.courseInfoViews removeObject:textField];
+        }
+        self.window.timetableView.currentWeek = 0;
         [self classifyCourseInfosToTimetableView];
         [self.window.timetableView setNeedsDisplay:YES];
         return NO;
@@ -448,8 +466,24 @@
         }
         self.window.timetableView.firstClassTime = self.currentTimetable.firstClassTime;
         self.window.timetableView.dayLength = [self.currentTimetable.lastClassTime timeIntervalSinceDate:self.currentTimetable.firstClassTime] / (double)3600;
+        for (NSTextField *textField in self.window.timetableView.courseInfoViews) {
+            [textField removeFromSuperviewWithoutNeedingDisplay];
+            [self.window.timetableView.courseInfoViews removeObject:textField];
+        }
         [self classifyCourseInfosToTimetableView];
         [self.window.timetableView setNeedsDisplay:YES];
+        return YES;
+    }
+}
+
+- (BOOL)checkTimetableEmpty {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Timetable"];
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"calendarIdentifier = %@", self.storeModel.currentCalendar.calendarIdentifier];
+    request.predicate = pre;
+    NSArray *resArray = [self.persistentContainer.viewContext executeFetchRequest:request error:nil];
+    if(resArray.count == 0){
+        return NO;
+    } else {
         return YES;
     }
 }
@@ -468,9 +502,6 @@
     }
     return NO;
 }
-
-#pragma mark -draw timetable
-
 
 #pragma mark - helper function
 - (NSArray*)convertedCourseInfosWithUnconvertedCourseInfos:(NSArray*)unconvertedCourseInfos andCourseName:(NSString*)courseName{

@@ -38,6 +38,9 @@
     if (!self.isCreating) {
         self.window.firstWeekPicker.enabled = NO;
         self.window.semesterLengthText.enabled = NO;
+        self.window.sourcePop.enabled = NO;
+        self.window.firstClassPicker.enabled = NO;
+        self.window.lastClassPicker.enabled = NO;
     }
     
     self.warningText = [NSString string];

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) IBOutlet NSPopUpButton *currentWeekPicker;
 @property (nonatomic) NSMutableArray<NSMutableArray<CourseInfo*>*> *courseInfos;
+@property (nonatomic) NSMutableArray<NSTextField*> *courseInfoViews;
 @property (nonatomic) NSDate *firstClassTime;
 @property (nonatomic) int currentWeek;
 @property (nonatomic) double dayLength;

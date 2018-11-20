@@ -182,7 +182,7 @@
                             <menuItem title="Create Timetable" id="0nn-8x-ffo">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem title="Change Timetable" id="bHP-xD-gPu">
+                            <menuItem title="View Timetable" id="bHP-xD-gPu">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="Delete Timetable" id="wXK-BO-QO4">

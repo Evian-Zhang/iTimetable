@@ -73,10 +73,10 @@
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem{
-    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetable]) && (!self.mainWindowController.courseWindowController.window.isVisible) && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
-    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
-    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
-    self.createCourseItem.enabled = [self.mainWindowController checkTimetable] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.createTimetableItem.enabled = [self.mainWindowController checkCalendarEmpty] && (![self.mainWindowController checkTimetableEmpty]) && (!self.mainWindowController.courseWindowController.window.isVisible) && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.changeTimetableItem.enabled = [self.mainWindowController checkTimetableEmpty] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.deleteTimetableItem.enabled = [self.mainWindowController checkTimetableEmpty] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
+    self.createCourseItem.enabled = [self.mainWindowController checkTimetableEmpty] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
     self.changeCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
     self.deleteCourseItem.enabled = [self.mainWindowController checkCourseSelected] && !self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
     self.createCourseInfoItem.enabled = self.mainWindowController.courseWindowController.window.isVisible && (!self.mainWindowController.courseWindowController.matchEventWindowController.window.isVisible);
