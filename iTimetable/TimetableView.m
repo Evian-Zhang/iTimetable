@@ -7,10 +7,10 @@
 //
 
 #import "TimetableView.h"
-#define origin NSMakePoint(50, 50)
-#define dayWidth 100
+#define origin NSMakePoint(55, 60)
+#define dayWidth 125
 #define titleHeight 30
-#define dayHeight 500
+#define dayHeight 550
 
 @implementation TimetableView
 @synthesize courseInfos = _courseInfos;
