@@ -121,7 +121,9 @@
 
 #pragma mark - Notification Handler
 - (void)eventStoreForEventAccessSuccessfullyNotificicationHandler{
-    self.window.accessText.stringValue = @"获取日历权限成功";
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.window.accessText.stringValue = @"获取日历权限成功";
+    });
     self.window.accessText.hidden = YES;
     self.window.sourceText.hidden = NO;
     self.window.sourcePop.hidden = NO;
@@ -133,7 +135,9 @@
 }
 
 - (void)eventStoreBForEventAccessUnsuccessfullyNotificicationHandler{
-    self.window.accessText.stringValue = @"获取日历权限失败";
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.window.accessText.stringValue = @"获取日历权限失败";
+    });
     self.window.accessText.hidden = NO;
     self.window.sourceText.hidden = YES;
     self.window.sourcePop.hidden = YES;

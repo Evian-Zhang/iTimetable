@@ -87,6 +87,7 @@
 		56D3C05C218B198E0032D0E5 /* EZEventStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZEventStore.m; sourceTree = "<group>"; };
 		56D6809921915B3500B515C0 /* EZCourse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EZCourse.h; sourceTree = "<group>"; };
 		56D6809A21915B3500B515C0 /* EZCourse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EZCourse.m; sourceTree = "<group>"; };
+		56DF2FE721A3E67200E5820D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		56E071D9218F755100020DBF /* CourseWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CourseWindowController.h; sourceTree = "<group>"; };
 		56E071DA218F755100020DBF /* CourseWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CourseWindowController.m; sourceTree = "<group>"; };
 		56E071DB218F755100020DBF /* CourseWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CourseWindowController.xib; sourceTree = "<group>"; };
@@ -308,6 +309,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				56D3C048218B0B940032D0E5 /* Base */,
+				56DF2FE721A3E67200E5820D /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -319,6 +321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -366,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -378,6 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -419,7 +423,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

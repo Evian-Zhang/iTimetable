@@ -32,11 +32,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1246" height="749"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <customView ambiguous="YES" id="I6t-0e-vJp">
+                                            <customView id="I6t-0e-vJp">
                                                 <rect key="frame" x="0.0" y="0.0" width="1246" height="93"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xyi-UH-hBm">
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xyi-UH-hBm">
                                                         <rect key="frame" x="18" y="38" width="31" height="17"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="账户" id="KQ0-IC-bum">
                                                             <font key="font" usesAppearanceFont="YES"/>
@@ -44,7 +44,7 @@
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rdC-WF-uIz">
+                                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdC-WF-uIz">
                                                         <rect key="frame" x="53" y="33" width="77" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="72" id="Zzy-ng-eK9"/>
@@ -55,7 +55,7 @@
                                                             <menu key="menu" id="0mY-8q-Tvs"/>
                                                         </popUpButtonCell>
                                                     </popUpButton>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DkK-Kg-lo6">
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DkK-Kg-lo6">
                                                         <rect key="frame" x="133" y="38" width="31" height="17"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="日历" id="Bv4-BR-Rjf">
                                                             <font key="font" metaFont="system"/>
@@ -63,7 +63,7 @@
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zki-42-krK">
+                                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zki-42-krK">
                                                         <rect key="frame" x="168" y="33" width="77" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="72" id="hZP-7x-QTg"/>
@@ -92,7 +92,9 @@
                                                     <constraint firstItem="xyi-UH-hBm" firstAttribute="leading" secondItem="I6t-0e-vJp" secondAttribute="leading" constant="20" symbolic="YES" id="dVG-J5-ybN"/>
                                                     <constraint firstItem="xyi-UH-hBm" firstAttribute="centerY" secondItem="rdC-WF-uIz" secondAttribute="centerY" id="mlh-yG-ywa"/>
                                                     <constraint firstItem="xyi-UH-hBm" firstAttribute="centerY" secondItem="I6t-0e-vJp" secondAttribute="centerY" id="oGX-wm-dut"/>
+                                                    <constraint firstAttribute="height" constant="93" id="x7s-iy-i8R"/>
                                                     <constraint firstItem="xyi-UH-hBm" firstAttribute="baseline" secondItem="DkK-Kg-lo6" secondAttribute="baseline" id="xSE-rD-fAG"/>
+                                                    <constraint firstAttribute="width" constant="1246" id="z5e-HH-hf5"/>
                                                 </constraints>
                                             </customView>
                                             <customView fixedFrame="YES" id="YOi-vJ-HnI">
@@ -103,20 +105,20 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="1246" height="655"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <subviews>
-                                                            <customView ambiguous="YES" id="Upe-g6-hTs">
+                                                            <customView id="Upe-g6-hTs">
                                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="655"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SkV-qq-l0T">
-                                                                        <rect key="frame" x="72" y="310" width="107" height="32"/>
+                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SkV-qq-l0T">
+                                                                        <rect key="frame" x="72" y="310" width="106" height="32"/>
                                                                         <buttonCell key="cell" type="push" title="新建课程表" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ObD-fZ-FyW">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                             <font key="font" metaFont="system"/>
                                                                         </buttonCell>
                                                                     </button>
-                                                                    <scrollView ambiguous="YES" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vr-qZ-cPK">
+                                                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vr-qZ-cPK">
                                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="655"/>
-                                                                        <clipView key="contentView" ambiguous="YES" id="V9C-9d-s7F">
+                                                                        <clipView key="contentView" id="V9C-9d-s7F">
                                                                             <rect key="frame" x="1" y="0.0" width="248" height="654"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
@@ -221,19 +223,21 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="7Vr-qZ-cPK" firstAttribute="leading" secondItem="Upe-g6-hTs" secondAttribute="leading" id="3JW-Nc-qSi"/>
+                                                                    <constraint firstAttribute="width" constant="250" id="GpS-0x-fjE"/>
                                                                     <constraint firstItem="7Vr-qZ-cPK" firstAttribute="top" secondItem="Upe-g6-hTs" secondAttribute="top" id="St6-i5-pG0"/>
                                                                     <constraint firstItem="SkV-qq-l0T" firstAttribute="centerY" secondItem="Upe-g6-hTs" secondAttribute="centerY" id="U52-hP-jdv"/>
                                                                     <constraint firstItem="SkV-qq-l0T" firstAttribute="centerX" secondItem="Upe-g6-hTs" secondAttribute="centerX" id="cbj-hq-LS6"/>
+                                                                    <constraint firstAttribute="height" constant="655" id="kRJ-H0-hHn"/>
                                                                     <constraint firstItem="7Vr-qZ-cPK" firstAttribute="centerY" secondItem="SkV-qq-l0T" secondAttribute="centerY" id="lUw-MN-TNi"/>
                                                                     <constraint firstItem="SkV-qq-l0T" firstAttribute="leading" secondItem="Upe-g6-hTs" secondAttribute="leading" constant="78" id="yob-PR-mgh"/>
                                                                     <constraint firstItem="7Vr-qZ-cPK" firstAttribute="centerX" secondItem="SkV-qq-l0T" secondAttribute="centerX" id="z0E-in-ia3"/>
                                                                 </constraints>
                                                             </customView>
-                                                            <customView ambiguous="YES" id="NfS-Ef-SxO" customClass="TimetableView">
+                                                            <customView id="NfS-Ef-SxO" customClass="TimetableView">
                                                                 <rect key="frame" x="251" y="0.0" width="995" height="655"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <popUpButton verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-d6-4TI">
+                                                                    <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-d6-4TI">
                                                                         <rect key="frame" x="459" y="611" width="77" height="25"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="72" id="P0G-o6-2qa"/>
